@@ -1,0 +1,134 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{D3D7C4C0-4798-4352-ADC7-B76A296249C1}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>e3net.tools</RootNamespace>
+    <AssemblyName>e3net.tools</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>dll\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>dll\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\agriculturesys\trunk\adminCode\e3net.common\libs\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Core">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Data.Entity">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Drawing">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Extensions">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CSharp">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Data">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml">
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Files\ContentType.cs" />
+    <Compile Include="Files\Directory.cs" />
+    <Compile Include="Files\Download.cs" />
+    <Compile Include="Files\Drive.cs" />
+    <Compile Include="Files\File.cs" />
+    <Compile Include="Files\MD5Hash.cs" />
+    <Compile Include="Files\Path.cs" />
+    <Compile Include="Files\Read.cs" />
+    <Compile Include="Files\Size.cs" />
+    <Compile Include="Files\Stream.cs" />
+    <Compile Include="Files\Upload.cs" />
+    <Compile Include="Files\Write.cs" />
+    <Compile Include="FilterTools.cs" />
+    <Compile Include="JsonHelper\FormatToJson.cs" />
+    <Compile Include="JsonHelper\JsonHelper.cs" />
+    <Compile Include="JsonHelper\JsonSplit.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StringHelpTool.cs" />
+    <Compile Include="ToEntityByEmit.cs" />
+    <Compile Include="ToolsHelper\AESHelper.cs" />
+    <Compile Include="ToolsHelper\Base64Provider.cs" />
+    <Compile Include="ToolsHelper\ConvertHelper.cs" />
+    <Compile Include="ToolsHelper\DESProvider.cs" />
+    <Compile Include="ToolsHelper\HttpUtil.cs" />
+    <Compile Include="ToolsHelper\LogHelper.cs" />
+    <Compile Include="ToolsHelper\MD5Provider.cs" />
+    <Compile Include="ToolsHelper\PageValidate.cs" />
+    <Compile Include="ToolsHelper\RegexHelper.cs" />
+    <Compile Include="ToolsHelper\RegexNormal.cs" />
+    <Compile Include="ToolsHelper\Tools.cs" />
+    <Compile Include="ToolsHelper\TypeHelper.cs" />
+    <Compile Include="ToolsHelper\XMlHelper.cs" />
+    <Compile Include="ToolsHelper\XXTEAHelper.cs" />
+    <Compile Include="ToolsHelper\YZMHelper.cs" />
+    <Compile Include="ValidateCode.cs" />
+    <Compile Include="WriteLog.cs" />
+    <Compile Include="XMLEntityHelper.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="dll\ICSharpCode.SharpZipLib.dll" />
+    <Content Include="dll\log4net.dll" />
+    <Content Include="dll\Newtonsoft.Json.dll" />
+    <Content Include="dll\Newtonsoft.Json.xml" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
