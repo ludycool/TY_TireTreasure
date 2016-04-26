@@ -13,7 +13,7 @@ using System.Web.Script.Serialization;
 using System.Web.UI;
 using Newtonsoft.Json;
 
-namespace ESUI.Controllers
+namespace ZAppUI.Controllers
 {
     /// <summary>
     /// 基础类
