@@ -7,12 +7,12 @@ using System.Web;
 //using App.IBLL;
 //using App.IDAL;
 using e3net.BLL;
-using e3net.BLL.DynamicTable;
 using e3net.BLL.RMS;
 using e3net.IDAL;
-using e3net.IDAL.DynamicTable;
 using e3net.IDAL.RMS;
 using Microsoft.Practices.Unity;
+using e3net.IDAL.TireTreasureBaseDB;
+using e3net.BLL.TireTreasureBaseDB;
 
 namespace App.Core
 {
@@ -44,8 +44,7 @@ namespace App.Core
 
              container.RegisterType<IRMS_DepartmentDao, RMS_DepartmentBiz>();
 
-             container.RegisterType<IBaschartypeDao, BaschartypeBiz>();
-             container.RegisterType<IBascharvalueDao, BascharvalueBiz>();
+ 
             #endregion
               
 

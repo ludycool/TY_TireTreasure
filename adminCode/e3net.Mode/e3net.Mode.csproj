@@ -62,8 +62,11 @@
     <Compile Include="FileManagementDB\TF_Units.cs" />
     <Compile Include="File_Image.cs" />
     <Compile Include="RMS\V_Role.cs" />
-    <Compile Include="SysItem.cs" />
-    <Compile Include="Sys_CityArea.cs" />
+    <Compile Include="TireTreasureBaseDB\SysItem.cs" />
+    <Compile Include="TireTreasureBaseDB\Sys_CityArea.cs" />
+    <Compile Include="TireTreasureBaseDB\Sys_Dictionary.cs" />
+    <Compile Include="TireTreasureBaseDB\Sys_DicType.cs" />
+    <Compile Include="TireTreasureBaseDB\Sys_Files.cs" />
     <Compile Include="V_mode\AdminUserInfo.cs" />
     <Compile Include="V_mode\v_Sys_Advertising.cs" />
     <Compile Include="V_mode\v_Sys_AppVerSion.cs" />
@@ -82,7 +85,6 @@
     <Compile Include="RMS\V_RoleManus.cs" />
     <Compile Include="RMS\V_UserRole.cs" />
     <Compile Include="SystemLogs.cs" />
-    <Compile Include="Sys_Dictionary.cs" />
     <Compile Include="RMS\V_MenuButtons.cs" />
     <Compile Include="RMS\V_RoleManuButtons.cs" />
     <Compile Include="Parameter.cs" />

@@ -4,16 +4,16 @@ using System.Collections;
 using System.Collections.Generic;
 using Moon.Orm;
 
-namespace e3net.Mode.V_mode
+namespace e3net.Mode.TireTreasureBaseDB
 {
 
-    [Table("[v_Sys_CityArea]", DbType.SqlServer)]
-
-    public partial class v_Sys_CityArea : EntityBase
+    [Table("[Sys_CityArea]", DbType.SqlServer)]
+    [TablesPrimaryKey(PrimaryKeyType.AutoIncrease, typeof(Int32), "CityAreaId")]
+    public partial class Sys_CityArea : EntityBase
     {
 
         /// <summary>
-        /// 
+        /// 主键
         /// </summary>
         public Int32 CityAreaId
         {
@@ -31,6 +31,15 @@ namespace e3net.Mode.V_mode
         }
 
         /// <summary>
+        /// 排序
+        /// </summary>
+        public Int32? OrderNo
+        {
+            get { return GetPropertyValue<Int32?>("OrderNo"); }
+            set { SetPropertyValue("OrderNo", value); }
+        }
+
+        /// <summary>
         /// 
         /// </summary>
         public String TName
@@ -40,7 +49,7 @@ namespace e3net.Mode.V_mode
         }
 
         /// <summary>
-        /// 
+        /// 登录名
         /// </summary>
         public String TCode
         {
@@ -67,7 +76,7 @@ namespace e3net.Mode.V_mode
         }
 
         /// <summary>
-        /// 
+        /// 详情
         /// </summary>
         public String Remarks
         {
@@ -76,7 +85,7 @@ namespace e3net.Mode.V_mode
         }
 
         /// <summary>
-        /// 
+        /// 添加时间
         /// </summary>
         public DateTime? CreateTime
         {
@@ -85,7 +94,7 @@ namespace e3net.Mode.V_mode
         }
 
         /// <summary>
-        /// 
+        /// 修改时间
         /// </summary>
         public DateTime? UpdateTime
         {
@@ -94,7 +103,7 @@ namespace e3net.Mode.V_mode
         }
 
         /// <summary>
-        /// 
+        /// 是否有效
         /// </summary>
         public Boolean? isValid
         {
@@ -103,109 +112,86 @@ namespace e3net.Mode.V_mode
         }
 
         /// <summary>
-        /// 
+        /// 是否删除
         /// </summary>
         public Boolean? isDeleted
         {
             get { return GetPropertyValue<Boolean?>("isDeleted"); }
             set { SetPropertyValue("isDeleted", value); }
         }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public String AreaTypesName
-        {
-            get { return GetPropertyValue<String>("AreaTypesName"); }
-            set { SetPropertyValue("AreaTypesName", value); }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public Int32? OrderNo
-        {
-            get { return GetPropertyValue<Int32?>("OrderNo"); }
-            set { SetPropertyValue("OrderNo", value); }
-        }
     }
 
-    [Table("[v_Sys_CityArea]", DbType.SqlServer)]
-    public  partial class v_Sys_CityAreaSet : MQLBase
+    [Table("[Sys_CityArea]", DbType.SqlServer)]
+    public  partial class Sys_CityAreaSet : MQLBase
     {
         public static new MQLBase Select(params FieldBase[] fields)
         {
-            return MQLBase.Select(DbType.SqlServer,"[v_Sys_CityArea]",fields);
+            return MQLBase.Select(DbType.SqlServer,"[Sys_CityArea]",fields);
         }
         public static new MQLBase SelectAll()
         {
-            return MQLBase.SelectAll(DbType.SqlServer,"[v_Sys_CityArea]");
+            return MQLBase.SelectAll(DbType.SqlServer,"[Sys_CityArea]");
         }
 
         /// <summary>
-        /// 
+        /// 主键
         /// </summary>
-        public static readonly FieldBase CityAreaId = new FieldBase(DbType.SqlServer, "[v_Sys_CityArea]", FieldType.Common, "[CityAreaId]");
+        public static readonly FieldBase CityAreaId = new FieldBase(DbType.SqlServer, "[Sys_CityArea]", FieldType.OnlyPrimaryKey, "[CityAreaId]");
 
         /// <summary>
         /// 
         /// </summary>
-        public static readonly FieldBase ParentId = new FieldBase(DbType.SqlServer, "[v_Sys_CityArea]", FieldType.Common, "[ParentId]");
+        public static readonly FieldBase ParentId = new FieldBase(DbType.SqlServer, "[Sys_CityArea]", FieldType.Common, "[ParentId]");
+
+        /// <summary>
+        /// 排序
+        /// </summary>
+        public static readonly FieldBase OrderNo = new FieldBase(DbType.SqlServer, "[Sys_CityArea]", FieldType.Common, "[OrderNo]");
 
         /// <summary>
         /// 
         /// </summary>
-        public static readonly FieldBase TName = new FieldBase(DbType.SqlServer, "[v_Sys_CityArea]", FieldType.Common, "[TName]");
+        public static readonly FieldBase TName = new FieldBase(DbType.SqlServer, "[Sys_CityArea]", FieldType.Common, "[TName]");
+
+        /// <summary>
+        /// 登录名
+        /// </summary>
+        public static readonly FieldBase TCode = new FieldBase(DbType.SqlServer, "[Sys_CityArea]", FieldType.Common, "[TCode]");
 
         /// <summary>
         /// 
         /// </summary>
-        public static readonly FieldBase TCode = new FieldBase(DbType.SqlServer, "[v_Sys_CityArea]", FieldType.Common, "[TCode]");
+        public static readonly FieldBase AreaTypes = new FieldBase(DbType.SqlServer, "[Sys_CityArea]", FieldType.Common, "[AreaTypes]");
 
         /// <summary>
         /// 
         /// </summary>
-        public static readonly FieldBase AreaTypes = new FieldBase(DbType.SqlServer, "[v_Sys_CityArea]", FieldType.Common, "[AreaTypes]");
+        public static readonly FieldBase Icon = new FieldBase(DbType.SqlServer, "[Sys_CityArea]", FieldType.Common, "[Icon]");
 
         /// <summary>
-        /// 
+        /// 详情
         /// </summary>
-        public static readonly FieldBase Icon = new FieldBase(DbType.SqlServer, "[v_Sys_CityArea]", FieldType.Common, "[Icon]");
+        public static readonly FieldBase Remarks = new FieldBase(DbType.SqlServer, "[Sys_CityArea]", FieldType.Common, "[Remarks]");
 
         /// <summary>
-        /// 
+        /// 添加时间
         /// </summary>
-        public static readonly FieldBase Remarks = new FieldBase(DbType.SqlServer, "[v_Sys_CityArea]", FieldType.Common, "[Remarks]");
+        public static readonly FieldBase CreateTime = new FieldBase(DbType.SqlServer, "[Sys_CityArea]", FieldType.Common, "[CreateTime]");
 
         /// <summary>
-        /// 
+        /// 修改时间
         /// </summary>
-        public static readonly FieldBase CreateTime = new FieldBase(DbType.SqlServer, "[v_Sys_CityArea]", FieldType.Common, "[CreateTime]");
+        public static readonly FieldBase UpdateTime = new FieldBase(DbType.SqlServer, "[Sys_CityArea]", FieldType.Common, "[UpdateTime]");
 
         /// <summary>
-        /// 
+        /// 是否有效
         /// </summary>
-        public static readonly FieldBase UpdateTime = new FieldBase(DbType.SqlServer, "[v_Sys_CityArea]", FieldType.Common, "[UpdateTime]");
+        public static readonly FieldBase isValid = new FieldBase(DbType.SqlServer, "[Sys_CityArea]", FieldType.Common, "[isValid]");
 
         /// <summary>
-        /// 
+        /// 是否删除
         /// </summary>
-        public static readonly FieldBase isValid = new FieldBase(DbType.SqlServer, "[v_Sys_CityArea]", FieldType.Common, "[isValid]");
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public static readonly FieldBase isDeleted = new FieldBase(DbType.SqlServer, "[v_Sys_CityArea]", FieldType.Common, "[isDeleted]");
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public static readonly FieldBase AreaTypesName = new FieldBase(DbType.SqlServer, "[v_Sys_CityArea]", FieldType.Common, "[AreaTypesName]");
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public static readonly FieldBase OrderNo = new FieldBase(DbType.SqlServer, "[v_Sys_CityArea]", FieldType.Common, "[OrderNo]");
+        public static readonly FieldBase isDeleted = new FieldBase(DbType.SqlServer, "[Sys_CityArea]", FieldType.Common, "[isDeleted]");
     }
 
 }

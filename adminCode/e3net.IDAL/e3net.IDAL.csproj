@@ -62,7 +62,7 @@
     <Compile Include="FileManagementDB\ITF_UnitsDao.cs" />
     <Compile Include="IBaseDao.cs" />
     <Compile Include="IFile_ImageDao.cs" />
-    <Compile Include="ISys_DictionaryDao.cs" />
+    <Compile Include="TireTreasureBaseDB\ISys_DictionaryDao.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RMS\IRMS_ButtonsDao.cs" />
     <Compile Include="RMS\IRMS_MenuButtonsDao.cs" />
@@ -74,8 +74,8 @@
     <Compile Include="RMS\IRMS_UserRoleDao.cs" />
     <Compile Include="RMS\IRMS_DepartmentDao.cs" />
     <Compile Include="ISystemLogsDao.cs" />
-    <Compile Include="ISysItemDao.cs" />
-    <Compile Include="ISys_CityAreaDao.cs" />
+    <Compile Include="TireTreasureBaseDB\ISysItemDao.cs" />
+    <Compile Include="TireTreasureBaseDB\ISys_CityAreaDao.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\e3net.common\e3net.common.csproj">

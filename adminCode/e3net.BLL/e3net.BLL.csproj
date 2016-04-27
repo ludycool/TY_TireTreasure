@@ -72,10 +72,10 @@
     <Compile Include="RMS\RMS_UserBiz.cs" />
     <Compile Include="RMS\RMS_UserRoleBiz.cs" />
     <Compile Include="RMS\RMS_DepartmentBiz.cs" />
-    <Compile Include="Sys_DictionaryBiz.cs" />
+    <Compile Include="TireTreasureBaseDB\Sys_DictionaryBiz.cs" />
     <Compile Include="SystemLogsBiz.cs" />
-    <Compile Include="SysItemBiz.cs" />
-    <Compile Include="Sys_CityAreaBiz.cs" />
+    <Compile Include="TireTreasureBaseDB\SysItemBiz.cs" />
+    <Compile Include="TireTreasureBaseDB\Sys_CityAreaBiz.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\e3net.common\e3net.common.csproj">
