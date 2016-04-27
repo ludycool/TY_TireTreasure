@@ -1,6 +1,4 @@
 ﻿using e3net.BLL;
-using e3net.BLL.RMS;
-using e3net.IDAL;
 using e3net.Mode;
 using System;
 using System.Collections.Generic;
@@ -9,6 +7,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.Practices.Unity;
+using e3net.BLL.TireTreasureBaseDB;
+using e3net.Mode.TireTreasureBaseDB;
 using e3net.Mode.V_mode;
 
 namespace ESUI.Controllers
@@ -34,7 +34,7 @@ namespace ESUI.Controllers
         {
             Random rnd = new Random();
             bool IsAdd = false;
-            if (Mode.Id == 0)//id为0，是添加
+            if (Mode.CityAreaId == 0)//CityAreaId为0，是添加
             {
                 IsAdd = true;
             }
@@ -46,9 +46,9 @@ namespace ESUI.Controllers
             }
             else
             {
-                Mode.WhereExpression = Sys_CityAreaSet.Id.Equal(Mode.Id);
-                //  spmodel.GroupId = GroupId;
-                Mode.ChangedMap.Remove("id");//移除主键值
+                Mode.WhereExpression = Sys_CityAreaSet.CityAreaId.Equal(Mode.CityAreaId);
+                //  spmodel.GroupCityAreaId = GroupCityAreaId;
+                Mode.ChangedMap.Remove("CityAreaId");//移除主键值
                 if (DDBiz.Update(Mode) > 0)
                 {
                     return Json("ok", JsonRequestBehavior.AllowGet);
@@ -61,9 +61,9 @@ namespace ESUI.Controllers
             }
 
         }
-        public JsonResult GetInfo(string ID)
+        public JsonResult GetInfo(string CityAreaId)
         {
-            var mql = Sys_CityAreaSet.SelectAll().Where(Sys_CityAreaSet.Id.Equal(ID));
+            var mql = Sys_CityAreaSet.SelectAll().Where(Sys_CityAreaSet.CityAreaId.Equal(CityAreaId));
             Sys_CityArea Rmodel = DDBiz.GetEntity(mql);
             //  groupsBiz.Add(rol);
             return Json(Rmodel, JsonRequestBehavior.AllowGet);
@@ -77,10 +77,10 @@ namespace ESUI.Controllers
             return jsonstring;
         }
 
-        public JsonResult DeleteInfo(string ID)
+        public JsonResult DeleteInfo(string CityAreaId)
         {
 
-            var mql2 = Sys_CityAreaSet.Id.Equal(ID);
+            var mql2 = Sys_CityAreaSet.CityAreaId.Equal(CityAreaId);
             int f = DDBiz.Remove<Sys_CityAreaSet>(mql2);
             return Json("OK", JsonRequestBehavior.AllowGet);
 

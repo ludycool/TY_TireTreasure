@@ -1,9 +1,7 @@
 ﻿using e3net.BLL;
-using e3net.BLL.RMS;
-using e3net.Mode;
+using e3net.BLL.TireTreasureBaseDB;
 using e3net.Mode.FileManagementDB;
-using e3net.Mode.RMS;
-using e3net.Mode.V_mode;
+using e3net.Mode.TireTreasureBaseDB;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,15 +26,15 @@ namespace ESUI.httpHandle
 
                 case "GetSonDictionary":
 
-                    string ValueName = context.Request["ValueName"];
-                    context.Response.Write(GetSonDictionary(ValueName));
+                    string DicNo = context.Request["DicNo"];
+                    context.Response.Write(GetSonDictionary(DicNo));
                     context.Response.End();
 
                     break;
                 case "GetSonDictionaryNo"://除掉本身只要子集
 
-                    string ValueNameNO = context.Request["ValueName"];
-                    context.Response.Write(GetSonDictionaryNo(ValueNameNO));
+                    string DicNoNO = context.Request["DicNo"];
+                    context.Response.Write(GetSonDictionaryNo(DicNoNO));
                     context.Response.End();
 
                     break;
@@ -97,26 +95,26 @@ namespace ESUI.httpHandle
             return JsonHelper.ToJson(AllList, true);
 
         }
-        public string GetSonDictionary(string ValueName)
+        public string GetSonDictionary(string DicNo)
         {
             string jsonstring = "[]";
-            var sql = Sys_DictionarySet.SelectAll().Where(Sys_DictionarySet.ValueName.StartWith(ValueName));
+            var sql = Sys_DictionarySet.SelectAll().Where(Sys_DictionarySet.DicNo.StartWith(DicNo));
             List<Sys_Dictionary> listAll = OPBiz.GetOwnList<Sys_Dictionary>(sql);
             jsonstring = OPBiz.GetCombotree(listAll);
 
 
             return jsonstring;
         }
-        public string GetSonDictionaryNo(string ValueName)
+        public string GetSonDictionaryNo(string DicNo)
         {
             string jsonstring = "[]";
-            var sql = Sys_DictionarySet.SelectAll().Where(Sys_DictionarySet.ValueName.StartWith(ValueName));
+            var sql = Sys_DictionarySet.SelectAll().Where(Sys_DictionarySet.DicNo.StartWith(DicNo));
             List<Sys_Dictionary> listAll = OPBiz.GetOwnList<Sys_Dictionary>(sql);
             if (listAll != null && listAll.Count > 0)
             {
                 for (int i = 0; i < listAll.Count; i++)
                 {
-                    if (listAll[i].ValueName.Equals(ValueName))//去除父级
+                    if (listAll[i].DicNo.Equals(DicNo))//去除父级
                     {
                         listAll.Remove(listAll[i]);
                         break;

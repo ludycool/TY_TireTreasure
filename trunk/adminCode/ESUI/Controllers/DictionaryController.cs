@@ -1,6 +1,4 @@
-﻿using e3net.BLL;
-using e3net.BLL.RMS;
-using e3net.IDAL;
+﻿
 using e3net.Mode;
 using System;
 using System.Collections.Generic;
@@ -9,6 +7,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.Practices.Unity;
+using e3net.Mode.TireTreasureBaseDB;
+using e3net.BLL.TireTreasureBaseDB;
 
 namespace ESUI.Controllers
 {
@@ -33,25 +33,24 @@ namespace ESUI.Controllers
         {
             Random rnd = new Random();
             bool IsAdd = false;
-            if (!(Mode.Id != null && !Mode.Id.ToString().Equals("00000000-0000-0000-0000-000000000000")))//id为空，是添加
+            if (!(Mode.DicId != null && !Mode.DicId.ToString().Equals(0)))//DicId为空，是添加
             {
                 IsAdd = true;
             }
             if (IsAdd)
             {
-                Mode.Id = Guid.NewGuid();
                 Mode.CreateTime = DateTime.Now;
-                Mode.ModifyTime = DateTime.Now;
+  
                 DDBiz.Add(Mode);
 
                 return Json("ok", JsonRequestBehavior.AllowGet);
             }
             else
             {
-                Mode.WhereExpression = Sys_DictionarySet.Id.Equal(Mode.Id);
-                //  spmodel.GroupId = GroupId;
+                Mode.WhereExpression = Sys_DictionarySet.DicId.Equal(Mode.DicId);
+                //  spmodel.GroupDicId = GroupDicId;
                 Mode.CreateTime = DateTime.Now;
-                Mode.ModifyTime = DateTime.Now;
+        
                 if (DDBiz.Update(Mode) > 0)
                 {
                     return Json("ok", JsonRequestBehavior.AllowGet);
@@ -64,9 +63,9 @@ namespace ESUI.Controllers
             }
 
         }
-        public JsonResult GetInfo(string ID)
+        public JsonResult GetInfo(string DicId)
         {
-            var mql = Sys_DictionarySet.SelectAll().Where(Sys_DictionarySet.Id.Equal(ID));
+            var mql = Sys_DictionarySet.SelectAll().Where(Sys_DictionarySet.DicId.Equal(DicId));
             Sys_Dictionary Rmodel = DDBiz.GetEntity(mql);
             //  groupsBiz.Add(rol);
             return Json(Rmodel, JsonRequestBehavior.AllowGet);
@@ -80,10 +79,10 @@ namespace ESUI.Controllers
             return jsonstring;
         }
 
-        public JsonResult DeleteInfo(string ID)
+        public JsonResult DeleteInfo(string DicId)
         {
 
-            var mql2 = Sys_DictionarySet.Id.Equal(ID);
+            var mql2 = Sys_DictionarySet.DicId.Equal(DicId);
             int f = DDBiz.Remove<Sys_DictionarySet>(mql2);
             return Json("OK", JsonRequestBehavior.AllowGet);
 
