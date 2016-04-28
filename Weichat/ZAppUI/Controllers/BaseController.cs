@@ -11,6 +11,7 @@ using System.Web.Mvc;
 using System.Web.Script.Serialization;
 using System.Web.UI;
 using Newtonsoft.Json;
+using ZAppUI.Models;
 
 namespace ZAppUI.Controllers
 {
@@ -30,6 +31,11 @@ namespace ZAppUI.Controllers
 
             return " var BaseUrl = '/" + RouteData.Values["controller"].ToString() + "/';";
 
+        }
+        public UserData GetUData {
+
+            get { return Session["UserData"] as UserData;}
+            set{Session["UserData"] =value;}
         }
 
         #region 获取客户端IP地址
