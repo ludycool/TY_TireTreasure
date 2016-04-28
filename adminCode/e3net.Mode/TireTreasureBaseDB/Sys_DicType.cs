@@ -97,13 +97,17 @@ namespace e3net.Mode.TireTreasureBaseDB
     [Table("[Sys_DicType]", DbType.SqlServer)]
     public  partial class Sys_DicTypeSet : MQLBase
     {
-        public static new MQLBase Select(params FieldBase[] fields)
+        public static  MQLBase Select(params FieldBase[] fields)
         {
             return MQLBase.Select(DbType.SqlServer,"[Sys_DicType]",fields);
         }
-        public static new MQLBase SelectAll()
+        public static  MQLBase SelectAll()
         {
             return MQLBase.SelectAll(DbType.SqlServer,"[Sys_DicType]");
+        }
+        public static MQLBase SelectAllBut(params FieldBase[] fields)
+        {
+            return MQLBase.SelectAllBut(typeof(Sys_DicTypeSet),DbType.SqlServer,"[Sys_DicType]",fields);
         }
 
         /// <summary>

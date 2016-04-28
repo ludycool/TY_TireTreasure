@@ -82,6 +82,8 @@
     <Compile Include="SystemLogsBiz.cs" />
     <Compile Include="TireTreasureBaseDB\SysItemBiz.cs" />
     <Compile Include="TireTreasureBaseDB\Sys_CityAreaBiz.cs" />
+    <Compile Include="TireTreasureBaseDB\Sys_DicTypeBiz.cs" />
+    <Compile Include="TireTreasureBaseDB\Sys_FilesBiz.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\e3net.common\e3net.common.csproj">

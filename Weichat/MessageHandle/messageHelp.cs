@@ -139,7 +139,9 @@ namespace WeiChatMessageHandle
         //接受文本消息
         public string TextHandle(string Content)
         {
-            string responseContent = SendText("欢迎使用微信公共账号，您输入的内容为：" + Content + "\r\n<a href=\"http://www.baidu.com\">点击进入</a>");
+
+            string url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx5c2b91a9bbef68b4&redirect_uri=http://5705395e.nat123.net/home&response_type=code&scope=snsapi_base&state=test#wechat_redirect";
+            string responseContent = SendText("欢迎使用微信公共账号，您输入的内容为：" + Content + "\r\n<a href=\""+url+"\">点击进入</a>");
             return responseContent;
         }
 

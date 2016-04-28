@@ -82,6 +82,8 @@
     <Compile Include="ISystemLogsDao.cs" />
     <Compile Include="TireTreasureBaseDB\ISysItemDao.cs" />
     <Compile Include="TireTreasureBaseDB\ISys_CityAreaDao.cs" />
+    <Compile Include="TireTreasureBaseDB\ISys_DicTypeDao.cs" />
+    <Compile Include="TireTreasureBaseDB\ISys_FilesDao.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\e3net.common\e3net.common.csproj">
