@@ -62,6 +62,12 @@
     <Compile Include="FileManagementDB\TF_Units.cs" />
     <Compile Include="File_Image.cs" />
     <Compile Include="RMS\V_Role.cs" />
+    <Compile Include="TireMoneyDB\TM_Balce.cs" />
+    <Compile Include="TireMoneyDB\TM_Banard.cs" />
+    <Compile Include="TireMoneyDB\TM_OrderList.cs" />
+    <Compile Include="TireMoneyDB\TM_PayPlatform.cs" />
+    <Compile Include="TireMoneyDB\TM_TranAcc.cs" />
+    <Compile Include="TireMoneyDB\TM_WaterBill.cs" />
     <Compile Include="TireTreasureBaseDB\SysItem.cs" />
     <Compile Include="TireTreasureBaseDB\Sys_CityArea.cs" />
     <Compile Include="TireTreasureBaseDB\Sys_Dictionary.cs" />

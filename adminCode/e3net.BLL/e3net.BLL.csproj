@@ -72,6 +72,12 @@
     <Compile Include="RMS\RMS_UserBiz.cs" />
     <Compile Include="RMS\RMS_UserRoleBiz.cs" />
     <Compile Include="RMS\RMS_DepartmentBiz.cs" />
+    <Compile Include="TireMoneyDB\TM_BalceBiz.cs" />
+    <Compile Include="TireMoneyDB\TM_BanardBiz.cs" />
+    <Compile Include="TireMoneyDB\TM_OrderListBiz.cs" />
+    <Compile Include="TireMoneyDB\TM_PayPlatformBiz.cs" />
+    <Compile Include="TireMoneyDB\TM_TranAccBiz.cs" />
+    <Compile Include="TireMoneyDB\TM_WaterBillBiz.cs" />
     <Compile Include="TireTreasureBaseDB\Sys_DictionaryBiz.cs" />
     <Compile Include="SystemLogsBiz.cs" />
     <Compile Include="TireTreasureBaseDB\SysItemBiz.cs" />

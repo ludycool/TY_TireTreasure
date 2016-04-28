@@ -192,5 +192,19 @@ namespace e3net.IDAL
         /// <returns></returns>
         T GetModelByWhere(string sql, string classname);
 
+        /// <summary>
+        /// 获取分页数据
+        /// </summary>
+        /// <param name="pc"></param>
+        /// <returns></returns>
+        DataSet GetPagingDataP(PageClass pc);
+
+        /// <summary>
+        /// 删除
+        /// </summary>
+        /// <typeparam name="T2"></typeparam>
+        /// <param name="expression"></param>
+        /// <returns></returns>
+        int Remove<T2>(WhereExpression expression) where T2 : MQLBase;
     }
 }
