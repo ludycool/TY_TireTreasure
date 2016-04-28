@@ -115,13 +115,17 @@ namespace e3net.Mode.TireTreasureBaseDB
     [Table("[Sys_Dictionary]", DbType.SqlServer)]
     public  partial class Sys_DictionarySet : MQLBase
     {
-        public static new MQLBase Select(params FieldBase[] fields)
+        public static  MQLBase Select(params FieldBase[] fields)
         {
             return MQLBase.Select(DbType.SqlServer,"[Sys_Dictionary]",fields);
         }
-        public static new MQLBase SelectAll()
+        public static  MQLBase SelectAll()
         {
             return MQLBase.SelectAll(DbType.SqlServer,"[Sys_Dictionary]");
+        }
+        public static MQLBase SelectAllBut(params FieldBase[] fields)
+        {
+            return MQLBase.SelectAllBut(typeof(Sys_DictionarySet),DbType.SqlServer,"[Sys_Dictionary]",fields);
         }
 
         /// <summary>

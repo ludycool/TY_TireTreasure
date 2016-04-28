@@ -124,13 +124,17 @@ namespace e3net.Mode.TireTreasureBaseDB
     [Table("[Sys_Files]", DbType.SqlServer)]
     public  partial class Sys_FilesSet : MQLBase
     {
-        public static new MQLBase Select(params FieldBase[] fields)
+        public static  MQLBase Select(params FieldBase[] fields)
         {
             return MQLBase.Select(DbType.SqlServer,"[Sys_Files]",fields);
         }
-        public static new MQLBase SelectAll()
+        public static  MQLBase SelectAll()
         {
             return MQLBase.SelectAll(DbType.SqlServer,"[Sys_Files]");
+        }
+        public static MQLBase SelectAllBut(params FieldBase[] fields)
+        {
+            return MQLBase.SelectAllBut(typeof(Sys_FilesSet),DbType.SqlServer,"[Sys_Files]",fields);
         }
 
         /// <summary>

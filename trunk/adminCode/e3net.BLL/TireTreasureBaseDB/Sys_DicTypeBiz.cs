@@ -9,10 +9,10 @@ using e3net.IDAL.TireTreasureBaseDB;
 using e3net.Mode.TireTreasureBaseDB;
 namespace e3net.BLL.TireTreasureBaseDB
 {
-    public class SysItemBiz : BaseDao<SysItem>, ISysItemDao
+    public class Sys_DicTypeBiz : BaseDao<Sys_DicType>, ISys_DicTypeDao
     {
 
-        public SysItemBiz()
+        public Sys_DicTypeBiz()
         {
             SetDb(false, "BaseCN");
         }

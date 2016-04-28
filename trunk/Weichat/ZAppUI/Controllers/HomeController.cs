@@ -40,10 +40,13 @@ namespace ZAppUI.Controllers
             if (Request["code"] != null && string.IsNullOrEmpty(Request["code"]))
             {
                 GetUData.OpenId = Request["code"];
-                ViewBag.OpenId=Request["code"];
-            
-            }else
-            getCode();
+                ViewData["code"] = Request["code"];
+
+            }
+            else
+            {
+                getCode();
+            }
             return View();
         }
 
