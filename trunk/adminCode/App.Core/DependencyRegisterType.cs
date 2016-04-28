@@ -13,6 +13,8 @@ using e3net.IDAL.RMS;
 using Microsoft.Practices.Unity;
 using e3net.IDAL.TireTreasureBaseDB;
 using e3net.BLL.TireTreasureBaseDB;
+using e3net.IDAL.TireMoneyDB;
+using e3net.BLL.TireMoneyDB;
 
 namespace App.Core
 {
@@ -46,7 +48,15 @@ namespace App.Core
 
  
             #endregion
-              
+             #region TireMoneyDB
+
+             container.RegisterType<ITM_BalceDao, TM_BalceBiz>();
+             container.RegisterType<ITM_BanardDao, TM_BanardBiz>();
+             container.RegisterType<ITM_OrderListDao, TM_OrderListBiz>();
+             container.RegisterType<ITM_PayPlatformDao, TM_PayPlatformBiz>();
+             container.RegisterType<ITM_TranAccDao, TM_TranAccBiz>();
+             container.RegisterType<ITM_WaterBillDao, TM_WaterBillBiz>();
+             #endregion
 
         }
     }

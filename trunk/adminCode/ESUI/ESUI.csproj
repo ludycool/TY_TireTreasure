@@ -244,6 +244,12 @@
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\ManuController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
+    <Compile Include="Controllers\TireMoneyDB\TM_BalceController.cs" />
+    <Compile Include="Controllers\TireMoneyDB\TM_BanardController.cs" />
+    <Compile Include="Controllers\TireMoneyDB\TM_OrderListController.cs" />
+    <Compile Include="Controllers\TireMoneyDB\TM_PayPlatformController.cs" />
+    <Compile Include="Controllers\TireMoneyDB\TM_TranAccController.cs" />
+    <Compile Include="Controllers\TireMoneyDB\TM_WaterBillController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\ParameterController.cs" />
     <Compile Include="Controllers\Sys_CityAreaController.cs" />
@@ -3470,6 +3476,12 @@
     <Content Include="Views\Sys_CityArea\Index.cshtml" />
     <Content Include="Views\Login_old\Index.cshtml" />
     <Content Include="Views\TF_Units\Index.cshtml" />
+    <Content Include="Views\TM_Balce\Index.cshtml" />
+    <Content Include="Views\TM_Banard\Index.cshtml" />
+    <Content Include="Views\TM_OrderList\Index.cshtml" />
+    <Content Include="Views\TM_PayPlatform\Index.cshtml" />
+    <Content Include="Views\TM_TranAcc\Index.cshtml" />
+    <Content Include="Views\TM_WaterBill\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="temp\" />

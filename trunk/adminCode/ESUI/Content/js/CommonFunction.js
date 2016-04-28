@@ -76,7 +76,7 @@ function clearNoNum(obj) {
 }
 
 function clearNoNumberContainDot(obj) {
-    //先把非数字的都替换掉，除了数字和. 
+    //先把非数字的都替换掉
     obj.value = obj.value.replace(/[^\d]/g, "");
 }
 function paramString2obj(serializedParams) {

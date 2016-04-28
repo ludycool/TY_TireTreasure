@@ -1,0 +1,237 @@
+﻿<!DOCTYPE html>
+@{
+    ViewBag.Title = "Index";
+}
+
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    @* <script type="text/javascript" charset="utf-8" src="~/Content/js/DictionaryHelper.js"></script>*@
+    @* ReSharper disable once NotAllPathsReturnValue *@
+    @section Jsprepare{
+
+        <script type="text/javascript">
+            @Html.Raw(ViewBag.RuteUrl)
+         @Html.Raw(ViewBag.toolbar)
+            jQuery(document).ready(function () {
+                DataGridSet();
+
+            })
+            function DataGridSet() {
+                $('#dg').datagrid({
+                    url: BaseUrl + 'Search',
+                    columns: [[
+                        { field: 'ck', checkbox: true },
+              { field: 'AMneys', title: '余额', width: 100, sortable: true }, 
+              { field: 'SecretS', title: '密钥', width: 100, sortable: true }, 
+              { field: 'UMoney', title: '可用金额', width: 100, sortable: true }, 
+              { field: 'Stas', title: '状态（ 0 正常-1冻结）', width: 100, sortable: true }, 
+              { field: 'CreateTime', title: '添加时间', width: 100, sortable: true }, 
+              { field: 'UpdateTime', title: '修改时间', width: 100, sortable: true }
+                    ]],
+                    iconCls: 'icon-save',
+                    title: '账户余额',
+                    nowrap: true,
+                    fit: true,
+                    fitColumns: true,
+                    singleSelect: true,
+                    striped: true,
+                    collapsible: true,
+                    pageSize: 20,
+                    pagination: true,
+                    rownumbers: true,
+                    sortName: 'CreateTime',
+                    sortOrder: 'desc',
+                    toolbar: toolbars
+                });
+            }
+            //刷新
+            function ReloadOP() {
+                $("#dg").datagrid("reload");
+            }
+            //easyUI 弹出添加的对话框
+            function AddInfo() {
+                //弹出层
+                // $("#DivEditor").dialog('open').dialog('setTitle', '添加信息');
+                $('#DivEditor').dialog({
+                    title: '添加',
+                    //width: 400,
+                    //height: 200,
+                    closed: false,
+                    cache: false,
+                    // href: 'get_content.php',
+                    modal: true, top: 20,
+                    onClose: function () {
+                        //解决弹出窗口关闭后，验证消息还显示在最上面
+
+                    }
+                });
+                $(".validatebox-tip").remove();//清除验证样式
+                DataBaseFunction.ClearForm("ff");
+                //$("input[name='HouseNo']").focus();
+                //$("#ff input[name='Tel']").removeAttr("disabled");
+
+            }
+
+            //查看
+            function ShowOP() {
+                var rows = $("#dg").datagrid('getSelected');
+                //首先取出来值判断只能选择一个
+                if (rows == null) {
+                    // $.messager.alert("友情提示", "请选择", "error");
+                    return;
+                }
+                $("#DivShow").dialog('open').dialog('setTitle', '查看-' /*+ rows.Name*/).window('resize', { top: 20 });
+                DataBaseFunction.BindForm("fshow", rows);
+            }
+            //绑定修改显示详细信息的方法
+            function EditInfo() {
+
+                var rows = $("#dg").datagrid('getSelected');
+                //首先取出来值判断只能选择一个
+                if (rows == null) {
+                    $.messager.alert("友情提示", "请选择", "error");
+                    return;
+                }
+                $("#DivEditor").dialog('open').dialog('setTitle', '修改-' /*+ rows.Name*/).window('resize', { top: 20 });
+                $(".validatebox-tip").remove();//清除验证样式
+
+                //$("#ff input[name='HouseCode']").attr("disabled", "true");
+
+                var ID = rows.BaId;  //获取到了用选择的ID
+                $.ajax({
+                    url: BaseUrl + 'GetInfo',
+                    type: 'POST',
+                    data: { ID: ID },
+                    cache: false,
+                    error: function () { alert('Error $.ajax'); },
+                    success: function (data) {
+                        //var result = eval('(' + data + ')');
+                        DataBaseFunction.BindForm("ff", data);
+                        //$("input[name='HouseNo']").focus();
+                    }
+                });
+
+            }
+
+            //实现的编辑，包括增查改
+            function SaveInfo() {
+
+                //判断的信息是否通过验证
+                var validate = $("#ff").form('validate');
+                if (validate == false) {
+                    return false;
+                }
+                //获取需要传递的参数传递给前台
+                var data = DataBaseFunction.GetFormData("ff")
+                //发送异步请求到后台保存数据
+                $.post(BaseUrl + 'EditInfo', data, function (data) {
+                    alerts(data.Msg, 2);
+                    if (data.Code > 0) {
+                        $('#DivEditor').dialog('close');
+                        $(".validatebox-tip").remove();
+                        $("#dg").datagrid("reload");
+                    }
+                });
+
+            }
+
+            //搜索
+            function SearchGo() {
+                DataBaseFunction.Search("fSearh", "dg");
+                $("#Div_Searh").dialog('close');
+            }
+            //搜索
+            function Search() {
+
+                // $("#fSearh").form("clear");
+                $("#Div_Searh").dialog('open').dialog('setTitle', '搜索').window('resize', { top: 100, left: 100 });
+            }
+            //删除
+            function Del() {
+                DataBaseFunction.deleteInfo("dg", "BaId", "Name");
+            }
+        </script>
+    }
+
+</head>
+<body style="overflow-y: hidden">
+
+    <table id="dg"></table>
+
+    <!------------------------搜索弹出层---------------------------------->
+    <div id="Div_Searh" class="easyui-dialog" style="width: 380px; padding: 10px 20px;"
+        closed="true" resizable="true" modal="true" buttons="#dlg-buttons">
+        <form id="fSearh">
+
+            <table class="stripes" style="table-layout: fixed; margin: 0 auto; width: 320px;" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td style="width: 60px;">
+                        <label>业主姓名：</label></td>
+                    <td>
+                        <input type="text" class="textbox" name="Name_like" style="width: 200px;" />
+                    </td>
+
+                </tr>
+            </table>
+
+        </form>
+        <div style="text-align: center; width: 100%; margin: 5px 0px; display: block;">
+            <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-undo" style="float: left;" onclick=" DataBaseFunction.ClearForm('fSearh');">清除</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" style="float: right;" iconcls="icon-search" onclick="SearchGo();">搜索</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" style="float: right;" iconcls="icon-cancel" onclick="$('#Div_Searh').dialog('close')">关闭</a>
+        </div>
+    </div>
+    <!------------------------弹出层---------------------------------->
+    <div id="DivEditor" class="easyui-dialog" style="width: 630px;"
+        closed="true" resizable="true" modal="true" buttons="#dlg-buttons">
+        <div id="Div_form" class="easyui-panel" style="padding: 10px 10px; overflow-x: hidden;" data-options=" height:500,width:610,border:false">
+            <form id="ff" method="post" enctype="multipart/form-data">
+
+                <table class="stripes" style="table-layout: fixed;" border="0" cellspacing="0" cellpadding="0">
+                    <input type="hidden" name="OwnerID" />
+                    <tr>
+                        <td style="width: 120px;">
+                            <label>房间门牌号：</label></td>
+                        <td style="width: 490px;">
+                            <input class="easyui-validatebox textbox" type="text" name="HouseNo" /></td>
+                    </tr>
+
+                </table>
+
+            </form>
+        </div>
+
+        <div style="text-align: center; width: 100%; margin-bottom: 5px;">
+            <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-ok" onclick="SaveInfo();">确定</a>&nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-cancel" onclick="$('#DivEditor').dialog('close')">关闭</a>
+        </div>
+    </div>
+
+    <!------------------------弹出查看层---------------------------------->
+    <div id="DivShow" class="easyui-dialog" style="width: 600px;"
+        closed="true" resizable="true" modal="true" buttons="#dlg-buttons">
+        <div class="easyui-panel" style="padding: 10px 10px; overflow-x: hidden;" data-options=" height:460,width:580,border:false">
+            <form id="fshow" method="post" enctype="multipart/form-data">
+
+                 <table class="stripes" style="table-layout: fixed;" border="0"  cellspacing="0" cellpadding="0">
+<tr><td><label >主键：</label></td><td><span   name="BaId"  ></span></td></tr>
+<tr><td><label >用户Id：</label></td><td><span   name="USId"  ></span></td></tr>
+<tr><td><label >余额：</label></td><td><span   name="AMneys"  ></span></td></tr>
+<tr><td><label >密钥：</label></td><td><span   name="SecretS"  ></span></td></tr>
+<tr><td><label >可用金额：</label></td><td><span   name="UMoney"  ></span></td></tr>
+<tr><td><label >状态（ 0 正常-1冻结）：</label></td><td><span   name="Stas"  ></span></td></tr>
+<tr><td><label >添加时间：</label></td><td><span   name="CreateTime"  ></span></td></tr>
+<tr><td><label >修改时间：</label></td><td><span   name="UpdateTime"  ></span></td></tr>
+<tr><td><label >是否删除：</label></td><td><span   name="isDeleted"  ></span></td></tr>
+ </table>
+            </form>
+        </div>
+
+        <div style="text-align: center; width: 100%; margin-bottom: 5px;">
+            <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-cancel" onclick="$('#DivShow').dialog('close')">关闭</a>
+        </div>
+    </div>
+</body>
+</html>
+
