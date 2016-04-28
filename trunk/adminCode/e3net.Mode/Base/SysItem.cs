@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Moon.Orm;
 
-namespace e3net.Mode.TireTreasureBaseDB
+namespace e3net.Mode.Base
 {
 
     [Table("[SysItem]", DbType.SqlServer)]
@@ -115,13 +115,17 @@ namespace e3net.Mode.TireTreasureBaseDB
     [Table("[SysItem]", DbType.SqlServer)]
     public  partial class SysItemSet : MQLBase
     {
-        public static new MQLBase Select(params FieldBase[] fields)
+        public static  MQLBase Select(params FieldBase[] fields)
         {
             return MQLBase.Select(DbType.SqlServer,"[SysItem]",fields);
         }
-        public static new MQLBase SelectAll()
+        public static  MQLBase SelectAll()
         {
             return MQLBase.SelectAll(DbType.SqlServer,"[SysItem]");
+        }
+        public static MQLBase SelectAllBut(params FieldBase[] fields)
+        {
+            return MQLBase.SelectAllBut(typeof(SysItemSet),DbType.SqlServer,"[SysItem]",fields);
         }
 
         /// <summary>
