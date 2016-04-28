@@ -1,0 +1,108 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+<title>登陆</title>
+
+<!-- Bootstrap -->
+<link href="~/Content/CSS/bootstrap.min.css" rel="stylesheet">
+<link href="~/Content/CSS/font-awesome.min.css" rel="stylesheet">
+<link href="~/Content/CSS/global.css" rel="stylesheet">
+<link href="~/Content/CSS/login.css" rel="stylesheet">
+
+<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="//cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+<script src="//cdn.bootcss.com/respond.Content/CSS/1.4.2/respond.min.js"></script>
+<![endif]-->
+    @section Jsprepare
+        {
+            <script  type="text/javascript" language="javascript">
+                var baseUrl = "/Home/";
+                $(document).ready(function () {
+                    $("#reg").click(function () {
+                        $.ajax({
+                            url: baseUrl + "getString",
+                            data: "",
+                            success: function (result) {  },
+                            error: function () { alert("error"); }
+                        });
+                    })
+                });
+            </script>
+        }
+</head>
+<body>
+<!-- 导航 -->
+<nav class="navbar top">
+  <div class="container">
+    <div class="navbar-header">
+      <a class="top-icon-left" href="index.html">
+        <i class="icon-chevron-left"></i>
+      </a>
+    </div>
+  </div>
+</nav>
+<!-- login -->
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12 login-pic">
+      <img src="images/loginPic.png" class="img-responsive center-block img-circle" alt="">
+    </div>
+  </div>
+
+  <div class="row">
+    <form class="form-signin">
+      <div class="col-xs-12 login-box">
+        <div class="col-xs-3 text-center">手机号</div>
+        <div class="col-xs-9">
+          <!-- <label for="inputEmail" class="sr-only">Email address</label> -->
+          <input type="email" id="inputEmail" class="form-control" placeholder="请输入手机号码" required="" autofocus="">
+        </div>
+      </div>
+
+      <div class="col-xs-4 col-xs-offset-8 text-right">
+        <a class="btn btn-default" href="#" role="button">发送验证码</a>
+      </div>
+
+      <div class="col-xs-12 login-box">
+        <div class="col-xs-3 text-center">验证码</div>
+        <div class="col-xs-9">
+          <!-- <label for="inputPassword" class="sr-only">Password</label> -->
+          <input type="password" id="inputPassword" class="form-control" placeholder="请输入验证码" required="">
+        </div>
+      </div>
+
+        <!-- <div class="checkbox">
+          <label>
+            <input type="checkbox" value="remember-me"> Remember me
+          </label>
+        </div> -->
+        <div class="col-xs-12 login-btn">
+          <button class="btn btn-lg btn-primary btn-block" type="submit">登陆</button>
+        </div>
+
+        <div class="col-xs-4 col-xs-offset-8 text-right">
+            @*<input type="button" id="reg" value="注册账号"></input>*@
+        <a class="" href="reg">注册账号</a>
+      </div>
+
+      </form>
+  </div>
+</div>
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="~/Content/CSS/jquery-1.12.2.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="~/Content/CSS/bootstrap.min.js"></script>
+</body>
+</html>

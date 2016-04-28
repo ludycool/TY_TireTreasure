@@ -1,0 +1,5 @@
+body{font-size: 16px;}
+.main{padding-top: 50px;}
+.main .box{background-color: #fff;border: 1px solid #ddd;}
+.main .box p{height: 30px;line-height: 30px;padding-top: 15px;}
+.main .box div{width: 200px;height: 100px;background-color: #ccc;margin: 30px auto;}

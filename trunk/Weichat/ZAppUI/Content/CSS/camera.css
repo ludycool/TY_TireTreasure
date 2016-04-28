@@ -1,0 +1,8 @@
+
+
+.main p{height: 100%;line-height: 300px;}
+
+
+.footer .navbar-header{border-top: 1px solid #ddd;}
+.footer .navbar-header a{padding: 15px;line-height: 30px;}
+.footer .navbar-header a span{font-size: 44px;color: #555;}

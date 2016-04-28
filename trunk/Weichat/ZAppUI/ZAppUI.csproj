@@ -67,10 +67,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\e3net.tools\dll\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="NPOI, Version=2.0.5.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\e3net.tools\dll\NPOI.dll</HintPath>
-    </Reference>
     <Reference Include="System">
       <EmbedInteropTypes>False</EmbedInteropTypes>
       <Private>True</Private>
@@ -229,6 +225,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\OAuthController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -241,16 +238,65 @@
     <Compile Include="httpHandle\wxapi.ashx.cs">
       <DependentUpon>wxapi.ashx</DependentUpon>
     </Compile>
+    <Compile Include="Models\UserInfo.cs" />
     <Compile Include="Models\ViewModes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\ParameterData.xml" />
+    <Content Include="Content\CSS\bootstrap-theme.css" />
+    <Content Include="Content\CSS\bootstrap-theme.min.css" />
+    <Content Include="Content\CSS\bootstrap.css" />
+    <Content Include="Content\CSS\bootstrap.min.css" />
+    <Content Include="Content\CSS\cash.css" />
+    <Content Include="Content\CSS\font-awesome-ie7.css" />
+    <Content Include="Content\CSS\font-awesome-ie7.min.css" />
+    <Content Include="Content\CSS\font-awesome.css" />
+    <Content Include="Content\CSS\font-awesome.min.css" />
+    <Content Include="Content\CSS\global.css" />
+    <Content Include="Content\CSS\iconfont-footer.css" />
+    <Content Include="Content\CSS\iconfont-main.css" />
+    <Content Include="Content\CSS\iconfont.css" />
+    <Content Include="Content\CSS\Index.css" />
+    <Content Include="Content\CSS\Login.css" />
+    <Content Include="Content\CSS\camera.css" />
+    <Content Include="Content\CSS\payee.css" />
+    <Content Include="Content\CSS\payment.css" />
+    <Content Include="Content\CSS\quest.css" />
+    <Content Include="Content\CSS\reg.css" />
+    <Content Include="Content\CSS\Register.css" />
+    <Content Include="Content\CSS\QR_code.css" />
+    <Content Include="Content\CSS\search.css" />
+    <Content Include="Content\CSS\transfer.css" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\font\fontawesome-webfont.svg" />
+    <Content Include="Content\iconfont\demo.css" />
+    <Content Include="Content\iconfont\demo.html" />
+    <Content Include="Content\iconfont\iconfont.css" />
+    <Content Include="Content\iconfont\iconfont.svg" />
+    <Content Include="Content\images\loginPic.png" />
+    <Content Include="Content\Scripts\bootstrap.js" />
+    <Content Include="Content\Scripts\bootstrap.min.js" />
+    <Content Include="Content\Scripts\jquery-1.12.2.min.js" />
+    <Content Include="Content\Scripts\npm.js" />
     <Content Include="Global.asax" />
     <Content Include="upload\file\20150319022047_psb.jpg" />
     <Content Include="httpHandle\DictionaryHandler.ashx" />
     <Content Include="httpHandle\ImageHandler.ashx" />
     <Content Include="httpHandle\wxapi.ashx" />
+    <Content Include="Content\CSS\bootstrap-theme.css.map" />
+    <Content Include="Content\CSS\bootstrap.css.map" />
+    <Content Include="Content\iconfont\iconfont.eot" />
+    <Content Include="Content\iconfont\iconfont.ttf" />
+    <Content Include="Content\iconfont\iconfont.woff" />
+    <Content Include="Content\font\fontawesome-webfont.eot" />
+    <Content Include="Content\font\fontawesome-webfont.ttf" />
+    <Content Include="Content\font\fontawesome-webfont.woff" />
+    <Content Include="Content\font\FontAwesome.otf" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.woff2" />
     <None Include="Properties\PublishProfiles\ESUIConfig.pubxml" />
     <None Include="Content\Scripts\jquery-1.7.1.intellisense.js" />
     <Content Include="Content\Scripts\jquery-1.7.1.js" />
@@ -265,12 +311,28 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Web.config">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Views\OAuth\Index.cshtml" />
+    <Content Include="Views\Home\index.cshtml" />
+    <Content Include="Views\Home\camera.cshtml" />
+    <Content Include="Views\Home\cash.cshtml" />
+    <Content Include="Views\Home\comment.cshtml" />
+    <Content Include="Views\Home\group.cshtml" />
+    <Content Include="Views\Home\login.cshtml" />
+    <Content Include="Views\Home\mall.cshtml" />
+    <Content Include="Views\Home\payee.cshtml" />
+    <Content Include="Views\Home\payment.cshtml" />
+    <Content Include="Views\Home\QR_code.cshtml" />
+    <Content Include="Views\Home\quest.cshtml" />
+    <Content Include="Views\Home\reg.cshtml" />
+    <Content Include="Views\Home\search.cshtml" />
+    <Content Include="Views\Home\transfer.cshtml" />
+    <Content Include="Views\Home\user.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="temp\" />
