@@ -68,7 +68,7 @@
     <Compile Include="TireMoneyDB\ITM_PayPlatformDao.cs" />
     <Compile Include="TireMoneyDB\ITM_TranAccDao.cs" />
     <Compile Include="TireMoneyDB\ITM_WaterBillDao.cs" />
-    <Compile Include="TireTreasureBaseDB\ISys_DictionaryDao.cs" />
+    <Compile Include="Base\ISys_DictionaryDao.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RMS\IRMS_ButtonsDao.cs" />
     <Compile Include="RMS\IRMS_MenuButtonsDao.cs" />
@@ -80,10 +80,10 @@
     <Compile Include="RMS\IRMS_UserRoleDao.cs" />
     <Compile Include="RMS\IRMS_DepartmentDao.cs" />
     <Compile Include="ISystemLogsDao.cs" />
-    <Compile Include="TireTreasureBaseDB\ISysItemDao.cs" />
-    <Compile Include="TireTreasureBaseDB\ISys_CityAreaDao.cs" />
-    <Compile Include="TireTreasureBaseDB\ISys_DicTypeDao.cs" />
-    <Compile Include="TireTreasureBaseDB\ISys_FilesDao.cs" />
+    <Compile Include="Base\ISysItemDao.cs" />
+    <Compile Include="Base\ISys_CityAreaDao.cs" />
+    <Compile Include="Base\ISys_DicTypeDao.cs" />
+    <Compile Include="Base\ISys_FilesDao.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\e3net.common\e3net.common.csproj">

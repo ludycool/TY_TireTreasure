@@ -1,7 +1,7 @@
 ﻿using e3net.BLL;
-using e3net.BLL.TireTreasureBaseDB;
+using e3net.BLL.Base;
 using e3net.Mode.FileManagementDB;
-using e3net.Mode.TireTreasureBaseDB;
+using e3net.Mode.Base;
 using System;
 using System.Collections.Generic;
 using System.Linq;

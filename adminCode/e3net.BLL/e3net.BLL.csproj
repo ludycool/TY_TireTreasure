@@ -78,12 +78,12 @@
     <Compile Include="TireMoneyDB\TM_PayPlatformBiz.cs" />
     <Compile Include="TireMoneyDB\TM_TranAccBiz.cs" />
     <Compile Include="TireMoneyDB\TM_WaterBillBiz.cs" />
-    <Compile Include="TireTreasureBaseDB\Sys_DictionaryBiz.cs" />
+    <Compile Include="Base\Sys_DictionaryBiz.cs" />
     <Compile Include="SystemLogsBiz.cs" />
-    <Compile Include="TireTreasureBaseDB\SysItemBiz.cs" />
-    <Compile Include="TireTreasureBaseDB\Sys_CityAreaBiz.cs" />
-    <Compile Include="TireTreasureBaseDB\Sys_DicTypeBiz.cs" />
-    <Compile Include="TireTreasureBaseDB\Sys_FilesBiz.cs" />
+    <Compile Include="Base\SysItemBiz.cs" />
+    <Compile Include="Base\Sys_CityAreaBiz.cs" />
+    <Compile Include="Base\Sys_DicTypeBiz.cs" />
+    <Compile Include="Base\Sys_FilesBiz.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\e3net.common\e3net.common.csproj">

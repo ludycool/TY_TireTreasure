@@ -59,6 +59,11 @@
   <ItemGroup>
     <Compile Include="Baschartype.cs" />
     <Compile Include="Bascharvalue.cs" />
+    <Compile Include="Base\SysItem.cs" />
+    <Compile Include="Base\Sys_CityArea.cs" />
+    <Compile Include="Base\Sys_Dictionary.cs" />
+    <Compile Include="Base\Sys_DicType.cs" />
+    <Compile Include="Base\Sys_Files.cs" />
     <Compile Include="FileManagementDB\TF_Units.cs" />
     <Compile Include="File_Image.cs" />
     <Compile Include="RMS\V_Role.cs" />
@@ -68,11 +73,6 @@
     <Compile Include="TireMoneyDB\TM_PayPlatform.cs" />
     <Compile Include="TireMoneyDB\TM_TranAcc.cs" />
     <Compile Include="TireMoneyDB\TM_WaterBill.cs" />
-    <Compile Include="TireTreasureBaseDB\SysItem.cs" />
-    <Compile Include="TireTreasureBaseDB\Sys_CityArea.cs" />
-    <Compile Include="TireTreasureBaseDB\Sys_Dictionary.cs" />
-    <Compile Include="TireTreasureBaseDB\Sys_DicType.cs" />
-    <Compile Include="TireTreasureBaseDB\Sys_Files.cs" />
     <Compile Include="V_mode\AdminUserInfo.cs" />
     <Compile Include="V_mode\v_Sys_Advertising.cs" />
     <Compile Include="V_mode\v_Sys_AppVerSion.cs" />

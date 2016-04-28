@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Moon.Orm;
 
-namespace e3net.Mode.TireTreasureBaseDB
+namespace e3net.Mode.Base
 {
 
     [Table("[Sys_Dictionary]", DbType.SqlServer)]

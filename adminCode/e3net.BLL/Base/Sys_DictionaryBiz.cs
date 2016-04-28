@@ -1,16 +1,16 @@
 ﻿
 using e3net.common;
 using e3net.DAL;
-using e3net.IDAL.TireTreasureBaseDB;
+using e3net.IDAL.Base;
 using e3net.Mode;
-using e3net.Mode.TireTreasureBaseDB;
+using e3net.Mode.Base;
 using System;
 using System.Collections.Generic;
 //using System.ComponentModel.Composition;
 using System.Linq;
 using System.Text;
 
-namespace e3net.BLL.TireTreasureBaseDB
+namespace e3net.BLL.Base
 {
     //  [Export(typeof(ISys_DictionaryDao))]
     public class Sys_DictionaryBiz : BaseDao<Sys_Dictionary>, ISys_DictionaryDao

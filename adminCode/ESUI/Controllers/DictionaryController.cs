@@ -7,8 +7,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.Practices.Unity;
-using e3net.Mode.TireTreasureBaseDB;
-using e3net.BLL.TireTreasureBaseDB;
+using e3net.Mode.Base;
+using e3net.BLL.Base;
 
 namespace ESUI.Controllers
 {

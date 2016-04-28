@@ -11,8 +11,8 @@ using e3net.BLL.RMS;
 using e3net.IDAL;
 using e3net.IDAL.RMS;
 using Microsoft.Practices.Unity;
-using e3net.IDAL.TireTreasureBaseDB;
-using e3net.BLL.TireTreasureBaseDB;
+using e3net.IDAL.Base;
+using e3net.BLL.Base;
 using e3net.IDAL.TireMoneyDB;
 using e3net.BLL.TireMoneyDB;
 
