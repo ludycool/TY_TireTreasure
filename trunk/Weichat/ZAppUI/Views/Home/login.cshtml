@@ -26,19 +26,7 @@
 <![endif]-->
     @section Jsprepare
         {
-            <script  type="text/javascript" language="javascript">
-                var baseUrl = "/Home/";
-                $(document).ready(function () {
-                    $("#reg").click(function () {
-                        $.ajax({
-                            url: baseUrl + "getString",
-                            data: "",
-                            success: function (result) {  },
-                            error: function () { alert("error"); }
-                        });
-                    })
-                });
-            </script>
+            
         }
 </head>
 <body>
@@ -92,8 +80,7 @@
         </div>
 
         <div class="col-xs-4 col-xs-offset-8 text-right">
-            @*<input type="button" id="reg" value="注册账号"></input>*@
-        <a class="" href="reg">注册账号</a>
+        <a class="" href="getCode">注册账号</a>
       </div>
 
       </form>
