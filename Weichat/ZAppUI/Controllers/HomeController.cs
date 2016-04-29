@@ -29,6 +29,7 @@ namespace ZAppUI.Controllers
         //public RMS_MenusBiz uBiz { get; set; }
         //[Dependency]
         //public RMS_UserBiz userBiz { get; set; }
+        String code;
         public ActionResult Index()
         {
             GetUData = new Models.UserData();
@@ -37,16 +38,17 @@ namespace ZAppUI.Controllers
             //  ViewBag.ManuString= GetManu();
             ViewBag.testString = "<div title=\"功能管理\" iconcls=\"icon-edit\" style=\"padding: 10px;\"><p><a href=\"javascript:void(0)\" src=\"/RoleManagement/Index\" class=\"MenuLink\">角色管理</a></p> </div>";
 
-            if (Request["code"] != null && string.IsNullOrEmpty(Request["code"]))
-            {
+            //if (Request["code"] != null && string.IsNullOrEmpty(Request["code"]))
+            //{
                 GetUData.OpenId = Request["code"];
                 ViewData["code"] = Request["code"];
-
-            }
-            else
-            {
-                getCode();
-            }
+            //code = Request["code"];
+            //ViewBag.code = code;
+            //}
+            //else
+            //{
+            //    getCode();
+            //}
             return View();
         }
 
@@ -68,14 +70,15 @@ namespace ZAppUI.Controllers
 
         public ActionResult login()
         {
-            getCode();   
+              
             return View();
         }
+       
         public ActionResult reg()
         {
             string code = GetUData.OpenId;
             string str = getAccessToken(code);
-            ViewBag.str=str;
+            ViewBag.str = code;
             return View();
         }
         
@@ -85,16 +88,13 @@ namespace ZAppUI.Controllers
 
         private HttpUtil request = new HttpUtil();
         private JObject obj;
-        public void getCode()
+
+        public ActionResult getCode()
         {
-            string redirect_uri = "http://5705395e.nat123.net/home";
+            string redirect_uri = "http://5705395e.nat123.net/home/reg";
             string state = "test";
             string url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + APP_ID + "&redirect_uri=" + redirect_uri + "&response_type=code&scope=snsapi_base&state=" + state + "#wechat_redirect";
-            request.GetRequest(url);
-            //string result = request.GetRequest(url);
-            //obj = JObject.Parse(result);
-            //string code = obj["code"].ToString();
-            //return code;
+            return Redirect(url);
         }
         public UserInfoBiz DDBiz
         {
@@ -119,18 +119,18 @@ namespace ZAppUI.Controllers
                 obj = JObject.Parse(userResult);
                 string nickName = obj["nickname"].ToString();
                 string headImgUrl = obj["headimgurl"].ToString();
-                str = headImgUrl;
+                str = nickName;
 
 
-                UserInfo userInfo = new UserInfo();
-                userInfo.AppUserInfoId = Guid.NewGuid();
-                userInfo.UserId= Guid.NewGuid();
-                userInfo.OpenId=openid;
-                userInfo.NickName=nickName;
-                userInfo.HeadImg = headImgUrl;
-                userInfo.AddTime = DateTime.Now;
+                //UserInfo userInfo = new UserInfo();
+                //userInfo.AppUserInfoId = Guid.NewGuid();
+                //userInfo.UserId= Guid.NewGuid();
+                //userInfo.OpenId=openid;
+                //userInfo.NickName=nickName;
+                //userInfo.HeadImg = headImgUrl;
+                //userInfo.AddTime = DateTime.Now;
 
-                DDBiz.Add(userInfo);
+                //DDBiz.Add(userInfo);
             }
             return str;
 
