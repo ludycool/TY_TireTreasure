@@ -164,7 +164,8 @@ namespace BH.Community.tools.ToolsHelper
                 req.ContentType = "application/x-www-form-urlencoded;charset=utf-8";
                 req.Timeout = 60000;
                 rsp = (HttpWebResponse)req.GetResponse();
-                encoding = Encoding.GetEncoding(rsp.CharacterSet);
+                encoding = Encoding.UTF8;
+                //encoding = Encoding.GetEncoding(rsp.CharacterSet);
             }
             catch (Exception)
             {

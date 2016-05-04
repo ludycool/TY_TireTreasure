@@ -13,7 +13,8 @@ using e3net.IDAL;
 using e3net.IDAL.DynamicTable;
 
 using Microsoft.Practices.Unity;
-
+using e3net.IDAL.Base;
+using e3net.BLL.Base;
 namespace App.Core
 {
     public class DependencyRegisterType
@@ -34,8 +35,10 @@ namespace App.Core
              container.RegisterType<IBaschartypeDao, BaschartypeBiz>();
              container.RegisterType<IBascharvalueDao, BascharvalueBiz>();
             #endregion
-              
-
+             #region 用户信息
+             container.RegisterType<I_AppUserInfoDao, AppUserInfoBiz>();
+             container.RegisterType<I_UserDao, UserBiz>();
+             #endregion
         }
     }
 }
