@@ -8,13 +8,18 @@ namespace ZAppUI.Models
     public class LoginModel
     {
         [Required]
-        [Display(Name = "用户名")]
-        public string LoginName { get; set; }
+        [Display(Name = "手机号")]
+        public string Phone { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
         [Display(Name = "密码")]
-        public string Password { get; set; }
+        public string FirstPassword { get; set; }
+
+        [Required]
+        [DataType(DataType.Password)]
+        [Display(Name = "密码")]
+        public string SecondPassword { get; set; }
 
 
         //[Required]

@@ -17,7 +17,9 @@ using e3net.Mode.V_mode;
 using BH.Community.tools.ToolsHelper;
 using TZHSWEET.Common;
 using Newtonsoft.Json.Linq;
-
+using ZAppUI.Models;
+using e3net.BLL.Base;
+using System.Data;
 namespace ZAppUI.Controllers
 {
 
@@ -52,6 +54,7 @@ namespace ZAppUI.Controllers
             return View();
         }
 
+        
 
         public ActionResult About()
         {
@@ -66,81 +69,28 @@ namespace ZAppUI.Controllers
 
             return View();
         }
-
-
-        public ActionResult login()
+        //判断是否注册
+        public ActionResult isRegister()
         {
-              
-            return View();
-        }
-       
-        public ActionResult reg()
-        {
-            string code = GetUData.OpenId;
-            string str = getAccessToken(code);
-            ViewBag.str = code;
-            return View();
+            string openId = GetUData.OpenId;
+            UserBiz userBiz = new UserBiz();
+
+            DataSet result = userBiz.ExecuteSqlToDataSet("SELECT [WeiXinId] FROM [TireTreasureDB].[dbo].[TT_User] where WeiXinId='" + openId + "'");
+            //DataSet result = userBiz.ExecuteSqlToDataSet("EXEC [TireTreasureDB].[dbo].[proc_SearchUser] '" + openId + "'");
+            DataTable bt = result.Tables[0];
+            try
+            {
+                if (bt.Rows[0]["WeiXinId"] != null)
+                {
+                    return RedirectToAction("Index", "User");
+                }
+            }
+            catch (IndexOutOfRangeException exception)
+            { 
+               
+            }         
+            return RedirectToAction("Index","Register");
         }
         
-       
-        private string APP_ID = "wx5c2b91a9bbef68b4";
-        private string APP_SECRET = "e895093b0a7227eac53199d8bcf4e031";
-
-        private HttpUtil request = new HttpUtil();
-        private JObject obj;
-
-        public ActionResult getCode()
-        {
-            string redirect_uri = "http://5705395e.nat123.net/home/reg";
-            string state = "test";
-            string url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + APP_ID + "&redirect_uri=" + redirect_uri + "&response_type=code&scope=snsapi_base&state=" + state + "#wechat_redirect";
-            return Redirect(url);
-        }
-        public UserInfoBiz DDBiz
-        {
-            set;
-            get;
-        }
-        private string getAccessToken(string code)
-        {
-            string str = null;
-            if (code != null)
-            {
-                string url = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=" + APP_ID + "&secret=" + APP_SECRET + "&code=" + code + "&grant_type=authorization_code";
-                string result = request.GetRequest(url);
-
-                obj = JObject.Parse(result);
-                string token = obj["access_token"].ToString();
-                string openid = obj["openid"].ToString();
-                string refreshToken = obj["refresh_token"].ToString();
-                //str = "access_token:" + token + "\n" + "openid:"+openid;
-
-                string userResult = getUserInfo(token, openid);
-                obj = JObject.Parse(userResult);
-                string nickName = obj["nickname"].ToString();
-                string headImgUrl = obj["headimgurl"].ToString();
-                str = nickName;
-
-
-                //UserInfo userInfo = new UserInfo();
-                //userInfo.AppUserInfoId = Guid.NewGuid();
-                //userInfo.UserId= Guid.NewGuid();
-                //userInfo.OpenId=openid;
-                //userInfo.NickName=nickName;
-                //userInfo.HeadImg = headImgUrl;
-                //userInfo.AddTime = DateTime.Now;
-
-                //DDBiz.Add(userInfo);
-            }
-            return str;
-
-        }
-
-        private string getUserInfo(string token, string openid)
-        {
-            string url = "https://api.weixin.qq.com/sns/userinfo?access_token=" + token + "&openid=" + openid + "&lang=zh_CN";
-            string result = request.GetRequest(url);
-            return result;
-        }
     }
 }

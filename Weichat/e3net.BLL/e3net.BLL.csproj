@@ -57,6 +57,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Base\UserBiz.cs" />
     <Compile Include="DynamicTable\BascharvalueBiz.cs" />
     <Compile Include="DynamicTable\BaschartypeBiz.cs" />
     <Compile Include="File_ImageBiz.cs" />
@@ -66,7 +67,7 @@
     <Compile Include="SystemLogsBiz.cs" />
     <Compile Include="SysItemBiz.cs" />
     <Compile Include="Sys_CityAreaBiz.cs" />
-    <Compile Include="UserInfoBiz.cs" />
+    <Compile Include="Base\AppUserInfoBiz.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\e3net.common\e3net.common.csproj">

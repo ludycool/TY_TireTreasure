@@ -1,13 +1,20 @@
-﻿@{
+﻿@model ZAppUI.Models.LoginModel
+@{
     Layout = null;
+    if (ViewData["IsShowAlert"] != null && ViewData["IsShowAlert"].ToString() == "True")
+    {
+
+        Response.Write(" <script>alert('" + ViewData["Alert"] + "'); </script>");
+
+    }
 }
 
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     @section Jsprepare{}
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
 <title>注册</title>
@@ -17,7 +24,7 @@
 <link href="~/Content/CSS/font-awesome.min.css" rel="stylesheet">
 <link href="~/Content/CSS/global.css" rel="stylesheet">
 <link href="~/Content/CSS/reg.css" rel="stylesheet">
-
+<link href="~/Content/CSS/login.css" rel="stylesheet">
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 <!--[if lt IE 9]>
@@ -36,18 +43,29 @@
     </div>
   </div>
 </nav>
+    
 <!-- reg -->
+     @using (Html.BeginForm("index", "Register", FormMethod.Post))
+     {
     <div class="container">
-      <form class="form-signin reg">    
-          <h1>@ViewBag.str</h1>
+        <div class="row">
+            <div class="col-xs-12 login-pic">
+                <img src=@ViewBag.src class="img-responsive center-block img-circle" alt="">
+            </div>
+        </div>
+      <div class="row">
+      <form class="form-signin reg">          
         <h2 class="form-signin-heading text-center">注册账户</h2>
-        <input type="email" id="inputEmail" class="form-control" placeholder="请输入您的手机号" required="" autofocus="">
-        <input type="password" id="inputPassword" class="form-control" placeholder="请输入您的密码" required="">
-        <input type="password" id="inputPassword" class="form-control" placeholder="确认密码" required="">
+         @Html.TextBoxFor(m => m.Phone, new {@class="form-control",@placeholder="请输入您的手机号"})
+         @Html.PasswordFor(m => m.FirstPassword,new { @class="form-control",@placeholder="请输入您的密码"})  
+         @Html.PasswordFor(m => m.SecondPassword,new { @class="form-control",@placeholder="确认密码"})
+        
         <button class="btn btn-lg btn-primary btn-block" type="submit">注册</button>
+          
       </form>
+      </div>
      </div>
-
+     }
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="~/Content/Scripts/jquery-1.12.2.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->

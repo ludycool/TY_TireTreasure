@@ -1,0 +1,33 @@
+.hd-media{border-bottom: 1px solid #ddd;padding: 15px 15px 15px;}
+.hd-media .media-left{}
+.hd-media .media-left a{}
+.hd-media .media-left a img{width: 100px;height: 100px;}
+
+.hd-media-body{}
+.hd-media-body h4{padding-top: 8px;font-size: 16px;}
+.hd-media-body h4 small{font-size: 16px;}
+
+
+
+
+
+
+
+.list{}
+.list-box{border: 1px solid #ddd;padding: 10px 15px;}
+.list-box .media div a i{font-size: 32px;color: #00AAEE;}
+
+
+
+/*
+
+.media{border-bottom: 1px solid #ddd;padding: 0px 15px 15px;}
+.media .media-left{}
+.media .media-left a{}
+.media .media-left a img{width: 64px;height: 64px;}
+
+.media-body{}
+.media-body h4{padding-top: 5px;}
+.media-body h4 small{font-size: 16px;}
+
+*/

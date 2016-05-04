@@ -5,7 +5,7 @@ a:link{text-decoration: none;}
 
 
 .navbar{margin: 0;text-align: center;}
-.top{background-color: #3a3a3a;}
+.top{/*background-color: #3a3a3a;*/  /*background: -webkit-linear-gradient(top,#ccc,#000);*/}
 .top .navbar-header{}
 .top .navbar-header a{height: 50px;padding: 10px 15px;line-height: 30px;}
 .top .top-icon-left{float: left;}
