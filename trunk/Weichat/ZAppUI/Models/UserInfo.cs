@@ -8,7 +8,7 @@ namespace ZAppUI.Models
     public class UserData
     {
 
-        public string OpenId { set; get; }
+        public string Code { set; get; }
 
         public UserInfo User_Info { set; get; }
     }

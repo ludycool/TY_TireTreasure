@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\e3net.tools\dll\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
@@ -45,7 +48,15 @@
     <Compile Include="messageHelp.cs" />
     <Compile Include="mode\NewsItem.cs" />
     <Compile Include="mode\ResponseText.cs" />
+    <Compile Include="OpenId\GetOpenId.cs" />
+    <Compile Include="OpenId\HttpUtil.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\e3net.tools\e3net.tools.csproj">
+      <Project>{d3d7c4c0-4798-4352-adc7-b76a296249c1}</Project>
+      <Name>e3net.tools</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

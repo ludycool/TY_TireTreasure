@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
+using WeiChatMessageHandle.OpenId;
 using ZAppUI.Models;
 
 namespace ZAppUI.Controllers
@@ -22,7 +23,8 @@ namespace ZAppUI.Controllers
         string[] result;
         public ActionResult Index()
         {
-            result = getAccessToken(GetUData.OpenId);
+
+            result = GetOpenId.getAccessToken(GetUData.Code);
             ViewBag.src = result[2];
             return View();
         }
@@ -74,46 +76,7 @@ namespace ZAppUI.Controllers
             }
             return View();
         }
-        private string APP_ID = "wx5c2b91a9bbef68b4";
-        private string APP_SECRET = "e895093b0a7227eac53199d8bcf4e031";
-
-        private HttpUtil request = new HttpUtil();
-        private JObject obj;
-
-
-
-        private string[] getAccessToken(string code)
-        {
-            string[] strArray = new String[3];
-            if (code != null)
-            {
-                string url = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=" + APP_ID + "&secret=" + APP_SECRET + "&code=" + code + "&grant_type=authorization_code";
-                string result = request.GetRequest(url);
-
-                obj = JObject.Parse(result);
-                string token = obj["access_token"].ToString();
-                string openid = obj["openid"].ToString();
-                string refreshToken = obj["refresh_token"].ToString();
-                //str = "access_token:" + token + "\n" + "openid:"+openid;
-
-                string userResult = getUserInfo(token, openid);
-                obj = JObject.Parse(userResult);
-                string nickName = obj["nickname"].ToString();
-                string headImgUrl = obj["headimgurl"].ToString();
-
-                strArray[0] = openid;
-                strArray[1] = nickName;
-                strArray[2] = headImgUrl;
-            }
-            return strArray;
-        }
-
-        private string getUserInfo(string token, string openid)
-        {
-            string url = "https://api.weixin.qq.com/sns/userinfo?access_token=" + token + "&openid=" + openid + "&lang=zh_CN";
-            string result = request.GetRequest(url);
-            return result;
-        }
+      
         //判断手机号
         private bool isNumber(string s)
         {

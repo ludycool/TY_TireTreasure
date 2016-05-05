@@ -226,7 +226,6 @@
     <Compile Include="Controllers\RegisterController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -323,7 +322,6 @@
     <Content Include="Views\Home\cash.cshtml" />
     <Content Include="Views\Home\comment.cshtml" />
     <Content Include="Views\Home\group.cshtml" />
-    <Content Include="Views\login\index.cshtml" />
     <Content Include="Views\Home\mall.cshtml" />
     <Content Include="Views\Home\payee.cshtml" />
     <Content Include="Views\Home\payment.cshtml" />
