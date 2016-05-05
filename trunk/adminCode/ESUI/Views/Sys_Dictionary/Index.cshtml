@@ -1,0 +1,278 @@
+﻿
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+           <script src="~/Content/js/Buttons.js"></script>
+    @* ReSharper disable once NotAllPathsReturnValue *@
+    <style type="text/css">
+        #iconlist li { display:block; float:left;}
+
+
+    </style>
+      @section Jsprepare{  
+  <script type="text/javascript">
+      @Html.Raw(ViewBag.RuteUrl)
+         @Html.Raw(ViewBag.toolbar)
+      var DicTypeId = "";
+      jQuery(document).ready(function () {
+
+          BindDic();
+          BindDicType();
+      });
+
+      function BindDic() {
+          $('#tg').treegrid({
+              title: '数据词典',
+              iconCls: 'icon-ok',
+              fit: true,
+              fitColumns: true,
+              rownumbers: true,
+              animate: true,
+              collapsible: true,//是否展开
+              method: 'get',
+              idField: 'Id',
+              treeField: 'Name',
+              showFooter: true,
+              columns: [[
+
+              { field: 'DicTypeId', title: '所属类型编号', width: 100, sortable: true },
+                { title: '名称', field: 'Name', width: 180 },
+                { title: '键值', field: 'DicNo', width: 80 },
+               { title: '图标', field: 'iconCls', width: 60, align: 'right' },
+               { title: '排序', field: 'OrderId', width: 80 },
+              { field: 'CreateTime', title: '添加时间', width: 100 },
+              { field: 'isValid', title: '是否有效', width: 100}
+              ]],
+              toolbar: toolbars
+          });
+          $('#DicTypeId').combobox({
+              width: 150,
+              emptyText: '请选择'
+          });
+          //SetTreeGridData();
+
+      }
+
+      function SetTreeGridData() {
+          $.ajax({
+              url: BaseUrl + 'GetJson?DicType=' + DicTypeId,
+              type: 'POST',
+              cache: false,
+              error: function () { alert('Error loading PHP document'); },
+              success: function (result) {
+                  var data = eval(result);
+                  $('#tg').treegrid('loadData', data);
+                  $('#ParentId').combotree('loadData', ConvertToTreeData(data));
+              }
+          });
+      }
+      function BindDicType() {
+
+          $('#tbDicType').datagrid({
+              url: '/httpHandle/DictionaryHandler.ashx?action=GetSys_DicTypeDataGrid',
+              columns: [[
+                  { field: 'DicTypeName', title: '名称', width: 140 }
+              ]],
+              nowrap: true,
+              singleSelect: true,
+              striped: true,
+              collapsible: true,
+              pageSize: 1000,
+              fit: true,
+              rownumbers: true,
+              onClickRow: function () {
+
+                  DicTypeId = $("#tbDicType").datagrid("getSelected").DicTypeId;  //获取到了用按钮选择的ID
+                  SetTreeGridData();
+              },
+              onLoadSuccess: function () {
+                  $('#tbDicType').datagrid('selectRow', 0);
+                  DicTypeId = $("#tbDicType").datagrid("getSelected").DicTypeId;  //获取到了用按钮选择的ID
+                  SetTreeGridData();
+              }
+          });
+          $('#DicTypeId').combobox('reload', '/httpHandle/DictionaryHandler.ashx?action=GetSys_DicTypeJson');  // 使用新的URL重新载入列表数据
+         
+
+      }
+      //easyUI 弹出添加的对话框
+      function AddInfo() {
+          //弹出层
+          // $("#DivEditor").dialog('open').dialog('setTitle', '添加信息');
+          $('#DivEditor').dialog({
+              title: '添加',
+              //width: 400,
+              //height: 200,
+              closed: false,
+              cache: false,
+              // href: 'get_content.php',
+              modal: true, top: 20,
+              onClose: function () {
+                  //解决弹出窗口关闭后，验证消息还显示在最上面
+
+              }
+          });
+          $(".validatebox-tip").remove();//清除验证样式
+          DataBaseFunction.ClearForm("ff");
+          //$("input[name='HouseNo']").focus();
+          //$("#ff input[name='Tel']").removeAttr("disabled");
+
+      }
+      //绑定修改显示详细信息的方法
+      function EditInfo() {
+
+          var rows = $('#tg').treegrid('getSelected');
+          //首先取出来值判断只能选择一个
+          if (rows == null) {
+              $.messager.alert("友情提示", "请选择", "error");
+              return;
+          }
+          $("#DivEditor").dialog('open').dialog('setTitle', '修改-' /*+ rows.Name*/).window('resize', { top: 20 });
+          $(".validatebox-tip").remove();//清除验证样式
+
+          //$("#ff input[name='HouseCode']").attr("disabled", "true");
+
+          var ID = rows.Id;  //获取到了用选择的ID
+          $.ajax({
+              url: BaseUrl + 'GetInfo',
+              type: 'POST',
+              data: { ID: ID },
+              cache: false,
+              error: function () { alert('Error $.ajax'); },
+              success: function (data) {
+                  //var result = eval('(' + data + ')');
+                  DataBaseFunction.BindForm("ff", data);
+                  $('#ParentId').combotree('setValue', data['ParentId']);
+                  $('#DicTypeId').combobox('setValue', data['DicTypeId']);
+                  //$("input[name='HouseNo']").focus();
+              }
+          });
+
+      }
+
+      //实现的编辑，包括增查改
+      function SaveInfo() {
+
+          //判断的信息是否通过验证
+          var validate = $("#ff").form('validate');
+          if (validate == false) {
+              return false;
+          }
+          //获取需要传递的参数传递给前台
+          var data = DataBaseFunction.GetFormData("ff")
+          //发送异步请求到后台保存数据
+          $.post(BaseUrl + 'EditInfo', data, function (data) {
+              alerts(data.Msg, 2);
+              if (data.Code > 0) {
+                  $('#DivEditor').dialog('close');
+                  $(".validatebox-tip").remove();
+                  $("#dg").datagrid("reload");
+              }
+          });
+
+      }
+
+      //删除
+      function Del() {
+          var rows = $('#tg').treegrid('getSelected');
+          var postData = "";
+
+          postData = {
+              ID: rows.Id
+          };
+          $.messager.confirm("删除信息", "您确认删除<font color='red' size='3'>" + rows.Name + "</font>吗？", function (DeleteRole) {
+              if (DeleteRole) {
+                  $.get(BaseUrl + "Del", postData, function (data) {
+                       alerts(data.Msg, 2);
+                      if (data.Code > 0) {
+                          SetTreeGridData();
+                      }
+                  });
+              }
+          });
+
+      }
+
+</script>
+           }
+</head>
+<body>
+
+    <div  class="easyui-layout"  data-options="fit:true" style="margin:5px;">
+    <div region="west" split="true" title="所属类型" style="width:180px;"><table id="tbDicType"></table></div>
+    <div region="center" style="padding:5px;background:#eee;" iconCls: 'icon-user_earth'><table id="tg" ></table></div>
+     </div>
+     <!------------------------弹出层---------------------------------->
+    <div id="DivEditor" class="easyui-dialog" style="width: 630px;"
+        closed="true" resizable="true" modal="true" buttons="#dlg-buttons">
+        <div id="Div_form" class="easyui-panel" style="padding: 10px 10px; overflow-x: hidden;" data-options=" height:330,width:610,border:false">
+            <form id="ff" method="post" enctype="multipart/form-data">
+
+                <table class="stripes" style="table-layout: fixed;" border="0" cellspacing="0" cellpadding="0">
+                    <input type="hidden" name="DicId" />
+                    <input type="hidden" name="CreateTime" />
+                    <input type="hidden" name="isValid" />
+                    <input type="hidden" name="isDeleted" />
+                    <tr>
+                        <td>
+                            <label>字典类型：</label></td>
+                        <td>
+                            <input id="DicTypeId" class="easyui-combobox" name="DicTypeId" style="width: 200px;" data-options="valueField:'DicTypeId',textField:'DicTypeName',required:true" /></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>父级：</label></td>
+                        <td>
+                            <select id="ParentId" name="ParentId" class="easyui-combotree" style="width: 200px;" ></select></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>字典名称：</label></td>
+                        <td>
+                            <input class="easyui-validatebox textbox" type="text" name="DicName" /></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>字典编号：</label></td>
+                        <td>
+                            <input class="easyui-validatebox textbox" type="text" name="DicNo" /></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>图标：</label></td>
+                        <td>
+                            <input class="easyui-validatebox textbox" type="text" id="Icon" name="Icon" /></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>备注：</label></td>
+                        <td>
+                            <textarea class="areabox" name="Remarks" style="height:50px;" ></textarea></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>序号：</label></td>
+                        <td>
+                            <input class="easyui-validatebox textbox" type="text" name="OrderId" onkeyup="clearNoNumberContainDot(this)"/></td>
+                    </tr>
+                </table>
+
+            </form>
+        </div>
+
+        <div style="text-align: center; width: 100%; margin-bottom: 5px;">
+            <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-ok" onclick="SaveInfo();">确定</a>&nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-cancel" onclick="$('#DivEditor').dialog('close')">关闭</a>
+        </div>
+    </div>
+      <div id="DviIcon" class="easyui-window" style="width:680px;height:400px;padding:10px 20px" title="选择图标"
+			closed="true" resizable="true" modal="true" buttons="#dlg-buttons">
+    
+     </div>
+        
+
+</body>
+</html>
