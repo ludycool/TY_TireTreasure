@@ -32,7 +32,6 @@ namespace ZAppUI.Controllers
         //public RMS_MenusBiz uBiz { get; set; }
         //[Dependency]
         //public RMS_UserBiz userBiz { get; set; }
-        String code;
         public ActionResult Index()
         {
             GetUData = new Models.UserData();
@@ -41,22 +40,19 @@ namespace ZAppUI.Controllers
             //  ViewBag.ManuString= GetManu();
             ViewBag.testString = "<div title=\"功能管理\" iconcls=\"icon-edit\" style=\"padding: 10px;\"><p><a href=\"javascript:void(0)\" src=\"/RoleManagement/Index\" class=\"MenuLink\">角色管理</a></p> </div>";
 
-            //if (Request["code"] != null && string.IsNullOrEmpty(Request["code"]))
-            //{
-                GetUData.Code = Request["code"];
-                ViewData["code"] = Request["code"];
-                
-            //code = Request["code"];
-            //ViewBag.code = code;
-            //}
-            //else
-            //{
-            //    getCode();
-            //}
+            string code = Request["code"];
+            
+            if (code != null && code != "")
+            {
+                string[] resultArray = GetOpenId.getAccessToken(code);        
+                GetUData.OpenId = resultArray[GetOpenId.OPEND_ID];
+                GetUData.Nick_Name = resultArray[GetOpenId.NICK_NAME];
+                GetUData.Head_Img_Url = resultArray[GetOpenId.HEAD_IMG_URL];
+            }        
             return View();
         }
 
-        
+
 
         public ActionResult About()
         {
@@ -74,26 +70,36 @@ namespace ZAppUI.Controllers
         //判断是否注册
         public ActionResult isRegister()
         {
-            string[] resultArray=GetOpenId.getAccessToken(GetUData.Code);
-            string openId = resultArray[GetOpenId.OPEND_ID];
+            string openId = GetUData.OpenId;
             UserBiz userBiz = new UserBiz();
 
             //DataSet result = userBiz.ExecuteSqlToDataSet("SELECT [WeiXinId] FROM [TireTreasureDB].[dbo].[TT_User] where WeiXinId='" + openId + "'");
             DataSet result = userBiz.ExecuteSqlToDataSet("EXEC [TireTreasureDB].[dbo].[proc_SearchUser] '" + openId + "'");
-            DataTable bt = result.Tables[0];
-            try
+            if (result != null)
             {
-                if (bt.Rows[0]["WeiXinId"] != null)
+                DataTable bt = result.Tables[0];
+                try
                 {
-                    return RedirectToAction("Index", "User");
+                    if (bt.Rows[0]["WeiXinId"] != null)
+                    {
+                        return RedirectToAction("Index", "User");
+                    }
                 }
-            }
-            catch (IndexOutOfRangeException exception)
-            { 
-               
-            }         
-            return RedirectToAction("Index","Register");
+                catch (IndexOutOfRangeException exception)
+                {
+
+                }
+            }    
+            return RedirectToAction("Index", "Register");
         }
-        
+
+        //private const string APP_ID = "wx5c2b91a9bbef68b4";
+        //public ActionResult getCode()
+        //{
+        //    string redirect_uri = "http://5705395e.nat123.net/register";
+        //    string state = "test";
+        //    string url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + APP_ID + "&redirect_uri=" + redirect_uri + "&response_type=code&scope=snsapi_base&state=" + state + "#wechat_redirect";
+        //    return Redirect(url);
+        //}
     }
 }

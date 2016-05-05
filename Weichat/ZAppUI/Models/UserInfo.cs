@@ -8,15 +8,18 @@ namespace ZAppUI.Models
     public class UserData
     {
 
-        public string Code { set; get; }
+        public string OpenId { set; get; }
 
         public UserInfo User_Info { set; get; }
+
+        public string Nick_Name { set; get; }
+
+        public string Head_Img_Url { set; get; }
     }
 
     public class UserInfo
     {
-    
-    
-    
+        
+
     }
 }
