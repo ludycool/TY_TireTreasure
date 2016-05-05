@@ -59,6 +59,8 @@
   <ItemGroup>
     <Compile Include="Baschartype.cs" />
     <Compile Include="Bascharvalue.cs" />
+    <Compile Include="Base\AppUserInfo.cs" />
+    <Compile Include="Base\User.cs" />
     <Compile Include="File_Image.cs" />
     <Compile Include="SysItem.cs" />
     <Compile Include="Sys_CityArea.cs" />
