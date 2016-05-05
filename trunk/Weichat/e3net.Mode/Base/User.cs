@@ -7,110 +7,110 @@ using Moon.Orm;
 namespace e3net.Mode.Base
 {
 
-    [Table("[TT_User]", DbType.Sqlite)]
+    [Table("[TT_User]", DbType.SqlServer)]
     public partial class TT_UserSet : MQLBase
     {
         public static MQLBase Select(params FieldBase[] fields)
         {
-            return MQLBase.Select(DbType.Sqlite, "[TT_User]", fields);
+            return MQLBase.Select(DbType.SqlServer, "[TT_User]", fields);
         }
         public static MQLBase SelectAll()
         {
-            return MQLBase.SelectAll(DbType.Sqlite, "[TT_User]");
+            return MQLBase.SelectAll(DbType.SqlServer, "[TT_User]");
         }
         public static MQLBase SelectAllBut(params FieldBase[] fields)
         {
-            return MQLBase.SelectAllBut(typeof(TT_UserSet), DbType.Sqlite, "[TT_User]", fields);
+            return MQLBase.SelectAllBut(typeof(TT_UserSet), DbType.SqlServer, "[TT_User]", fields);
         }
 
         /// <summary>
         /// 主键
         /// </summary>
-        public static readonly FieldBase UserId = new FieldBase(DbType.Sqlite, "[TT_User]", FieldType.OnlyPrimaryKey, "[UserId]");
+        public static readonly FieldBase UserId = new FieldBase(DbType.SqlServer, "[TT_User]", FieldType.OnlyPrimaryKey, "[UserId]");
+
+        /// <summary>
+        /// 用户微信openId
+        /// </summary>
+        public static readonly FieldBase WeiXinId = new FieldBase(DbType.SqlServer, "[TT_User]", FieldType.Common, "[WeiXinId]");
 
         /// <summary>
         /// 登录名
         /// </summary>
-        public static readonly FieldBase LoginName = new FieldBase(DbType.Sqlite, "[TT_User]", FieldType.Common, "[LoginName]");
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public static readonly FieldBase WeiXinId = new FieldBase(DbType.Sqlite, "[TT_User]", FieldType.Common, "[WeiXinId]");
+        public static readonly FieldBase LoginName = new FieldBase(DbType.SqlServer, "[TT_User]", FieldType.Common, "[LoginName]");
 
         /// <summary>
         /// 密码
         /// </summary>
-        public static readonly FieldBase Password = new FieldBase(DbType.Sqlite, "[TT_User]", FieldType.Common, "[Password]");
+        public static readonly FieldBase Password = new FieldBase(DbType.SqlServer, "[TT_User]", FieldType.Common, "[Password]");
 
         /// <summary>
         /// 姓名
         /// </summary>
-        public static readonly FieldBase TrueName = new FieldBase(DbType.Sqlite, "[TT_User]", FieldType.Common, "[TrueName]");
+        public static readonly FieldBase TrueName = new FieldBase(DbType.SqlServer, "[TT_User]", FieldType.Common, "[TrueName]");
 
         /// <summary>
-        /// 部门主键
+        /// 用户类型 0为普通用户 1为店铺用户
         /// </summary>
-        public static readonly FieldBase UserType = new FieldBase(DbType.Sqlite, "[TT_User]", FieldType.Common, "[UserType]");
+        public static readonly FieldBase UserType = new FieldBase(DbType.SqlServer, "[TT_User]", FieldType.Common, "[UserType]");
 
         /// <summary>
-        /// 
+        /// 等级
         /// </summary>
-        public static readonly FieldBase Levels = new FieldBase(DbType.Sqlite, "[TT_User]", FieldType.Common, "[Levels]");
+        public static readonly FieldBase Levels = new FieldBase(DbType.SqlServer, "[TT_User]", FieldType.Common, "[Levels]");
 
         /// <summary>
-        /// 
+        /// 积分
         /// </summary>
-        public static readonly FieldBase Scores = new FieldBase(DbType.Sqlite, "[TT_User]", FieldType.Common, "[Scores]");
+        public static readonly FieldBase Scores = new FieldBase(DbType.SqlServer, "[TT_User]", FieldType.Common, "[Scores]");
 
         /// <summary>
-        /// 状态（2已审核、开启1，未审核0，关闭-1）
+        /// 状态（1锁定 0 正常-1关闭）
         /// </summary>
-        public static readonly FieldBase States = new FieldBase(DbType.Sqlite, "[TT_User]", FieldType.Common, "[States]");
+        public static readonly FieldBase States = new FieldBase(DbType.SqlServer, "[TT_User]", FieldType.Common, "[States]");
 
         /// <summary>
-        /// 
+        /// 标签(组)
         /// </summary>
-        public static readonly FieldBase tags = new FieldBase(DbType.Sqlite, "[TT_User]", FieldType.Common, "[tags]");
+        public static readonly FieldBase tags = new FieldBase(DbType.SqlServer, "[TT_User]", FieldType.Common, "[tags]");
 
         /// <summary>
-        /// 
+        /// 在线iP
         /// </summary>
-        public static readonly FieldBase CurrentIP = new FieldBase(DbType.Sqlite, "[TT_User]", FieldType.Common, "[CurrentIP]");
+        public static readonly FieldBase CurrentIP = new FieldBase(DbType.SqlServer, "[TT_User]", FieldType.Common, "[CurrentIP]");
 
         /// <summary>
-        /// 
+        /// 在线端口
         /// </summary>
-        public static readonly FieldBase CurrentPort = new FieldBase(DbType.Sqlite, "[TT_User]", FieldType.Common, "[CurrentPort]");
+        public static readonly FieldBase CurrentPort = new FieldBase(DbType.SqlServer, "[TT_User]", FieldType.Common, "[CurrentPort]");
 
         /// <summary>
-        /// 
+        /// 最后登录地点
         /// </summary>
-        public static readonly FieldBase LastLoginAddr = new FieldBase(DbType.Sqlite, "[TT_User]", FieldType.Common, "[LastLoginAddr]");
+        public static readonly FieldBase LastLoginAddr = new FieldBase(DbType.SqlServer, "[TT_User]", FieldType.Common, "[LastLoginAddr]");
 
         /// <summary>
-        /// 状态（2已审核、开启1，未审核0，关闭-1）
+        /// 状态（1在线 0 下线 ）
         /// </summary>
-        public static readonly FieldBase IsOnline = new FieldBase(DbType.Sqlite, "[TT_User]", FieldType.Common, "[IsOnline]");
+        public static readonly FieldBase IsOnline = new FieldBase(DbType.SqlServer, "[TT_User]", FieldType.Common, "[IsOnline]");
 
         /// <summary>
         /// 添加时间
         /// </summary>
-        public static readonly FieldBase CreateTime = new FieldBase(DbType.Sqlite, "[TT_User]", FieldType.Common, "[CreateTime]");
+        public static readonly FieldBase CreateTime = new FieldBase(DbType.SqlServer, "[TT_User]", FieldType.Common, "[CreateTime]");
 
         /// <summary>
         /// 修改时间
         /// </summary>
-        public static readonly FieldBase UpdateTime = new FieldBase(DbType.Sqlite, "[TT_User]", FieldType.Common, "[UpdateTime]");
+        public static readonly FieldBase UpdateTime = new FieldBase(DbType.SqlServer, "[TT_User]", FieldType.Common, "[UpdateTime]");
 
         /// <summary>
         /// 是否删除
         /// </summary>
-        public static readonly FieldBase isDeleted = new FieldBase(DbType.Sqlite, "[TT_User]", FieldType.Common, "[isDeleted]");
+        public static readonly FieldBase isDeleted = new FieldBase(DbType.SqlServer, "[TT_User]", FieldType.Common, "[isDeleted]");
     }
 
 
-    [Table("[TT_User]", DbType.Sqlite)]
+    [Table("[TT_User]", DbType.SqlServer)]
     [TablesPrimaryKey(PrimaryKeyType.CustomerGUID, typeof(Guid), "UserId")]
     public partial class User : EntityBase
     {
@@ -125,21 +125,21 @@ namespace e3net.Mode.Base
         }
 
         /// <summary>
+        /// 用户微信openId
+        /// </summary>
+        public String WeiXinId
+        {
+            get { return GetPropertyValue<String>("WeiXinId"); }
+            set { SetPropertyValue("WeiXinId", value); }
+        }
+
+        /// <summary>
         /// 登录名
         /// </summary>
         public String LoginName
         {
             get { return GetPropertyValue<String>("LoginName"); }
             set { SetPropertyValue("LoginName", value); }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public String WeiXinId
-        {
-            get { return GetPropertyValue<String>("WeiXinId"); }
-            set { SetPropertyValue("WeiXinId", value); }
         }
 
         /// <summary>
@@ -161,7 +161,7 @@ namespace e3net.Mode.Base
         }
 
         /// <summary>
-        /// 部门主键
+        /// 用户类型 0为普通用户 1为店铺用户
         /// </summary>
         public Byte UserType
         {
@@ -170,7 +170,7 @@ namespace e3net.Mode.Base
         }
 
         /// <summary>
-        /// 
+        /// 等级
         /// </summary>
         public Byte Levels
         {
@@ -179,7 +179,7 @@ namespace e3net.Mode.Base
         }
 
         /// <summary>
-        /// 
+        /// 积分
         /// </summary>
         public Int32? Scores
         {
@@ -188,7 +188,7 @@ namespace e3net.Mode.Base
         }
 
         /// <summary>
-        /// 状态（2已审核、开启1，未审核0，关闭-1）
+        /// 状态（1锁定 0 正常-1关闭）
         /// </summary>
         public Byte States
         {
@@ -197,7 +197,7 @@ namespace e3net.Mode.Base
         }
 
         /// <summary>
-        /// 
+        /// 标签(组)
         /// </summary>
         public String tags
         {
@@ -206,7 +206,7 @@ namespace e3net.Mode.Base
         }
 
         /// <summary>
-        /// 
+        /// 在线iP
         /// </summary>
         public String CurrentIP
         {
@@ -215,7 +215,7 @@ namespace e3net.Mode.Base
         }
 
         /// <summary>
-        /// 
+        /// 在线端口
         /// </summary>
         public String CurrentPort
         {
@@ -224,7 +224,7 @@ namespace e3net.Mode.Base
         }
 
         /// <summary>
-        /// 
+        /// 最后登录地点
         /// </summary>
         public String LastLoginAddr
         {
@@ -233,7 +233,7 @@ namespace e3net.Mode.Base
         }
 
         /// <summary>
-        /// 状态（2已审核、开启1，未审核0，关闭-1）
+        /// 状态（1在线 0 下线 ）
         /// </summary>
         public Boolean? IsOnline
         {
@@ -271,4 +271,3 @@ namespace e3net.Mode.Base
 
 
 }
-

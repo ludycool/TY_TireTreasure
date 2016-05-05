@@ -29,17 +29,17 @@ namespace e3net.Mode.Base
         public static readonly FieldBase AppUserInfoId = new FieldBase(DbType.SqlServer, "[TT_AppUserInfo]", FieldType.OnlyPrimaryKey, "[AppUserInfoId]");
 
         /// <summary>
-        /// 主键
+        /// 用户Id
         /// </summary>
         public static readonly FieldBase UserId = new FieldBase(DbType.SqlServer, "[TT_AppUserInfo]", FieldType.Common, "[UserId]");
 
         /// <summary>
-        /// 
+        /// 昵称
         /// </summary>
         public static readonly FieldBase Nickname = new FieldBase(DbType.SqlServer, "[TT_AppUserInfo]", FieldType.Common, "[Nickname]");
 
         /// <summary>
-        /// 图片
+        /// 头像图片
         /// </summary>
         public static readonly FieldBase ImgeUrl = new FieldBase(DbType.SqlServer, "[TT_AppUserInfo]", FieldType.Common, "[ImgeUrl]");
 
@@ -94,12 +94,12 @@ namespace e3net.Mode.Base
         public static readonly FieldBase LocationUpdateTime = new FieldBase(DbType.SqlServer, "[TT_AppUserInfo]", FieldType.Common, "[LocationUpdateTime]");
 
         /// <summary>
-        /// 
+        /// 推荐我的人名
         /// </summary>
         public static readonly FieldBase References = new FieldBase(DbType.SqlServer, "[TT_AppUserInfo]", FieldType.Common, "[References]");
 
         /// <summary>
-        /// 
+        /// 推荐我的人Id
         /// </summary>
         public static readonly FieldBase ReferencesId = new FieldBase(DbType.SqlServer, "[TT_AppUserInfo]", FieldType.Common, "[ReferencesId]");
 
@@ -135,7 +135,7 @@ namespace e3net.Mode.Base
         }
 
         /// <summary>
-        /// 主键
+        /// 用户Id
         /// </summary>
         public Guid UserId
         {
@@ -144,7 +144,7 @@ namespace e3net.Mode.Base
         }
 
         /// <summary>
-        /// 
+        /// 昵称
         /// </summary>
         public String Nickname
         {
@@ -153,7 +153,7 @@ namespace e3net.Mode.Base
         }
 
         /// <summary>
-        /// 图片
+        /// 头像图片
         /// </summary>
         public String ImgeUrl
         {
@@ -209,9 +209,9 @@ namespace e3net.Mode.Base
         /// <summary>
         /// 类别
         /// </summary>
-        public Int32? CategoryId
+        public String CategoryId
         {
-            get { return GetPropertyValue<Int32?>("CategoryId"); }
+            get { return GetPropertyValue<String>("CategoryId"); }
             set { SetPropertyValue("CategoryId", value); }
         }
 
@@ -252,7 +252,7 @@ namespace e3net.Mode.Base
         }
 
         /// <summary>
-        /// 
+        /// 推荐我的人名
         /// </summary>
         public String References
         {
@@ -261,7 +261,7 @@ namespace e3net.Mode.Base
         }
 
         /// <summary>
-        /// 
+        /// 推荐我的人Id
         /// </summary>
         public Guid? ReferencesId
         {

@@ -12,15 +12,14 @@ namespace WeiChatMessageHandle.OpenId
         public const int OPEND_ID = 0;
         public const int NICK_NAME = 1;
         public const int HEAD_IMG_URL = 2;
-
-        private const string APP_ID = "wx5c2b91a9bbef68b4";
-        private const string APP_SECRET = "e895093b0a7227eac53199d8bcf4e031";
-
-        private static HttpUtil request = new HttpUtil();
-        private static JObject obj;
-
+        static HttpUtil request = new HttpUtil();
+        static JObject obj;
         public static string[] getAccessToken(string code)
         {
+            string APP_ID = "wx5c2b91a9bbef68b4";
+            string APP_SECRET = "e895093b0a7227eac53199d8bcf4e031";
+
+
             string[] strArray = new String[3];
             if (code != null)
             {

@@ -20,18 +20,17 @@ namespace ZAppUI.Controllers
         //
         // GET: /Access/
         //public UserBiz userBiz { set; get; }
-        string[] result;
+
         public ActionResult Index()
         {
-
-            result = GetOpenId.getAccessToken(GetUData.Code);
-            ViewBag.src = result[2];
+            ViewBag.src = getUserImg();
             return View();
         }
 
         [HttpPost]
         public ActionResult Index(LoginModel model)
         {
+            ViewBag.src = getUserImg(); ;
             if (model.Phone == null || model.Phone == "")
             {
                 ViewData["IsShowAlert"] = true;
@@ -62,9 +61,9 @@ namespace ZAppUI.Controllers
             }
             else
             {
-                string openid = result[0];
-                string nickName = result[1];
-                string headImgUrl = result[2];
+                string openid = GetUData.OpenId;
+                string nickName = GetUData.Nick_Name;
+                string headImgUrl = GetUData.Head_Img_Url;
 
                 DateTime now = DateTime.Now;
                 Guid guid = Guid.NewGuid();
@@ -76,7 +75,7 @@ namespace ZAppUI.Controllers
             }
             return View();
         }
-      
+
         //判断手机号
         private bool isNumber(string s)
         {
@@ -143,6 +142,35 @@ namespace ZAppUI.Controllers
 
             }
             return false;
+        }
+        public string getUserImg()
+        {
+            string imgSrc = GetUData.Head_Img_Url;
+            if (imgSrc != null)
+                return imgSrc;
+            else
+            {
+                AppUserInfoBiz userInfoBiz = new AppUserInfoBiz();
+                string openId = GetUData.OpenId;
+
+                DataSet result = userInfoBiz.ExecuteSqlToDataSet("EXEC [TireTreasureDB].[dbo].[proc_SearchUserInfo] '" + openId + "'");
+                if (result != null)
+                {
+                    DataTable userInfoTable = result.Tables[0];
+                    try
+                    {
+                        if (userInfoTable.Rows[0][0] != null)
+                        {
+                            Object headImgUrl = userInfoTable.Rows[0]["ImgeUrl"];
+                            imgSrc = headImgUrl.ToString();
+                        }
+                    }
+                    catch (IndexOutOfRangeException Exception)
+                    {
+                    }
+                }
+            }
+            return imgSrc;
         }
     }
 }
