@@ -20,6 +20,7 @@ using Newtonsoft.Json.Linq;
 using ZAppUI.Models;
 using e3net.BLL.Base;
 using System.Data;
+using WeiChatMessageHandle.OpenId;
 namespace ZAppUI.Controllers
 {
 
@@ -42,8 +43,9 @@ namespace ZAppUI.Controllers
 
             //if (Request["code"] != null && string.IsNullOrEmpty(Request["code"]))
             //{
-                GetUData.OpenId = Request["code"];
+                GetUData.Code = Request["code"];
                 ViewData["code"] = Request["code"];
+                
             //code = Request["code"];
             //ViewBag.code = code;
             //}
@@ -72,11 +74,12 @@ namespace ZAppUI.Controllers
         //判断是否注册
         public ActionResult isRegister()
         {
-            string openId = GetUData.OpenId;
+            string[] resultArray=GetOpenId.getAccessToken(GetUData.Code);
+            string openId = resultArray[GetOpenId.OPEND_ID];
             UserBiz userBiz = new UserBiz();
 
-            DataSet result = userBiz.ExecuteSqlToDataSet("SELECT [WeiXinId] FROM [TireTreasureDB].[dbo].[TT_User] where WeiXinId='" + openId + "'");
-            //DataSet result = userBiz.ExecuteSqlToDataSet("EXEC [TireTreasureDB].[dbo].[proc_SearchUser] '" + openId + "'");
+            //DataSet result = userBiz.ExecuteSqlToDataSet("SELECT [WeiXinId] FROM [TireTreasureDB].[dbo].[TT_User] where WeiXinId='" + openId + "'");
+            DataSet result = userBiz.ExecuteSqlToDataSet("EXEC [TireTreasureDB].[dbo].[proc_SearchUser] '" + openId + "'");
             DataTable bt = result.Tables[0];
             try
             {
