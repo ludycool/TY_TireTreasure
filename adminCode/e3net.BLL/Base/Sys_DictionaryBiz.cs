@@ -65,6 +65,7 @@ namespace e3net.BLL.Base
                 {
 
                     menus += "{  \"Id\":\"" + list[i].DicId + "\",";
+                    menus += string.Format("  \"DicTypeId\":\"{0}\",", list[i].DicTypeId);
                     menus += string.Format("  \"Name\":\"{0}\",", list[i].DicName);
                     menus += string.Format("  \"DicNo\":\"{0}\",", list[i].DicNo);
                     menus += string.Format("  \"ParentId\":\"{0}\",", list[i].ParentId);
@@ -92,6 +93,7 @@ namespace e3net.BLL.Base
 
                     menus += "{  \"Id\":\"" + list[i].DicId + "\",";
                     menus += string.Format("  \"Name\":\"{0}\",", list[i].DicName);
+                    menus += string.Format("  \"DicTypeId\":\"{0}\",", list[i].DicTypeId);
                     menus += string.Format("  \"DicNo\":\"{0}\",", list[i].DicNo);
                     menus += string.Format("  \"ParentId\":\"{0}\",", list[i].ParentId);
                     menus += string.Format("  \"OrderId\":\"{0}\",", list[i].OrderId);

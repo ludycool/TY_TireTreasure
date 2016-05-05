@@ -58,6 +58,17 @@ namespace App.Core
              container.RegisterType<ITM_WaterBillDao, TM_WaterBillBiz>();
              #endregion
 
+             #region Base
+             container.RegisterType<ISys_CityAreaDao, Sys_CityAreaBiz>();
+             container.RegisterType<ISys_DictionaryDao, Sys_DictionaryBiz>();
+             container.RegisterType<ISys_DicTypeDao, Sys_DicTypeBiz>();
+             container.RegisterType<ISys_FilesDao, Sys_FilesBiz>();
+             container.RegisterType<ISysItemDao, SysItemBiz>();
+             container.RegisterType<ISystemLogsDao, SystemLogsBiz>();
+          
+             #endregion
+
+
         }
     }
 }

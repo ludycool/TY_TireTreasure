@@ -24,6 +24,20 @@ namespace ESUI.httpHandle
             switch (action)
             {
 
+                    ///获取所有的类型
+                case "GetSys_DicTypeDataGrid":
+
+                    context.Response.Write(GetSys_DicTypeDataGrid());
+                    context.Response.End();
+                    break;
+                ///获取所有的类型
+                case "GetSys_DicTypeJson":
+
+                    context.Response.Write(GetSys_DicTypeJson());
+                    context.Response.End();
+                    break;
+
+
                 case "GetSonDictionary":
 
                     string DicNo = context.Request["DicNo"];
@@ -60,14 +74,28 @@ namespace ESUI.httpHandle
         }
 
 
-        //public string GetDepartment()
-        //{
-        //    RMS_DepartmentBiz DDBiz = new RMS_DepartmentBiz();
-        //    var sql = RMS_DepartmentSet.SelectAll();
-        //    List<RMS_Department> listAll = DDBiz.GetOwnList<RMS_Department>(sql);
-        //    string jsonstring = DDBiz.GetTree(listAll);
-        //    return jsonstring;
-        //}
+        public string GetSys_DicTypeDataGrid()
+        {
+            Sys_DicTypeBiz DDBiz = new Sys_DicTypeBiz();
+            var sql = Sys_DicTypeSet.SelectAll().Where(Sys_DicTypeSet.isDeleted.Equal(0).And(Sys_DicTypeSet.isValid.Equal(1)));
+            List<Sys_DicType> listAll = DDBiz.GetOwnList<Sys_DicType>(sql);
+            Dictionary<string, object> dic = new Dictionary<string, object>();
+            // var mql = RMS_RoleSet.ControlId.NotEqual("");
+            dic.Add("rows", listAll);
+            dic.Add("total", listAll.Count);
+
+            return JsonHelper.ToJson(dic, true);
+        }
+        public string GetSys_DicTypeJson()
+        {
+            Sys_DicTypeBiz DDBiz = new Sys_DicTypeBiz();
+            var sql = Sys_DicTypeSet.SelectAll().Where(Sys_DicTypeSet.isDeleted.Equal(0).And(Sys_DicTypeSet.isValid.Equal(1)));
+            List<Sys_DicType> listAll = DDBiz.GetOwnList<Sys_DicType>(sql);
+            return JsonHelper.ToJson(listAll, true);
+
+        }
+
+
         public string GetDepartment( )
         {
             List<TF_Units> AllList = new List<TF_Units>();
