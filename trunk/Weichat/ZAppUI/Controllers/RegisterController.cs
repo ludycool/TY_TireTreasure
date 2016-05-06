@@ -128,19 +128,11 @@ namespace ZAppUI.Controllers
             AppUserInfoBiz userInfoBiz = new AppUserInfoBiz();
 
             DataSet result = userInfoBiz.ExecuteSqlToDataSet("SELECT [LoginName] FROM [TireTreasureDB].[dbo].[TT_User] where LoginName='" + phone + "'");
-
-            DataTable userTable = result.Tables[0];
-            try
+            if (result.Tables.Count > 0 && result.Tables[0].Rows.Count > 0)
             {
-                if (userTable.Rows[0]["LoginName"] != null)
-                {
-                    return true;
-                }
+                return true;
             }
-            catch (IndexOutOfRangeException exception)
-            {
 
-            }
             return false;
         }
         public string getUserImg()
@@ -154,20 +146,10 @@ namespace ZAppUI.Controllers
                 string openId = GetUData.OpenId;
 
                 DataSet result = userInfoBiz.ExecuteSqlToDataSet("EXEC [TireTreasureDB].[dbo].[proc_SearchUserInfo] '" + openId + "'");
-                if (result != null)
+                if (result.Tables.Count > 0 && result.Tables[0].Rows.Count > 0)
                 {
-                    DataTable userInfoTable = result.Tables[0];
-                    try
-                    {
-                        if (userInfoTable.Rows[0][0] != null)
-                        {
-                            Object headImgUrl = userInfoTable.Rows[0]["ImgeUrl"];
-                            imgSrc = headImgUrl.ToString();
-                        }
-                    }
-                    catch (IndexOutOfRangeException Exception)
-                    {
-                    }
+                    Object headImgUrl = result.Tables[0].Rows[0]["ImgeUrl"];
+                    imgSrc = headImgUrl.ToString();
                 }
             }
             return imgSrc;
