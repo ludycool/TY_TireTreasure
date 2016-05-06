@@ -48,10 +48,10 @@ namespace ESUI.Controllers
             String sortOrder = Request["order"];
             PageClass pc = new PageClass();
             pc.sys_Fields = "*";
-            pc.sys_Key = "AppUserInfoId";
+            pc.sys_Key = "UserId";
             pc.sys_PageIndex = pageIndex;
             pc.sys_PageSize = pageSize;
-            pc.sys_Table = "TT_AppUserInfo";
+            pc.sys_Table = "v_TT_User";
             pc.sys_Where = Where;
             pc.sys_Order = " " + sortField + " " + sortOrder;
             DataSet ds = OPBiz.GetPagingDataP(pc);
