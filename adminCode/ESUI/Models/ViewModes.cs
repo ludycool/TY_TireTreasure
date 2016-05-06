@@ -17,9 +17,9 @@ namespace ESUI.Models
         public string Password { get; set; }
 
 
-        //[Required]
-        //[Display(Name = "验证码")]
-        //public string VCode { get; set; }
+        [Required]
+        [Display(Name = "验证码")]
+        public string VCode { get; set; }
         /// <summary>
         /// 用户类型 为1正常 姓名登录为0，身份证为2
         /// </summary>

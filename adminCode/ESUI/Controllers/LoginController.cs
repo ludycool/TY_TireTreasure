@@ -65,14 +65,14 @@ namespace ESUI.Controllers
             //}
             #endregion
 
-            //string Vcode = Session["ValidateCode"].ToString();
-            //if (mode.VCode.Trim().Equals(Vcode))//验证码
-            //{
+            string Vcode = Session["ValidateCode"].ToString();
+            if (mode.VCode!=null&&mode.VCode.Trim().Equals(Vcode))//验证码
+            {
 
             UserData = null;
             List<V_UserRole> adminRole = null;
             bool IsHaveP = false;//是否有权限登录
-
+            mode.UserType = "1";//
             #region  根据类型登录
             switch (mode.UserType)
             {
@@ -219,13 +219,12 @@ namespace ESUI.Controllers
                 ViewData["Alert"] = "账号或者密码有误";
 
             }
-            //}
-            //else
-            //{
-            //    ViewData["IsShowAlert"] = true;
-            //    ViewData["Alert"] = "验证码有误";
-            //}
-            //}
+            }
+            else
+            {
+                ViewData["IsShowAlert"] = true;
+                ViewData["Alert"] = "验证码有误";
+            }
             return View();
 
 

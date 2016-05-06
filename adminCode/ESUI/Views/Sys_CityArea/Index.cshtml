@@ -1,6 +1,8 @@
-﻿@{
+﻿<!DOCTYPE html>
+@{
     ViewBag.Title = "Index";
 }
+
 
 <html>
 <head>
@@ -34,12 +36,12 @@
                 var postData = "";
 
                 postData = {
-                    ID: rows.Id
+                    IDSet: rows.Id
                 };
                 $.messager.confirm("删除信息", "您确认删除<font color='red' size='3'>" + rows.Name + "</font>吗？", function (DeleteRole) {
                     if (DeleteRole) {
-                        $.get(BaseUrl + "DeleteInfo", postData, function (data) {
-                            if (data == "OK") {
+                        $.get(BaseUrl + "Del", postData, function (data) {
+                            if (data.Code > 0) {
                                 //友情提示用户删除成功，刷新表格
                                 $.messager.alert("友情提示", "删除成功");
                                 SetTreeGridData();
@@ -50,18 +52,18 @@
                                 $("#tg").datagrid("clearSelections");
                             }
                             else {
-                                $.messager.alert("友情提示", data);
+                                $.messager.alert("友情提示", data.Msg);
                             }
                         });
                     }
                 });
 
             }
-           
-     
-         
+
+
+
             $(function () {
-             
+
                 $('#AreaTypes').combobox('reload', '/httpHandle/DictionaryHandler.ashx?action=GetSysItem&ItemType=AreaTypes');  // 使用新的URL重新载入列表数据
             @Html.Raw(ViewBag.toolbar)
                 $('#tg').treegrid({
@@ -78,21 +80,11 @@
                     showFooter: true,
                     columns: [[
                         { title: '名称', field: 'Name', width: 180 },
-                        { title: '图标', field: 'iconCls', width: 60, align: 'right' },
-                        { title: '键值', field: 'ValueName', width: 80 },
-                        { title: '类型', field: 'AreaTypesName', width: 80 },
-                        { title: '排序', field: 'OrderNo', width: 80 },
-                        {
-                            field: 'FunctionDescription', title: '备注', width: 120,
-                            formatter: function (value) {
-                                if (value) {
-                                    var s = value;
-                                    return s;
-                                } else {
-                                    return '';
-                                }
-                            }
-                        }
+              { field: 'OrderNo', title: '排序', width: 100, sortable: true },
+              { field: 'TCode', title: '代号', width: 100, sortable: true },
+              { field: 'AreaTypesName', title: '类型', width: 100, sortable: true },
+              { field: 'iconCls', title: '图标', width: 100, sortable: true },
+              { field: 'Remarks', title: '详情', width: 100, sortable: true }
                     ]],
                     toolbar: toolbars
                 });
@@ -108,7 +100,7 @@
                     url: BaseUrl + 'GetJson',
                     type: 'POST',
                     cache: false,
-                    error: function () { alert('Error loading PHP document'); },
+                    error: function () { alert('Error loading SetTreeGridData document'); },
                     success: function (result) {
                         var data = eval(result);
                         $('#tg').treegrid('loadData', data);
@@ -165,7 +157,7 @@
                 postData.push(DeparId);
                 //发送异步请求到后台保存数据
                 $.post(BaseUrl + 'EditInfo', postData, function (data) {
-                    if (data = "OK") {
+                    if (data.Code >0) {
                         //添加成功  1.关闭弹出层，2.刷新DataGird
                         alert("编辑成功");
                         $('#DivEditor').dialog('close');
@@ -183,10 +175,16 @@
 
             //绑定修改显示详细信息的方法
             function EditInfo() {
+
+                var rows = $('#tg').treegrid('getSelected');
+                //首先取出来值判断只能选择一个
+                if (rows == null) {
+                    return;
+                }
                 //处理修改的信息，弹出修改的对话框,然后显示选择的的详细信息
                 $("#DivEditor").dialog('open').dialog('setTitle', '修改信息').window('resize', { top: 100 });
                 //首先发送一个异步请求去后台实现方法
-                var ID = $('#tg').treegrid('getSelected').Id;  //获取到了用选择的ID
+                var ID = rows.Id;  //获取到了用选择的ID
 
                 $.ajax({
                     url: BaseUrl + 'GetInfo',
@@ -196,9 +194,7 @@
                     error: function () { alert('Error $.ajax'); },
                     success: function (result) {
 
-                        for (items in result) {
-                            $("#" + items).val(result[items]);
-                        }
+                        DataBaseFunction.BindForm("ff", result);
                         $('#DeparTree').combotree('setValue', result['ParentId']);
                         $('#AreaTypes').combobox('select', result.AreaTypes);
                     }
@@ -209,45 +205,60 @@
     }
 
 </head>
-<body>
-  
-        <table id="tg"></table>
+<body style="overflow-y: hidden">
 
-    <!------------------------弹出修改角色信息的弹出层---------------------------------->
-    <div id="DivEditor" class="easyui-dialog" style="width: 580px; padding: 10px 20px;"
+    <table id="tg"></table>
+
+    <!------------------------搜索弹出层---------------------------------->
+    <div id="Div_Searh" class="easyui-dialog" style="width: 380px; padding: 10px 20px;"
         closed="true" resizable="true" modal="true" buttons="#dlg-buttons">
-        <form id="ff" method="post" novalidate="novalidate">
-            <fieldset>
-                <legend>信息填写栏</legend>
-                <table id="tblAdd">
-                    <tr>
-                        <input type="hidden" id="Id" name="Id" />
-                        <input type="hidden" id="CreateTime" name="CreateTime" />
-                        <input type="hidden" id="ModifyTime" name="ModifyTime" />
+        <form id="fSearh">
 
-                        <td>
+            <table class="stripes" style="table-layout: fixed; margin: 0 auto; width: 320px;" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td style="width: 60px;">
+                        <label>代号：</label></td>
+                    <td>
+                        <input type="text" class="textbox" name="TCode_like" style="width: 200px;" />
+                    </td>
+
+                </tr>
+            </table>
+
+        </form>
+        <div style="text-align: center; width: 100%; margin: 5px 0px; display: block;">
+            <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-undo" style="float: left;" onclick=" DataBaseFunction.ClearForm('fSearh');">清除</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" style="float: right;" iconcls="icon-search" onclick="SearchGo();">搜索</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" style="float: right;" iconcls="icon-cancel" onclick="$('#Div_Searh').dialog('close')">关闭</a>
+        </div>
+    </div>
+    <!------------------------弹出层---------------------------------->
+    <div id="DivEditor" class="easyui-dialog" style="width: 630px;"
+        closed="true" resizable="true" modal="true" buttons="#dlg-buttons">
+        <div id="Div_form" class="easyui-panel" style="padding: 10px 10px; overflow-x: hidden;" data-options=" height:350,width:610,border:false">
+            <form id="ff" method="post" enctype="multipart/form-data">
+
+           <table class="stripes" style="table-layout: fixed;" border="0" cellspacing="0" cellpadding="0">
+                    <input type="hidden" name="CityAreaId" />
+            
+                    <input type="hidden" name="CreateTime" />
+                    <input type="hidden" name="UpdateTime" />
+                    <input type="hidden" name="isValid" />
+                    <input type="hidden" name="isDeleted" />
+               
+                    <tr>
+                        <td style="width:120px;">
                             <label>名称：</label></td>
-                        <td>
-                            <input class="easyui-validatebox" type="text" id="Name" name="Name" data-options="required:true,validType:'length[1,32]'" />
-                        </td>
-
+                        <td style="width:480px;">
+                            <input class="easyui-validatebox textbox" type="text" name="TName" /></td>
                     </tr>
-                    <tr>
+                 <tr>
                         <td>
-                            <label>键 值：</label></td>
+                            <label>代号：</label></td>
                         <td>
-                            <input class="easyui-validatebox" type="text" id="ValueName" name="ValueName" data-options="required:true" />
-                        </td>
+                            <input class="easyui-validatebox textbox" type="text" name="TCode" /></td>
                     </tr>
-                    <tr>
-                        <td>
-                            <label>图标：</label></td>
-                        <td>
-                            <input class="easyui-validatebox" type="text" id="Icon" name="Icon" /><a id="selecticon" ref="javascript:;"
-                                plain="true" class="easyui-linkbutton" icon="icon-search" title="选择图标"></a>
-                        </td>
-                    </tr>
-                    <tr>
+                 <tr>
                         <td>
                             <label>上级：</label></td>
                         <td>
@@ -255,7 +266,9 @@
                         </td>
 
                     </tr>
-                                        <tr>
+                   
+              
+                       <tr>
                         <td>
                             <label>类型：</label></td>
                         <td>
@@ -264,32 +277,35 @@
 
                         </td>
                     </tr>
-                    <tr>
+                 <tr>
                         <td>
-                            <label>排序码：</label></td>
+                            <label>排序：</label></td>
                         <td>
-                            <input class="easyui-validatebox" type="text" id="OrderNo" name="OrderNo" />
-                        </td>
+                            <input class="easyui-validatebox textbox" type="text" name="OrderNo" /></td>
                     </tr>
                     <tr>
                         <td>
-                            <label>描述：</label></td>
-                        <td colspan="3">
-                            <textarea style="height: 50px; width: 406px;" id="Remarks" name="Remarks"></textarea>
-                        </td>
+                            <label>图标：</label></td>
+                        <td>
+                            <input class="easyui-validatebox textbox" type="text" name="Icon" /></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>详情：</label></td>
+                        <td>
+                            <textarea class="areabox" name="Remarks" style="height:100px;"></textarea></td>
                     </tr>
                 </table>
-            </fieldset>
+            </form>
+        </div>
 
-        </form>
-        <div style="text-align: center; width: 100%">
-            <a href="javascript:void(0)" class="easyui-linkbutton" id="btnAddRole" iconcls="icon-ok" onclick="SaveInfo();">确定</a>
+        <div style="text-align: center; width: 100%; margin-bottom: 5px;">
+            <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-ok" onclick="SaveInfo();">确定</a>&nbsp;&nbsp;&nbsp;&nbsp;
             <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-cancel" onclick="$('#DivEditor').dialog('close')">关闭</a>
         </div>
     </div>
 
-    <div id="DviIcon" class="easyui-window" style="width: 660px; height: 400px; padding: 0px 10px" title="选择图标"
-        closed="true" resizable="true" modal="true" buttons="#dlg-buttons">
-    </div>
+
 </body>
 </html>
+

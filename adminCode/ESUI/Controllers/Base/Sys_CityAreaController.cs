@@ -13,6 +13,7 @@ using e3net.common.SysMode;
 using e3net.Mode.Base;
 using e3net.IDAL.Base;
 using e3net.BLL.Base;
+using e3net.Mode.V_mode;
 
 
 
@@ -35,38 +36,26 @@ namespace ESUI.Controllers
         }
 
         [HttpPost]
-        public JsonResult Search()
+        public string GetJson()
         {
-            // SelectWhere.selectwherestring(Request["sqlSet"]);
-            int pageIndex = Request["page"] == null ? 1 : int.Parse(Request["page"]);
-            int pageSize = Request["rows"] == null ? 10 : int.Parse(Request["rows"]);
-            //string Where = Request["sqlSet"] == null ? "1=1" : SelectWhere.selectwherestring(Request["sqlSet"]);
-            string Where = Request["sqlSet"] == null ? "1=1" : GetSql(Request["sqlSet"]);
-			     Where += " and (isDeleted=0)";
-            ////字段排序
-            String sortField = Request["sort"];
-            String sortOrder = Request["order"];
-            PageClass pc = new PageClass();
-            pc.sys_Fields = "*";
-            pc.sys_Key = "CityAreaId";
-            pc.sys_PageIndex = pageIndex;
-            pc.sys_PageSize = pageSize;
-            pc.sys_Table = "Sys_CityArea";
-            pc.sys_Where = Where;
-            pc.sys_Order = " " + sortField + " " + sortOrder;
-            DataSet ds = OPBiz.GetPagingDataP(pc);
-            Dictionary<string, object> dic = new Dictionary<string, object>();
-            dic.Add("rows", ds.Tables[0]);
-            dic.Add("total", pc.RCount);
-            return Json(dic, JsonRequestBehavior.AllowGet);
+
+            var sql = v_Sys_CityAreaSet.SelectAll();
+            List<v_Sys_CityArea> listAll = OPBiz.GetOwnList<v_Sys_CityArea>(sql);
+            string jsonstring = OPBiz.GetTree(listAll);
+            return jsonstring;
         }
+
 
         public JsonResult EditInfo(Sys_CityArea EidModle)
         {
             HttpReSultMode ReSultMode = new HttpReSultMode();
             bool IsAdd = false;
-          
-             if (EidModle.CityAreaId !=0)//id为空，是添加
+            if (EidModle.ParentId == EidModle.CityAreaId)//父级不能等于自已
+            {
+
+                EidModle.ParentId = 0;
+            }
+             if (EidModle.CityAreaId ==0)//id为空，是添加
             {
                 IsAdd = true;
                 EidModle.CreateTime = DateTime.Now;
