@@ -12,6 +12,8 @@ using System.Web.Script.Serialization;
 using System.Web.UI;
 using Newtonsoft.Json;
 using ZAppUI.Models;
+using System.Data;
+using e3net.BLL.Base;
 
 namespace ZAppUI.Controllers
 {
@@ -39,13 +41,16 @@ namespace ZAppUI.Controllers
         }
 
         #region 获取客户端IP地址
+        #endregion
+        #region 获取UserID
+        
 
-
-
+        
         #endregion
         #endregion
 
-    
+
+
     }
 
 

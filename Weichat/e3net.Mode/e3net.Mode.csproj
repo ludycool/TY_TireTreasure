@@ -62,6 +62,7 @@
     <Compile Include="Base\AppUserInfo.cs" />
     <Compile Include="Base\User.cs" />
     <Compile Include="File_Image.cs" />
+    <Compile Include="Money\Balance.cs" />
     <Compile Include="SysItem.cs" />
     <Compile Include="Sys_CityArea.cs" />
     <Compile Include="V_mode\v_Sys_CityArea.cs" />

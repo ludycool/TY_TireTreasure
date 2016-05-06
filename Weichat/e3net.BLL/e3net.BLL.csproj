@@ -61,6 +61,7 @@
     <Compile Include="DynamicTable\BascharvalueBiz.cs" />
     <Compile Include="DynamicTable\BaschartypeBiz.cs" />
     <Compile Include="File_ImageBiz.cs" />
+    <Compile Include="Money\BalanceBiz.cs" />
     <Compile Include="ParameterXmlHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Sys_DictionaryBiz.cs" />

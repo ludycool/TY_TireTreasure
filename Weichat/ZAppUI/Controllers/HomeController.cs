@@ -74,21 +74,13 @@ namespace ZAppUI.Controllers
             UserBiz userBiz = new UserBiz();
 
             //DataSet result = userBiz.ExecuteSqlToDataSet("SELECT [WeiXinId] FROM [TireTreasureDB].[dbo].[TT_User] where WeiXinId='" + openId + "'");
-            DataSet result = userBiz.ExecuteSqlToDataSet("EXEC [TireTreasureDB].[dbo].[proc_SearchUser] '" + openId + "'");
-            if (result != null)
+            DataSet result = userBiz.ExecuteSqlToDataSet("EXEC [TireTreasureDB].[dbo].[proc_IsUserRegistered] '" + openId + "'");
+            if (result.Tables.Count > 0 && result.Tables[0].Rows.Count > 0)
             {
-                DataTable bt = result.Tables[0];
-                try
-                {
-                    if (bt.Rows[0]["WeiXinId"] != null)
+                if (result.Tables[0].Rows[0]["WeiXinId"] != null)
                     {
                         return RedirectToAction("Index", "User");
-                    }
-                }
-                catch (IndexOutOfRangeException exception)
-                {
-
-                }
+                    }              
             }    
             return RedirectToAction("Index", "Register");
         }
