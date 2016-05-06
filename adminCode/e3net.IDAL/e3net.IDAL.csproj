@@ -84,6 +84,27 @@
     <Compile Include="Base\ISys_CityAreaDao.cs" />
     <Compile Include="Base\ISys_DicTypeDao.cs" />
     <Compile Include="Base\ISys_FilesDao.cs" />
+    <Compile Include="TireTreasureDB\ITT_AppUserInfoDao.cs" />
+    <Compile Include="TireTreasureDB\ITT_CommentTDao.cs" />
+    <Compile Include="TireTreasureDB\ITT_FilesInsuranDao.cs" />
+    <Compile Include="TireTreasureDB\ITT_FilesTransactDao.cs" />
+    <Compile Include="TireTreasureDB\ITT_FriendsDao.cs" />
+    <Compile Include="TireTreasureDB\ITT_FundInfoDao.cs" />
+    <Compile Include="TireTreasureDB\ITT_FundPerSonDao.cs" />
+    <Compile Include="TireTreasureDB\ITT_InsuranCompanyDao.cs" />
+    <Compile Include="TireTreasureDB\ITT_InsuranDao.cs" />
+    <Compile Include="TireTreasureDB\ITT_LevelsDao.cs" />
+    <Compile Include="TireTreasureDB\ITT_MessagesDao.cs" />
+    <Compile Include="TireTreasureDB\ITT_MissionsApplyDao.cs" />
+    <Compile Include="TireTreasureDB\ITT_MissionsDao.cs" />
+    <Compile Include="TireTreasureDB\ITT_ReferencesDao.cs" />
+    <Compile Include="TireTreasureDB\ITT_RequestFriendsDao.cs" />
+    <Compile Include="TireTreasureDB\ITT_ReservationDao.cs" />
+    <Compile Include="TireTreasureDB\ITT_ShopAppUserDao.cs" />
+    <Compile Include="TireTreasureDB\ITT_ShopDao.cs" />
+    <Compile Include="TireTreasureDB\ITT_TransactionDao.cs" />
+    <Compile Include="TireTreasureDB\ITT_TransactSnapshotDao.cs" />
+    <Compile Include="TireTreasureDB\ITT_UserDao.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\e3net.common\e3net.common.csproj">

@@ -15,6 +15,8 @@ using e3net.IDAL.Base;
 using e3net.BLL.Base;
 using e3net.IDAL.TireMoneyDB;
 using e3net.BLL.TireMoneyDB;
+using e3net.IDAL.TireTreasureDB;
+using e3net.BLL.TireTreasureDB;
 
 namespace App.Core
 {
@@ -68,7 +70,29 @@ namespace App.Core
           
              #endregion
 
-
+             #region TireTreasureDB
+             container.RegisterType<ITT_AppUserInfoDao, TT_AppUserInfoBiz>();
+             container.RegisterType<ITT_CommentTDao, TT_CommentTBiz>();
+             container.RegisterType<ITT_FilesInsuranDao, TT_FilesInsuranBiz>();
+             container.RegisterType<ITT_FilesTransactDao, TT_FilesTransactBiz>();
+             container.RegisterType<ITT_FriendsDao, TT_FriendsBiz>();
+             container.RegisterType<ITT_FundInfoDao, TT_FundInfoBiz>();
+             container.RegisterType<ITT_FundPerSonDao, TT_FundPerSonBiz>();
+             container.RegisterType<ITT_InsuranDao, TT_InsuranBiz>();
+             container.RegisterType<ITT_InsuranCompanyDao, TT_InsuranCompanyBiz>();
+             container.RegisterType<ITT_LevelsDao, TT_LevelsBiz>();
+             container.RegisterType<ITT_MessagesDao, TT_MessagesBiz>();
+             container.RegisterType<ITT_MissionsDao, TT_MissionsBiz>();
+             container.RegisterType<ITT_MissionsApplyDao, TT_MissionsApplyBiz>();
+             container.RegisterType<ITT_ReferencesDao, TT_ReferencesBiz>();
+             container.RegisterType<ITT_RequestFriendsDao, TT_RequestFriendsBiz>();
+             container.RegisterType<ITT_ReservationDao, TT_ReservationBiz>();
+             container.RegisterType<ITT_ShopDao, TT_ShopBiz>();
+             container.RegisterType<ITT_ShopAppUserDao, TT_ShopAppUserBiz>();
+             container.RegisterType<ITT_TransactionDao, TT_TransactionBiz>();
+             container.RegisterType<ITT_TransactSnapshotDao, TT_TransactSnapshotBiz>();
+             container.RegisterType<ITT_UserDao, TT_UserBiz>();
+             #endregion
         }
     }
 }

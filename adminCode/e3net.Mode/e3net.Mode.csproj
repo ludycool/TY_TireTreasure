@@ -73,6 +73,27 @@
     <Compile Include="TireMoneyDB\TM_PayPlatform.cs" />
     <Compile Include="TireMoneyDB\TM_TranAcc.cs" />
     <Compile Include="TireMoneyDB\TM_WaterBill.cs" />
+    <Compile Include="TireTreasureDB\TT_AppUserInfo.cs" />
+    <Compile Include="TireTreasureDB\TT_CommentT.cs" />
+    <Compile Include="TireTreasureDB\TT_FilesInsuran.cs" />
+    <Compile Include="TireTreasureDB\TT_FilesTransact.cs" />
+    <Compile Include="TireTreasureDB\TT_Friends.cs" />
+    <Compile Include="TireTreasureDB\TT_FundInfo.cs" />
+    <Compile Include="TireTreasureDB\TT_FundPerSon.cs" />
+    <Compile Include="TireTreasureDB\TT_Insuran.cs" />
+    <Compile Include="TireTreasureDB\TT_InsuranCompany.cs" />
+    <Compile Include="TireTreasureDB\TT_Levels.cs" />
+    <Compile Include="TireTreasureDB\TT_Messages.cs" />
+    <Compile Include="TireTreasureDB\TT_Missions.cs" />
+    <Compile Include="TireTreasureDB\TT_MissionsApply.cs" />
+    <Compile Include="TireTreasureDB\TT_References.cs" />
+    <Compile Include="TireTreasureDB\TT_RequestFriends.cs" />
+    <Compile Include="TireTreasureDB\TT_Reservation.cs" />
+    <Compile Include="TireTreasureDB\TT_Shop.cs" />
+    <Compile Include="TireTreasureDB\TT_ShopAppUser.cs" />
+    <Compile Include="TireTreasureDB\TT_Transaction.cs" />
+    <Compile Include="TireTreasureDB\TT_TransactSnapshot.cs" />
+    <Compile Include="TireTreasureDB\TT_User.cs" />
     <Compile Include="V_mode\AdminUserInfo.cs" />
     <Compile Include="V_mode\v_Sys_Advertising.cs" />
     <Compile Include="V_mode\v_Sys_AppVerSion.cs" />
@@ -95,6 +116,7 @@
     <Compile Include="RMS\V_RoleManuButtons.cs" />
     <Compile Include="Parameter.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

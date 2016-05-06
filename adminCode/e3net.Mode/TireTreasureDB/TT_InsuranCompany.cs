@@ -4,21 +4,21 @@ using System.Collections;
 using System.Collections.Generic;
 using Moon.Orm;
 
-namespace e3net.Mode.TireMoneyDB
+namespace e3net.Mode.TireTreasureDB
 {
 
-    [Table("[TM_PayPlatform]", DbType.SqlServer)]
-    [TablesPrimaryKey(PrimaryKeyType.AutoIncrease, typeof(Int32), "PPId")]
-    public partial class TM_PayPlatform : EntityBase
+    [Table("[TT_InsuranCompany]", DbType.SqlServer)]
+    [TablesPrimaryKey(PrimaryKeyType.AutoIncrease, typeof(Int32), "InsuranCompanyId")]
+    public partial class TT_InsuranCompany : EntityBase
     {
 
         /// <summary>
         /// 主键
         /// </summary>
-        public Int32 PPId
+        public Int32 InsuranCompanyId
         {
-            get { return GetPropertyValue<Int32>("PPId"); }
-            set { SetPropertyValue("PPId", value); }
+            get { return GetPropertyValue<Int32>("InsuranCompanyId"); }
+            set { SetPropertyValue("InsuranCompanyId", value); }
         }
 
         /// <summary>
@@ -85,15 +85,6 @@ namespace e3net.Mode.TireMoneyDB
         }
 
         /// <summary>
-        /// 类型(转账、购物)
-        /// </summary>
-        public Int32? Types
-        {
-            get { return GetPropertyValue<Int32?>("Types"); }
-            set { SetPropertyValue("Types", value); }
-        }
-
-        /// <summary>
         /// 添加时间
         /// </summary>
         public DateTime? CreateTime
@@ -130,86 +121,81 @@ namespace e3net.Mode.TireMoneyDB
         }
     }
 
-    [Table("[TM_PayPlatform]", DbType.SqlServer)]
-    public  partial class TM_PayPlatformSet : MQLBase
+    [Table("[TT_InsuranCompany]", DbType.SqlServer)]
+    public  partial class TT_InsuranCompanySet : MQLBase
     {
         public static  MQLBase Select(params FieldBase[] fields)
         {
-            return MQLBase.Select(DbType.SqlServer,"[TM_PayPlatform]",fields);
+            return MQLBase.Select(DbType.SqlServer,"[TT_InsuranCompany]",fields);
         }
         public static  MQLBase SelectAll()
         {
-            return MQLBase.SelectAll(DbType.SqlServer,"[TM_PayPlatform]");
+            return MQLBase.SelectAll(DbType.SqlServer,"[TT_InsuranCompany]");
         }
         public static MQLBase SelectAllBut(params FieldBase[] fields)
         {
-            return MQLBase.SelectAllBut(typeof(TM_PayPlatformSet),DbType.SqlServer,"[TM_PayPlatform]",fields);
+            return MQLBase.SelectAllBut(typeof(TT_InsuranCompanySet),DbType.SqlServer,"[TT_InsuranCompany]",fields);
         }
 
         /// <summary>
         /// 主键
         /// </summary>
-        public static readonly FieldBase PPId = new FieldBase(DbType.SqlServer, "[TM_PayPlatform]", FieldType.OnlyPrimaryKey, "[PPId]");
+        public static readonly FieldBase InsuranCompanyId = new FieldBase(DbType.SqlServer, "[TT_InsuranCompany]", FieldType.OnlyPrimaryKey, "[InsuranCompanyId]");
 
         /// <summary>
         /// 名称
         /// </summary>
-        public static readonly FieldBase TName = new FieldBase(DbType.SqlServer, "[TM_PayPlatform]", FieldType.Common, "[TName]");
+        public static readonly FieldBase TName = new FieldBase(DbType.SqlServer, "[TT_InsuranCompany]", FieldType.Common, "[TName]");
 
         /// <summary>
         /// 接口Url
         /// </summary>
-        public static readonly FieldBase ApiUrl = new FieldBase(DbType.SqlServer, "[TM_PayPlatform]", FieldType.Common, "[ApiUrl]");
+        public static readonly FieldBase ApiUrl = new FieldBase(DbType.SqlServer, "[TT_InsuranCompany]", FieldType.Common, "[ApiUrl]");
 
         /// <summary>
         /// 图标
         /// </summary>
-        public static readonly FieldBase IConUrl = new FieldBase(DbType.SqlServer, "[TM_PayPlatform]", FieldType.Common, "[IConUrl]");
+        public static readonly FieldBase IConUrl = new FieldBase(DbType.SqlServer, "[TT_InsuranCompany]", FieldType.Common, "[IConUrl]");
 
         /// <summary>
         /// 排序
         /// </summary>
-        public static readonly FieldBase Orders = new FieldBase(DbType.SqlServer, "[TM_PayPlatform]", FieldType.Common, "[Orders]");
+        public static readonly FieldBase Orders = new FieldBase(DbType.SqlServer, "[TT_InsuranCompany]", FieldType.Common, "[Orders]");
 
         /// <summary>
         /// 代号
         /// </summary>
-        public static readonly FieldBase SCode = new FieldBase(DbType.SqlServer, "[TM_PayPlatform]", FieldType.Common, "[SCode]");
+        public static readonly FieldBase SCode = new FieldBase(DbType.SqlServer, "[TT_InsuranCompany]", FieldType.Common, "[SCode]");
 
         /// <summary>
         /// 公钥
         /// </summary>
-        public static readonly FieldBase Pkey = new FieldBase(DbType.SqlServer, "[TM_PayPlatform]", FieldType.Common, "[Pkey]");
+        public static readonly FieldBase Pkey = new FieldBase(DbType.SqlServer, "[TT_InsuranCompany]", FieldType.Common, "[Pkey]");
 
         /// <summary>
         /// 详情
         /// </summary>
-        public static readonly FieldBase Details = new FieldBase(DbType.SqlServer, "[TM_PayPlatform]", FieldType.Common, "[Details]");
-
-        /// <summary>
-        /// 类型(转账、购物)
-        /// </summary>
-        public static readonly FieldBase Types = new FieldBase(DbType.SqlServer, "[TM_PayPlatform]", FieldType.Common, "[Types]");
+        public static readonly FieldBase Details = new FieldBase(DbType.SqlServer, "[TT_InsuranCompany]", FieldType.Common, "[Details]");
 
         /// <summary>
         /// 添加时间
         /// </summary>
-        public static readonly FieldBase CreateTime = new FieldBase(DbType.SqlServer, "[TM_PayPlatform]", FieldType.Common, "[CreateTime]");
+        public static readonly FieldBase CreateTime = new FieldBase(DbType.SqlServer, "[TT_InsuranCompany]", FieldType.Common, "[CreateTime]");
 
         /// <summary>
         /// 修改时间
         /// </summary>
-        public static readonly FieldBase UpdateTime = new FieldBase(DbType.SqlServer, "[TM_PayPlatform]", FieldType.Common, "[UpdateTime]");
+        public static readonly FieldBase UpdateTime = new FieldBase(DbType.SqlServer, "[TT_InsuranCompany]", FieldType.Common, "[UpdateTime]");
 
         /// <summary>
         /// 是否有效
         /// </summary>
-        public static readonly FieldBase isValid = new FieldBase(DbType.SqlServer, "[TM_PayPlatform]", FieldType.Common, "[isValid]");
+        public static readonly FieldBase isValid = new FieldBase(DbType.SqlServer, "[TT_InsuranCompany]", FieldType.Common, "[isValid]");
 
         /// <summary>
         /// 是否删除
         /// </summary>
-        public static readonly FieldBase isDeleted = new FieldBase(DbType.SqlServer, "[TM_PayPlatform]", FieldType.Common, "[isDeleted]");
+        public static readonly FieldBase isDeleted = new FieldBase(DbType.SqlServer, "[TT_InsuranCompany]", FieldType.Common, "[isDeleted]");
     }
 
 }
