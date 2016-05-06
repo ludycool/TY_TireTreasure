@@ -84,6 +84,27 @@
     <Compile Include="Base\Sys_CityAreaBiz.cs" />
     <Compile Include="Base\Sys_DicTypeBiz.cs" />
     <Compile Include="Base\Sys_FilesBiz.cs" />
+    <Compile Include="TireTreasureDB\TT_AppUserInfoBiz.cs" />
+    <Compile Include="TireTreasureDB\TT_CommentTBiz.cs" />
+    <Compile Include="TireTreasureDB\TT_FilesInsuranBiz.cs" />
+    <Compile Include="TireTreasureDB\TT_FilesTransactBiz.cs" />
+    <Compile Include="TireTreasureDB\TT_FriendsBiz.cs" />
+    <Compile Include="TireTreasureDB\TT_FundInfoBiz.cs" />
+    <Compile Include="TireTreasureDB\TT_FundPerSonBiz.cs" />
+    <Compile Include="TireTreasureDB\TT_InsuranBiz.cs" />
+    <Compile Include="TireTreasureDB\TT_InsuranCompanyBiz.cs" />
+    <Compile Include="TireTreasureDB\TT_LevelsBiz.cs" />
+    <Compile Include="TireTreasureDB\TT_MessagesBiz.cs" />
+    <Compile Include="TireTreasureDB\TT_MissionsApplyBiz.cs" />
+    <Compile Include="TireTreasureDB\TT_MissionsBiz.cs" />
+    <Compile Include="TireTreasureDB\TT_ReferencesBiz.cs" />
+    <Compile Include="TireTreasureDB\TT_RequestFriendsBiz.cs" />
+    <Compile Include="TireTreasureDB\TT_ReservationBiz.cs" />
+    <Compile Include="TireTreasureDB\TT_ShopAppUserBiz.cs" />
+    <Compile Include="TireTreasureDB\TT_ShopBiz.cs" />
+    <Compile Include="TireTreasureDB\TT_TransactionBiz.cs" />
+    <Compile Include="TireTreasureDB\TT_TransactSnapshotBiz.cs" />
+    <Compile Include="TireTreasureDB\TT_UserBiz.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\e3net.common\e3net.common.csproj">

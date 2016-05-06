@@ -194,14 +194,14 @@ namespace ESUI.Controllers
                     }
 
                     #region   存cookies
-                    string datajson = JsonHelper.ToJson(UserData);
-                    HttpCookie cookie = new HttpCookie("UserData");//初使化并设置Cookie的名称
-                    DateTime dt = DateTime.Now;
-                    TimeSpan ts = new TimeSpan(0, 1, 0, 0, 0);//过期时间为1分钟
-                    cookie.Expires = dt.Add(ts);//设置过期时间
+                    //string datajson = JsonHelper.ToJson(UserData);
+                    //HttpCookie cookie = new HttpCookie("UserData");//初使化并设置Cookie的名称
+                    //DateTime dt = DateTime.Now;
+                    //TimeSpan ts = new TimeSpan(0, 1, 0, 0, 0);//过期时间为1分钟
+                    //cookie.Expires = dt.Add(ts);//设置过期时间
 
-                    cookie.Values.Add("AdminUserInfo", datajson);
-                    Response.AppendCookie(cookie);
+                    //cookie.Values.Add("AdminUserInfo", datajson);
+                    //Response.AppendCookie(cookie);
 
                     #endregion
 
