@@ -133,13 +133,17 @@ namespace e3net.Mode.V_mode
     [Table("[v_Sys_CityArea]", DbType.SqlServer)]
     public  partial class v_Sys_CityAreaSet : MQLBase
     {
-        public static new MQLBase Select(params FieldBase[] fields)
+        public static  MQLBase Select(params FieldBase[] fields)
         {
             return MQLBase.Select(DbType.SqlServer,"[v_Sys_CityArea]",fields);
         }
-        public static new MQLBase SelectAll()
+        public static  MQLBase SelectAll()
         {
             return MQLBase.SelectAll(DbType.SqlServer,"[v_Sys_CityArea]");
+        }
+        public static MQLBase SelectAllBut(params FieldBase[] fields)
+        {
+            return MQLBase.SelectAllBut(typeof(v_Sys_CityAreaSet),DbType.SqlServer,"[v_Sys_CityArea]",fields);
         }
 
         /// <summary>

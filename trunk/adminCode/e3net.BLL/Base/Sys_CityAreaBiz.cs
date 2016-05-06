@@ -36,7 +36,7 @@ namespace e3net.BLL.Base
                 menus += string.Format("  \"ParentId\":\"{0}\",", listFather[i].ParentId);
                 menus += string.Format("  \"OrderNo\":\"{0}\",", listFather[i].OrderNo);
                 menus += string.Format("  \"Remarks\":\"{0}\",", listFather[i].Remarks);
-                menus += string.Format("  \"Icon\":\"{0}\",", listFather[i].Icon);
+                menus += string.Format("  \"iconCls\":\"{0}\",", listFather[i].Icon);
                 menus += string.Format("  \"TCode\":\"{0}\",", listFather[i].TCode);
                 menus += string.Format("  \"AreaTypes\":\"{0}\",", listFather[i].AreaTypes);
                 menus += string.Format("  \"AreaTypesName\":\"{0}\",", listFather[i].AreaTypesName);
@@ -62,7 +62,7 @@ namespace e3net.BLL.Base
                     menus += string.Format("  \"ParentId\":\"{0}\",", list[i].ParentId);
                     menus += string.Format("  \"OrderNo\":\"{0}\",", list[i].OrderNo);
                     menus += string.Format("  \"Remarks\":\"{0}\",", list[i].Remarks);
-                    menus += string.Format("  \"Icon\":\"{0}\",", list[i].Icon);
+                    menus += string.Format("  \"iconCls\":\"{0}\",", list[i].Icon);
                     menus += string.Format("  \"TCode\":\"{0}\",", list[i].TCode);
                     menus += string.Format("  \"AreaTypes\":\"{0}\",", list[i].AreaTypes);
                     menus += string.Format("  \"AreaTypesName\":\"{0}\",", list[i].AreaTypesName);

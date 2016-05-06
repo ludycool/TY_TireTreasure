@@ -37,7 +37,7 @@ namespace ESUI.Controllers
         public string GetJson(string DicType)
         {
 
-            var sql = Sys_DictionarySet.SelectAll().Where(Sys_DictionarySet.DicTypeId.Equal(DicType));
+            var sql = Sys_DictionarySet.SelectAll().Where(Sys_DictionarySet.DicTypeId.Equal(DicType).And(Sys_DictionarySet.isDeleted.Equal(0)));
             List<Sys_Dictionary> listAll = OPBiz.GetOwnList<Sys_Dictionary>(sql);
             string jsonstring = OPBiz.GetTree(listAll);
             return jsonstring;
@@ -46,7 +46,23 @@ namespace ESUI.Controllers
         public JsonResult EditInfo(Sys_Dictionary EidModle)
         {
             HttpReSultMode ReSultMode = new HttpReSultMode();
+            var mql2 = Sys_DictionarySet.SelectAll().Where(Sys_DictionarySet.DicNo.Equal(EidModle.DicNo));
+            Sys_Dictionary Rmodel = OPBiz.GetEntity(mql2);
+            if (Rmodel != null && Rmodel.DicId != EidModle.DicId)
+            {
+                ReSultMode.Code = -13;
+                ReSultMode.Data = "";
+                ReSultMode.Msg = "已经存在相同的编号";
+                return Json(ReSultMode, JsonRequestBehavior.AllowGet);
+            }
+
+
             bool IsAdd = false;
+            if (EidModle.ParentId == EidModle.DicId)//父级不能等于自已
+            {
+
+                EidModle.ParentId = 0;
+            }
           
              if (EidModle.DicId == 0)//id为空，是添加
             {
@@ -103,8 +119,8 @@ namespace ESUI.Controllers
 
         public JsonResult Del(string IDSet)
         {
-            var mql2 = Sys_DictionarySet.DicId.In(IDSet);
-            int f = OPBiz.Remove<Sys_DictionarySet>(mql2);
+
+            int f = OPBiz.DelForSetDelete("DicId", IDSet);
             HttpReSultMode ReSultMode = new HttpReSultMode();
             if (f > 0)
             {

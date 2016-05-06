@@ -30,7 +30,7 @@
                     columns: [[
                         { field: 'ck', checkbox: true },
 
-              { field: 'DicTypeId', title: '字典主键', width: 100, sortable: true },
+              { field: 'DicTypeId', title: 'Id', width: 100, sortable: true },
               { field: 'DicTypeName', title: '字典名称', width: 100, sortable: true },
               { field: 'DicTypeNum', title: '字典编号', width: 100, sortable: true },
               {
@@ -45,16 +45,16 @@
               },
               { field: 'Remarks', title: '备注', width: 100, sortable: true },
               { field: 'OrderId', title: '序号', width: 100, sortable: true },
-              { field: 'CreateTime', title: '添加时间', width: 100, sortable: true },
-              {
-                  field: 'isValid', title: '是否有效', width: 100, sortable: true, formatter: function (value, row, index) {
-                      if (row.isValid) {
-                          return "是";
-                      } else {
-                          return "否";
-                      }
-                  }
-              }
+              { field: 'CreateTime', title: '添加时间', width: 100, sortable: true }
+              //{
+              //    field: 'isValid', title: '是否有效', width: 100, sortable: true, formatter: function (value, row, index) {
+              //        if (row.isValid) {
+              //            return "是";
+              //        } else {
+              //            return "否";
+              //        }
+              //    }
+              //}
                     ]],
                     iconCls: 'icon-save',
                     title: '词典类型',

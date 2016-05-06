@@ -64,6 +64,17 @@ namespace ESUI.Controllers
         public JsonResult EditInfo(Sys_DicType EidModle)
         {
             HttpReSultMode ReSultMode = new HttpReSultMode();
+
+            var mql2 = Sys_DicTypeSet.SelectAll().Where(Sys_DicTypeSet.DicTypeNum.Equal(EidModle.DicTypeNum));
+            Sys_DicType Rmodel = OPBiz.GetEntity(mql2);
+            if (Rmodel != null && Rmodel.DicTypeId != EidModle.DicTypeId)
+            {
+                ReSultMode.Code = -13;
+                ReSultMode.Data = "";
+                ReSultMode.Msg = "已经存在相同的编号";
+                return Json(ReSultMode, JsonRequestBehavior.AllowGet);
+            }
+
             bool IsAdd = false;
           
              if (EidModle.DicTypeId == 0)//id为空，是添加
