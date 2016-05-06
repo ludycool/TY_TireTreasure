@@ -1,0 +1,341 @@
+﻿<!DOCTYPE html>
+@{
+    ViewBag.Title = "Index";
+}
+
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    @* <script type="text/javascript" charset="utf-8" src="~/Content/js/DictionaryHelper.js"></script>*@
+    @* ReSharper disable once NotAllPathsReturnValue *@
+    @section Jsprepare{
+
+        <script type="text/javascript">
+            @Html.Raw(ViewBag.RuteUrl)
+         @Html.Raw(ViewBag.toolbar)
+            jQuery(document).ready(function () {
+                DataGridSet();
+
+            })
+            function DataGridSet() {
+                $('#dg').datagrid({
+                    url: BaseUrl + 'Search',
+                    columns: [[
+                        { field: 'ck', checkbox: true },
+
+
+              { field: 'LoginName', title: '登录名', width: 100, sortable: true },
+              { field: 'TrueName', title: '姓名', width: 100, sortable: true },
+               { field: 'Nickname', title: '昵称', width: 100, sortable: true },
+              {
+                  field: 'ImgeUrl', title: '头像', width: 100, sortable: true, formatter: function (value, row, index) {
+                      return '  <img  src="' + row.ImgeUrl + '" style="width: 50px; height: 50px;" />';
+                  }
+              },
+              { field: 'Phone', title: '电话', width: 100, sortable: true },
+              { field: 'ProvinceCode', title: '省', width: 100, sortable: true },
+              { field: 'CityCode', title: '城市', width: 100, sortable: true },
+              { field: 'AreaCode', title: '区', width: 100, sortable: true },
+              { field: 'Address', title: '地址', width: 100, sortable: true },
+
+              //{ field: 'UserType', title: '用户类型 0为普通用户 1为店铺用户', width: 100, sortable: true },
+              { field: 'Levels', title: '等级', width: 100, sortable: true },
+              { field: 'Scores', title: '积分', width: 100, sortable: true },
+              {
+                  field: 'States', title: '状态', width: 100, sortable: true, formatter: function (value, row, index) {
+                      if (row.States == 0) {
+                          return "正常";
+                      } else if (row.States == 1) {
+                          return "锁定";
+                      }
+                  }
+              },
+              //{ field: 'tags', title: '标签(组)', width: 100, sortable: true },
+              //{ field: 'CurrentIP', title: '在线iP', width: 100, sortable: true },
+              //{ field: 'CurrentPort', title: '在线端口', width: 100, sortable: true },
+              //{ field: 'LastLoginAddr', title: '最后登录地点', width: 100, sortable: true },
+              //{ field: 'IsOnline', title: '状态（1在线 0 下线 ）', width: 100, sortable: true },
+
+
+
+              //{ field: 'CategoryId', title: '类别', width: 100, sortable: true }, 
+              //{ field: 'Details', title: '详情', width: 100, sortable: true }, 
+              { field: 'References', title: '推荐我的人名', width: 100, sortable: true },
+              { field: 'AddTime', title: '注册时间时间', width: 100, sortable: true }
+                    ]],
+                    iconCls: 'icon-save',
+                    title: '会员信息',
+                    nowrap: true,
+                    fit: true,
+                    //fitColumns: true,
+                    singleSelect: true,
+                    striped: true,
+                    collapsible: true,
+                    pageSize: 20,
+                    pagination: true,
+                    rownumbers: true,
+                    sortName: 'CreateTime',
+                    sortOrder: 'desc',
+                    toolbar: toolbars
+                });
+            }
+            //刷新
+            function ReloadOP() {
+                $("#dg").datagrid("reload");
+            }
+        
+
+            //查看
+            function ShowOP() {
+                var rows = $("#dg").datagrid('getSelected');
+                //首先取出来值判断只能选择一个
+                if (rows == null) {
+                    // $.messager.alert("友情提示", "请选择", "error");
+                    return;
+                }
+                $("#DivShow").dialog('open').dialog('setTitle', '查看-' + rows.LoginName).window('resize', { top: 20 });
+                DataBaseFunction.BindForm("fshow", rows);
+                //if (rows.Types == 0) {
+                //    $("#fshow span[name='Types']").html('转账');
+                //} else {
+                //    $("#fshow span[name='Types']").html('购物');
+
+                //}
+                $("#fshow img[name='ImgeUrl']").attr("src", rows.ImgeUrl)
+
+               
+            }
+            //绑定修改显示详细信息的方法
+            function EditInfo() {
+
+                var rows = $("#dg").datagrid('getSelected');
+                //首先取出来值判断只能选择一个
+                if (rows == null) {
+                    $.messager.alert("友情提示", "请选择", "error");
+                    return;
+                }
+                $("#DivEditor").dialog('open').dialog('setTitle', '修改-' + rows.LoginName).window('resize', { top: 20 });
+                $(".validatebox-tip").remove();//清除验证样式
+
+                //$("#ff input[name='HouseCode']").attr("disabled", "true");
+
+                var ID = rows.AppUserInfoId;  //获取到了用选择的ID
+                $.ajax({
+                    url: BaseUrl + 'GetInfo',
+                    type: 'POST',
+                    data: { ID: ID },
+                    cache: false,
+                    error: function () { alert('Error $.ajax'); },
+                    success: function (data) {
+                        //var result = eval('(' + data + ')');
+                        DataBaseFunction.BindForm("ff", data);
+                        //$("input[name='HouseNo']").focus();
+                    }
+                });
+
+            }
+
+            //实现的编辑，包括增查改
+            function SaveInfo() {
+
+                //判断的信息是否通过验证
+                var validate = $("#ff").form('validate');
+                if (validate == false) {
+                    return false;
+                }
+                //获取需要传递的参数传递给前台
+                var data = DataBaseFunction.GetFormData("ff")
+                //发送异步请求到后台保存数据
+                $.post(BaseUrl + 'EditInfo', data, function (data) {
+                    alerts(data.Msg, 2);
+                    if (data.Code > 0) {
+                        $('#DivEditor').dialog('close');
+                        $(".validatebox-tip").remove();
+                        $("#dg").datagrid("reload");
+                    }
+                });
+
+            }
+
+            //搜索
+            function SearchGo() {
+                DataBaseFunction.Search("fSearh", "dg");
+                $("#Div_Searh").dialog('close');
+            }
+            //搜索
+            function Search() {
+
+                // $("#fSearh").form("clear");
+                $("#Div_Searh").dialog('open').dialog('setTitle', '搜索').window('resize', { top: 100, left: 100 });
+            }
+            //删除
+            function Del() {
+                DataBaseFunction.deleteInfo("dg", "AppUserInfoId", "Name");
+            }
+        </script>
+    }
+
+</head>
+<body style="overflow-y: hidden">
+
+    <table id="dg"></table>
+
+    <!------------------------搜索弹出层---------------------------------->
+    <div id="Div_Searh" class="easyui-dialog" style="width: 380px; padding: 10px 20px;"
+        closed="true" resizable="true" modal="true" buttons="#dlg-buttons">
+        <form id="fSearh">
+
+            <table class="stripes" style="table-layout: fixed; margin: 0 auto; width: 320px;" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td style="width: 60px;">
+                        <label>用户名：</label></td>
+                    <td>
+                        <input type="text" class="textbox" name="LoginName_like" style="width: 200px;" />
+                    </td>
+
+                </tr>
+            </table>
+
+        </form>
+        <div style="text-align: center; width: 100%; margin: 5px 0px; display: block;">
+            <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-undo" style="float: left;" onclick=" DataBaseFunction.ClearForm('fSearh');">清除</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" style="float: right;" iconcls="icon-search" onclick="SearchGo();">搜索</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" style="float: right;" iconcls="icon-cancel" onclick="$('#Div_Searh').dialog('close')">关闭</a>
+        </div>
+    </div>
+    <!------------------------弹出层---------------------------------->
+    <div id="DivEditor" class="easyui-dialog" style="width: 630px;"
+        closed="true" resizable="true" modal="true" buttons="#dlg-buttons">
+        <div id="Div_form" class="easyui-panel" style="padding: 10px 10px; overflow-x: hidden;" data-options=" height:500,width:610,border:false">
+            <form id="ff" method="post" enctype="multipart/form-data">
+
+                <table class="stripes" style="table-layout: fixed;" border="0" cellspacing="0" cellpadding="0">
+                    <input type="hidden" name="OwnerID" />
+                    <tr>
+                        <td style="width: 120px;">
+                            <label>房间门牌号：</label></td>
+                        <td style="width: 490px;">
+                            <input class="easyui-validatebox textbox" type="text" name="HouseNo" /></td>
+                    </tr>
+
+                </table>
+
+            </form>
+        </div>
+
+        <div style="text-align: center; width: 100%; margin-bottom: 5px;">
+            <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-ok" onclick="SaveInfo();">确定</a>&nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-cancel" onclick="$('#DivEditor').dialog('close')">关闭</a>
+        </div>
+    </div>
+
+    <!------------------------弹出查看层---------------------------------->
+    <div id="DivShow" class="easyui-dialog" style="width: 600px;"
+        closed="true" resizable="true" modal="true" buttons="#dlg-buttons">
+        <div class="easyui-panel" style="padding: 10px 10px; overflow-x: hidden;" data-options=" height:460,width:580,border:false">
+            <form id="fshow" method="post" enctype="multipart/form-data">
+
+                <table class="stripes" style="table-layout: fixed;" border="0" cellspacing="0" cellpadding="0">
+                
+                    <tr>
+                        <td style=" width:120px;">
+                            <label>登录名：</label></td>
+                        <td style=" width:480px;"><span name="LoginName"></span></td>
+                    </tr>
+                    
+                    <tr>
+                        <td>
+                            <label>姓名：</label></td>
+                        <td><span name="TrueName"></span></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>用户类型：</label></td>
+                        <td><span name="UserType"></span></td>
+                    </tr>
+                     <tr>
+                        <td>
+                            <label>昵称：</label></td>
+                        <td><span name="Nickname"></span></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>头像：</label></td>
+                        <td> <img   name="ImgeUrl" src="" style="width: 50px; height: 50px;" /></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>电话：</label></td>
+                        <td><span name="Phone"></span></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>省：</label></td>
+                        <td><span name="ProvinceCode"></span></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>城市：</label></td>
+                        <td><span name="CityCode"></span></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>区：</label></td>
+                        <td><span name="AreaCode"></span></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>地址：</label></td>
+                        <td><span name="Address"></span></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>等级：</label></td>
+                        <td><span name="Levels"></span></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>积分：</label></td>
+                        <td><span name="Scores"></span></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>状态）：</label></td>
+                        <td><span name="States"></span></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>标签(组)：</label></td>
+                        <td><span name="tags"></span></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>最后登录地点：</label></td>
+                        <td><span name="LastLoginAddr"></span></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>在线状态：</label></td>
+                        <td><span name="IsOnline"></span></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>注册时间：</label></td>
+                        <td><span name="CreateTime"></span></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>推荐我的人名：</label></td>
+                        <td><span name="References"></span></td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+
+        <div style="text-align: center; width: 100%; margin-bottom: 5px;">
+            <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-cancel" onclick="$('#DivShow').dialog('close')">关闭</a>
+        </div>
+    </div>
+</body>
+</html>
+

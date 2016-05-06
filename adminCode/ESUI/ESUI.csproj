@@ -3510,6 +3510,8 @@
     <Content Include="Views\TM_WaterBill\Index.cshtml" />
     <Content Include="Views\Sys_DicType\Index.cshtml" />
     <Content Include="Views\Sys_Dictionary\Index.cshtml" />
+    <Content Include="Views\TT_AppUserInfo\Index.cshtml" />
+    <Content Include="Views\TT_Shop\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="temp\" />

@@ -51,7 +51,7 @@ namespace ESUI.Controllers
             pc.sys_Key = "ShopId";
             pc.sys_PageIndex = pageIndex;
             pc.sys_PageSize = pageSize;
-            pc.sys_Table = "TT_Shop";
+            pc.sys_Table = "v_TT_Shop";
             pc.sys_Where = Where;
             pc.sys_Order = " " + sortField + " " + sortOrder;
             DataSet ds = OPBiz.GetPagingDataP(pc);
