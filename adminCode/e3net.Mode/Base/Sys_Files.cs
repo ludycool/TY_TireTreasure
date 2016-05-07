@@ -13,7 +13,7 @@ namespace e3net.Mode.Base
     {
 
         /// <summary>
-        /// 
+        /// 主键
         /// </summary>
         public Int64 FileId
         {
@@ -22,7 +22,7 @@ namespace e3net.Mode.Base
         }
 
         /// <summary>
-        /// 
+        /// 所禹对象Id
         /// </summary>
         public Guid? ToId
         {
@@ -31,7 +31,7 @@ namespace e3net.Mode.Base
         }
 
         /// <summary>
-        /// 
+        /// 显示名称
         /// </summary>
         public String ShowName
         {
@@ -40,7 +40,7 @@ namespace e3net.Mode.Base
         }
 
         /// <summary>
-        /// 
+        /// 文件名
         /// </summary>
         public String FileName
         {
@@ -49,7 +49,7 @@ namespace e3net.Mode.Base
         }
 
         /// <summary>
-        /// 
+        /// 来源表（某个数据表）
         /// </summary>
         public String SourceTable
         {
@@ -58,7 +58,7 @@ namespace e3net.Mode.Base
         }
 
         /// <summary>
-        /// 
+        /// 相对路径
         /// </summary>
         public String RelativePath
         {
@@ -67,7 +67,7 @@ namespace e3net.Mode.Base
         }
 
         /// <summary>
-        /// 
+        /// 路由
         /// </summary>
         public String Route
         {
@@ -76,7 +76,7 @@ namespace e3net.Mode.Base
         }
 
         /// <summary>
-        /// 
+        /// 后缀名
         /// </summary>
         public String Suffix
         {
@@ -85,7 +85,7 @@ namespace e3net.Mode.Base
         }
 
         /// <summary>
-        /// 
+        /// 文件属性类型（中文）
         /// </summary>
         public String FileType
         {
@@ -94,7 +94,7 @@ namespace e3net.Mode.Base
         }
 
         /// <summary>
-        /// 
+        /// 添加时间
         /// </summary>
         public DateTime? AddTime
         {
@@ -138,52 +138,52 @@ namespace e3net.Mode.Base
         }
 
         /// <summary>
-        /// 
+        /// 主键
         /// </summary>
         public static readonly FieldBase FileId = new FieldBase(DbType.SqlServer, "[Sys_Files]", FieldType.OnlyPrimaryKey, "[FileId]");
 
         /// <summary>
-        /// 
+        /// 所禹对象Id
         /// </summary>
         public static readonly FieldBase ToId = new FieldBase(DbType.SqlServer, "[Sys_Files]", FieldType.Common, "[ToId]");
 
         /// <summary>
-        /// 
+        /// 显示名称
         /// </summary>
         public static readonly FieldBase ShowName = new FieldBase(DbType.SqlServer, "[Sys_Files]", FieldType.Common, "[ShowName]");
 
         /// <summary>
-        /// 
+        /// 文件名
         /// </summary>
         public static readonly FieldBase FileName = new FieldBase(DbType.SqlServer, "[Sys_Files]", FieldType.Common, "[FileName]");
 
         /// <summary>
-        /// 
+        /// 来源表（某个数据表）
         /// </summary>
         public static readonly FieldBase SourceTable = new FieldBase(DbType.SqlServer, "[Sys_Files]", FieldType.Common, "[SourceTable]");
 
         /// <summary>
-        /// 
+        /// 相对路径
         /// </summary>
         public static readonly FieldBase RelativePath = new FieldBase(DbType.SqlServer, "[Sys_Files]", FieldType.Common, "[RelativePath]");
 
         /// <summary>
-        /// 
+        /// 路由
         /// </summary>
         public static readonly FieldBase Route = new FieldBase(DbType.SqlServer, "[Sys_Files]", FieldType.Common, "[Route]");
 
         /// <summary>
-        /// 
+        /// 后缀名
         /// </summary>
         public static readonly FieldBase Suffix = new FieldBase(DbType.SqlServer, "[Sys_Files]", FieldType.Common, "[Suffix]");
 
         /// <summary>
-        /// 
+        /// 文件属性类型（中文）
         /// </summary>
         public static readonly FieldBase FileType = new FieldBase(DbType.SqlServer, "[Sys_Files]", FieldType.Common, "[FileType]");
 
         /// <summary>
-        /// 
+        /// 添加时间
         /// </summary>
         public static readonly FieldBase AddTime = new FieldBase(DbType.SqlServer, "[Sys_Files]", FieldType.Common, "[AddTime]");
 

@@ -37,6 +37,13 @@ namespace ESUI.httpHandle
                     context.Response.End();
                     break;
 
+                case "geturltest":
+                    //HttpContext.Current.Request.Url.Authority;
+                    string url ="http://" +HttpContext.Current.Request.Url.Authority+"/";
+                    context.Response.Write(url);
+                    context.Response.End();
+                    break;
+
             }
 
         }
