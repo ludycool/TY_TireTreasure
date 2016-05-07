@@ -9,7 +9,7 @@ function change(v) {
      sCArea = document.getElementById(s[2]);
     switch (v) {
         case 0:
-            $("#" + s[0]).val(ProvinceD[0].ValueName);
+            $("#" + s[0]).val(ProvinceD[0].TCode);
             change(v + 1);
             break;
         case 1:
@@ -18,7 +18,7 @@ function change(v) {
             var prId;//省 的id
             var selectproCode = $("#"+s[0]).val();
             $.each(ProvinceD, function (i, n) {
-                if (selectproCode == n.ValueName)
+                if (selectproCode == n.TCode)
                 {
                     prId = n.Id;//当前选的省的id
                     return true;
@@ -27,7 +27,7 @@ function change(v) {
             $.each(CityD, function (i, n) {
                 if (prId == n.ParentId) {
                    
-                    sCity.options.add(new Option(n.Name, n.ValueName));
+                    sCity.options.add(new Option(n.TName, n.TCode));
                 }
             });
             change(v + 1);
@@ -38,14 +38,14 @@ function change(v) {
             var CId;//市 的id
             var selectCCode = $("#" + s[1]).val();
             $.each(CityD, function (i, n) {
-                if (selectCCode == n.ValueName) {
+                if (selectCCode == n.TCode) {
                     CId = n.Id; //当前选的市的id
                     return true;
                 }
             });
             $.each(AreaD, function (i, n) {
                 if (CId == n.ParentId) {
-                    sCArea.options.add(new Option(n.Name, n.ValueName));
+                    sCArea.options.add(new Option(n.TName, n.TCode));
                 }
             });
             break;
@@ -79,7 +79,7 @@ function _init_area() {  //初始化函数
                     switch (n.AreaTypes) {
                         case 2:
                             ProvinceD.push(n);
-                            document.getElementById(s[0]).options.add(new Option(n.Name, n.ValueName));
+                            document.getElementById(s[0]).options.add(new Option(n.TName, n.TCode));
                             break;
                         case 1:
                             CityD.push(n);
@@ -125,7 +125,7 @@ function _init_areaForSearch() {  //初始化函数   搜索用
                             ProvinceD.push(n);
                             if (document.getElementById(d[0]) != null)
                             {
-                                document.getElementById(d[0]).options.add(new Option(n.Name, n.ValueName));
+                                document.getElementById(d[0]).options.add(new Option(n.TName, n.TCode));
 
                             }
                             break;
@@ -143,7 +143,7 @@ function _init_areaForSearch() {  //初始化函数   搜索用
         });
     } else {
         $.each(ProvinceD, function (i, n) {
-          document.getElementById(d[0]).options.add(new Option(n.Name, n.ValueName));
+          document.getElementById(d[0]).options.add(new Option(n.TName, n.TCode));
         });
         changeForSearch(0);//省城市默认选择第一个
     }
@@ -158,7 +158,7 @@ function changeForSearch(v) {
     var sCArea = document.getElementById(d[2]);
     switch (v) {
         case 0:
-            $("#" + d[0]).val(ProvinceD[0].ValueName);
+            $("#" + d[0]).val(ProvinceD[0].TCode);
             changeForSearch(v + 1);
             break;
         case 1:
@@ -168,7 +168,7 @@ function changeForSearch(v) {
             var prId;//省 的id
             var selectproCode = $("#" + d[0]).val();
             $.each(ProvinceD, function (i, n) {
-                if (selectproCode == n.ValueName) {
+                if (selectproCode == n.TCode) {
                     prId = n.Id;//当前选的省的id
                     return true;
                 }
@@ -176,7 +176,7 @@ function changeForSearch(v) {
             $.each(CityD, function (i, n) {
                 if (prId == n.ParentId) {
 
-                    sCity.options.add(new Option(n.Name, n.ValueName));
+                    sCity.options.add(new Option(n.TName, n.TCode));
                 }
             });
             changeForSearch(v + 1);
@@ -188,14 +188,14 @@ function changeForSearch(v) {
             var CId;//市 的id
             var selectCCode = $("#" + d[1]).val();
             $.each(CityD, function (i, n) {
-                if (selectCCode == n.ValueName) {
+                if (selectCCode == n.TCode) {
                     CId = n.Id; //当前选的市的id
                     return true;
                 }
             });
             $.each(AreaD, function (i, n) {
                 if (CId == n.ParentId) {
-                    sCArea.options.add(new Option(n.Name, n.ValueName));
+                    sCArea.options.add(new Option(n.TName, n.TCode));
                 }
             });
             break;

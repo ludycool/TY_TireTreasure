@@ -49,7 +49,7 @@ namespace e3net.Mode.Base
         }
 
         /// <summary>
-        /// 登录名
+        /// 代码
         /// </summary>
         public String TCode
         {
