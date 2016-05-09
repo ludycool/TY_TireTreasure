@@ -453,7 +453,7 @@ namespace ESUI.httpHandle
 
                     }
                     file.Suffix = ext;
-                    file.FileType = "图片";
+                    file.FileType = "文件";
                     file.isValid = true;
                     file.isDeleted = false;
 
