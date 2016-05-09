@@ -241,13 +241,13 @@
                 var FileId = "";
                 $("input[name='Details']").val("");//html带有非法字符
                 $("#ff").form('submit', {
-                    url: "/httpHandle/UploadHandler.ashx?action=addImg&SourceTable=TT_Shop",
+                    url: "/httpHandle/Sys_FilesHandler.ashx?action=addImg&SourceTable=TT_Shop",
                     onSubmit: function () {
 
                     },
                     success: function (data) {
                         var d = eval('(' + data + ')');
-                        if (d.Success) {
+                        if (d.Code>0) {
                             var imgList = eval('(' + d.Data + ')');
                             $("#imgLogo").attr('src', imgList[0].Route + imgList[0].RelativePath);
                             $("input[name='ImageUrl']").val(imgList[0].Route + imgList[0].RelativePath)
@@ -257,7 +257,7 @@
                             file.remove();
                         }
                         else {
-                            alerts(d.Message, 5);
+                            alerts(d.Msg, 5);
                         }
 
                     }
@@ -269,7 +269,7 @@
                 var FileId = "";
                 $("input[name='Details']").val("");//html带有非法字符
                 $("#ff").form('submit', {
-                    url: "/httpHandle/UploadHandler.ashx?action=addImg&SourceTable=TS_ShopUser",
+                    url: "/httpHandle/Sys_FilesHandler.ashx?action=addImg&SourceTable=TT_Shop",
                     onSubmit: function () {
 
                     },
@@ -277,8 +277,8 @@
                         var d = eval('(' + data + ')');
                         if (d.Success) {
                             var imgList = eval('(' + d.Data + ')');
-                            $("#imgLogoM").attr('src', imgList[0].FullRoute);
-                            $("input[name='ImageUrlMax']").val(imgList[0].FullRoute);
+                            $("#imgLogoM").attr('src', imgList[0].Route + imgList[0].RelativePath);
+                            $("input[name='ImageUrlMax']").val(imgList[0].Route + imgList[0].RelativePath);
 
                             var file = $("input[name='fileM']");//清空文件
                             file.after(file.clone().val(""));

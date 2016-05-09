@@ -19,6 +19,9 @@ namespace Zephyr.Utils
 {
     public partial class ZFiles
     {
+
+     
+    
         #region 返回文件是否存在
         /// <summary>
         /// 返回文件是否存在

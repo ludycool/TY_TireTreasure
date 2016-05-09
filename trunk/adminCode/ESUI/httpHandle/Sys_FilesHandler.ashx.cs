@@ -105,14 +105,38 @@ namespace ESUI.httpHandle
 
                     if (!string.IsNullOrEmpty(context.Request["IdSet"]))
                     {
+                        string[] IDSet=context.Request["IdSet"].ToString().Split(',');
+                         var mql2 = Sys_FilesSet.FileId.In(IDSet);
 
-                        string sql = " delete from  Sys_Files   where FileId in (" + context.Request["IdSet"] + ")";
-                        int i = OPBiz.ExecuteSqlWithNonQuery(sql);
-                        if (i > 0)
+                        var selectm=Sys_FilesSet.SelectAll().Where(mql2);
+                        List<Sys_Files> listDel = OPBiz.GetEntities(selectm);
+
+                        //数据库删除
+                        int f = OPBiz.Remove<Sys_FilesSet>(mql2);
+
+                     
+                        if (f> 0)
                         {
                             jmsg.Code = 11;
-                            jmsg.Data = i.ToString();
+                            jmsg.Data = f.ToString();
                             jmsg.Msg = "删除成功";
+
+                            #region 文件删除
+                            try {
+                                  string HttpFileRoute = ConfigurationManager.AppSettings["HttpFileRoute"].ToString();//文件保存本地路径根目录
+                                   for(int i=0;i<listDel.Count;i++)
+                                   {
+                                       string path=  HttpFileRoute+listDel[i].RelativePath;
+                                       ZFiles.FilePicDelete(path);
+                                   }
+                            }
+                            catch(Exception ex) { 
+                            //jmsg.Code = -13;
+                            //jmsg.Data = ex.Message;
+                            //jmsg.Msg = "删除失败";
+
+                            }
+                            #endregion
                         }
                         else
                         {
@@ -205,12 +229,15 @@ namespace ESUI.httpHandle
                     for (int i = 0; i < context.Request.Files.Count; i++)
                     {
                         HttpPostedFile hpFile = context.Request.Files[i];
-                        Sys_Files file = AddImgOne(out jmsg, hpFile, lenth, SourceTable, ToId, ShowName);
-                        if (file != null)
+                        if (!string.IsNullOrEmpty(hpFile.FileName))
                         {
-                            FileIdSet += file.FileId + ",";
-                            res += 1;
-                            listFile.Add(file);
+                            Sys_Files file = AddImgOne(out jmsg, hpFile, lenth, SourceTable, ToId, ShowName);
+                            if (file != null)
+                            {
+                                FileIdSet += file.FileId + ",";
+                                res += 1;
+                                listFile.Add(file);
+                            }
                         }
                     }
                 }
@@ -219,10 +246,12 @@ namespace ESUI.httpHandle
                 {
                     FileIdSet = FileIdSet.Substring(0, FileIdSet.Length - 1);
                 }
-
-                jmsg.Code = res;
-                jmsg.Data = JsonHelper.ToJson(listFile, true);
-                jmsg.Msg = "成功上传：" + context.Request.Files.Count + " 个图片，成功：" + res + "个";
+                if (res > 0)
+                {
+                    jmsg.Code = res;
+                    jmsg.Data = JsonHelper.ToJson(listFile, true);
+                    jmsg.Msg = "成功上传：" + context.Request.Files.Count + " 个图片，成功：" + res + "个";
+                }
           
 
             return jmsg;
@@ -269,12 +298,15 @@ namespace ESUI.httpHandle
                 for (int i = 0; i < context.Request.Files.Count; i++)
                 {
                     HttpPostedFile hpFile = context.Request.Files[i];
-                    Sys_Files file = AddFileOne(out jmsg, hpFile, Types, lenth, SourceTable, ToId, ShowName);
-                    if (file != null)
+                    if (!string.IsNullOrEmpty(hpFile.FileName))
                     {
-                        FileIdSet += file.FileId + ",";
-                        res += 1;
-                        listFile.Add(file);
+                        Sys_Files file = AddFileOne(out jmsg, hpFile, Types, lenth, SourceTable, ToId, ShowName);
+                        if (file != null)
+                        {
+                            FileIdSet += file.FileId + ",";
+                            res += 1;
+                            listFile.Add(file);
+                        }
                     }
                 }
             }
@@ -283,11 +315,12 @@ namespace ESUI.httpHandle
             {
                 FileIdSet = FileIdSet.Substring(0, FileIdSet.Length - 1);
             }
-
-            jmsg.Code = res;
-            jmsg.Data = JsonHelper.ToJson(listFile, true);
-            jmsg.Msg = "成功：" + context.Request.Files.Count + " 个文件，成功：" + res + "个";
-
+            if (res > 0)
+            {
+                jmsg.Code = res;
+                jmsg.Data = JsonHelper.ToJson(listFile, true);
+                jmsg.Msg = "成功：" + context.Request.Files.Count + " 个文件，成功：" + res + "个";
+            }
 
             return jmsg;
 
@@ -313,8 +346,7 @@ namespace ESUI.httpHandle
             {
                 string FileName = hpFile.FileName;
                 string ext = System.IO.Path.GetExtension(FileName);// 后缀名
-                if (!String.IsNullOrEmpty(FileName))
-                {
+              
                     FileName = FileName.Substring(FileName.LastIndexOf("\\") + 1);
                     Sys_Files file = new Sys_Files();
                     file.ToId = ToId;
@@ -340,7 +372,7 @@ namespace ESUI.httpHandle
                     string FileRelativeRoute = ConfigurationManager.AppSettings["FileRelativeRoute"].ToString();//文件保存相对目录
                     //给文件取随及名 
                     Guid Pguid = Guid.NewGuid();
-                    FileName = DateTime.Now.ToString("yyyyMMddhhmmss") + "_" + Pguid + "_" + FileName;
+                    FileName = DateTime.Now.ToString("yyyyMMddhhmmss") + "_" + Pguid + ext;
 
 
                     file.Route = HttpFileWeb;
@@ -371,18 +403,6 @@ namespace ESUI.httpHandle
                     {
                         return null;
                     }
-                }
-                else
-                {
-                    rsm = new HttpReSultMode()
-                    {
-                        Code = -11,
-                        Data = "",
-                        Msg = "文件名为空"
-
-                    };
-                    return null;
-                }
             }
             catch (Exception ex)
             {
@@ -416,8 +436,7 @@ namespace ESUI.httpHandle
             {
                 string FileName = hpFile.FileName;
                 string ext = System.IO.Path.GetExtension(FileName);// 后缀名
-                if (!String.IsNullOrEmpty(FileName))
-                {
+            
                     FileName = FileName.Substring(FileName.LastIndexOf("\\") + 1);
                     Sys_Files file = new Sys_Files();
                     file.ToId = ToId;
@@ -443,7 +462,7 @@ namespace ESUI.httpHandle
                     string FileRelativeRoute = ConfigurationManager.AppSettings["FileRelativeRoute"].ToString();//文件保存相对目录
                     //给文件取随及名 
                     Guid Pguid = Guid.NewGuid();
-                    FileName = DateTime.Now.ToString("yyyyMMddhhmmss") + "_" + Pguid + "_" + FileName;
+                    FileName = DateTime.Now.ToString("yyyyMMddhhmmss") + "_" + Pguid  +ext;
 
 
                     file.Route = HttpFileWeb;
@@ -474,18 +493,7 @@ namespace ESUI.httpHandle
                     {
                         return null;
                     }
-                }
-                else
-                {
-                    rsm = new HttpReSultMode()
-                    {
-                        Code = -11,
-                        Data = "",
-                        Msg = "文件名为空"
-
-                    };
-                    return null;
-                }
+             
             }
             catch (Exception ex)
             {
