@@ -516,6 +516,7 @@
     <Content Include="Content\js\area.js" />
     <Content Include="Content\js\json2.js" />
     <Content Include="Content\js\publicMethod.js" />
+    <Content Include="Content\js\Sys_FileUp.js" />
     <Content Include="Content\Login\wuye\base.css" />
     <Content Include="Content\Login\wuye\bc_bg.gif" />
     <Content Include="Content\Login\wuye\bc_separator.gif" />

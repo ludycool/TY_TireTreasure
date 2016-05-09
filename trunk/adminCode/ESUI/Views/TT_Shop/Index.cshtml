@@ -17,7 +17,7 @@
     <script type="text/javascript" src="~/Content/umditor/lang/zh-cn/zh-cn.js"></script>
 
 
-    <script type="text/javascript" charset="utf-8" src="~/Content/js/ImgUp.js"></script>
+    <script type="text/javascript" charset="utf-8" src="~/Content/js/Sys_FileUp.js"></script>
     <script type="text/javascript" charset="utf-8" src="~/Content/js/DictionaryHelper.js"></script>
     <!--省 市 区 联动-->
     <script src="~/Content/js/area.js"></script>
@@ -249,8 +249,8 @@
                         var d = eval('(' + data + ')');
                         if (d.Success) {
                             var imgList = eval('(' + d.Data + ')');
-                            $("#imgLogo").attr('src', imgList[0].FullRoute);
-                            $("input[name='ImageUrl']").val(imgList[0].FullRoute)
+                            $("#imgLogo").attr('src', imgList[0].Route + imgList[0].RelativePath);
+                            $("input[name='ImageUrl']").val(imgList[0].Route + imgList[0].RelativePath)
 
                             var file = $("input[name='file1']");//清空文件
                             file.after(file.clone().val(""));
@@ -292,7 +292,7 @@
                 })
             }
             function AddImg() {
-                FileUp("TS_Shop")
+                FileUp("TT_Shop")
             }
         </script>
     }

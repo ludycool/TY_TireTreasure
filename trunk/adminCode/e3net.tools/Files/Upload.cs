@@ -102,14 +102,24 @@ namespace Zephyr.Utils
             string fileExtension = System.IO.Path.GetExtension(hpFile.FileName).ToLower();
             bool fileAllow = false;
             string tmp = "";   // 存储允许上传的文件后缀名
-            for (int i = 0; i < allowExtensions.Length; i++)
+
+            if (allowExtensions.Length == 0)
             {
-                tmp += i == allowExtensions.Length - 1 ? allowExtensions[i] : allowExtensions[i] + ",";
-                if (fileExtension == allowExtensions[i])
+                fileAllow = true;
+
+            }
+            else
+            {
+                for (int i = 0; i < allowExtensions.Length; i++)
                 {
-                    fileAllow = true;
+                    tmp += i == allowExtensions.Length - 1 ? allowExtensions[i] : allowExtensions[i] + ",";
+                    if (fileExtension == allowExtensions[i])
+                    {
+                        fileAllow = true;
+                    }
                 }
             }
+
             if (fileAllow)
             {
                 if (hpFile.ContentLength / 1024 > maxLength)

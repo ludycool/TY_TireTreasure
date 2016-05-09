@@ -1,9 +1,11 @@
 ﻿using e3net.BLL.Base;
 using e3net.Mode.Base;
 using e3net.Mode.HttpView;
+using e3net.tools;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.IO;
 using System.Linq;
 using System.Web;
 using TZHSWEET.Common;
@@ -30,16 +32,15 @@ namespace ESUI.httpHandle
             switch (action)
             {
 
-                case "addImgList"://上传图片集 返回 Id集 
-
-                    jmsg = addImgList(context);
-                    context.Response.Write(JsonHelper.ToJson(jmsg));
-                    context.Response.End();
-
-                    break;
-                case "addImg"://上传单图片 返回全路径地址
+                case "addImg"://上传单图片 返回文件信息json
 
                     jmsg = addImg(context);
+                    context.Response.Write(JsonHelper.ToJson(jmsg));
+                    context.Response.End();
+                    break;
+                case "addFile"://上传图片 返回全路径
+
+                    jmsg = addFile(context);
                     context.Response.Write(JsonHelper.ToJson(jmsg));
                     context.Response.End();
                     break;
@@ -47,9 +48,10 @@ namespace ESUI.httpHandle
 
                     #region
                     string id = context.Request["ToId"];
+                        string SourceTable = context.Request["SourceTable"];
                     if (!string.IsNullOrEmpty(id))
                     {
-                        var mql = Sys_FilesSet.SelectAll().Where(Sys_FilesSet.ToId.Equal(id));
+                        var mql = Sys_FilesSet.SelectAll().Where(Sys_FilesSet.ToId.Equal(id).And(Sys_FilesSet.SourceTable.Equal(SourceTable)));
                         List<Sys_Files> list = OPBiz.GetOwnList(mql);
                         context.Response.Write(JsonHelper.ToJson(list, true));
                     }
@@ -64,11 +66,12 @@ namespace ESUI.httpHandle
 
                     #region
 
-                    string Tid = context.Request["ToId"];
-                    string IdSet = context.Request["IdSet"];
+                    string Tid =FilterTools.FilterSpecial(context.Request["ToId"]);
+                    string IdSet = FilterTools.FilterSpecial(context.Request["IdSet"]);
                     if (!string.IsNullOrEmpty(context.Request["ToId"]) && !string.IsNullOrEmpty(context.Request["IdSet"]))
                     {
-                        string sql = " update Sys_Files set ToId='" + Tid + "'  where Id in (" + IdSet + ")";
+
+                        string sql = " update Sys_Files set ToId='" + Tid + "'  where FileId in (" + IdSet + ")";
                         int i = OPBiz.ExecuteSqlWithNonQuery(sql);
                         if (i > 0)
                         {
@@ -102,7 +105,8 @@ namespace ESUI.httpHandle
 
                     if (!string.IsNullOrEmpty(context.Request["IdSet"]))
                     {
-                        string sql = " delete from  Sys_Files   where Id in (" + context.Request["IdSet"] + ")";
+
+                        string sql = " delete from  Sys_Files   where FileId in (" + context.Request["IdSet"] + ")";
                         int i = OPBiz.ExecuteSqlWithNonQuery(sql);
                         if (i > 0)
                         {
@@ -164,69 +168,7 @@ namespace ESUI.httpHandle
             }
         }
         /// <summary>
-        /// 上传列表，返回Id集
-        /// </summary>
-        /// <param name="context"></param>
-        /// <returns></returns>
-        public HttpReSultMode addImgList(HttpContext context)
-        {
-            string SourceTable = "";
-            if (context.Request["SourceTable"] != null)
-            {
-                SourceTable = context.Request["SourceTable"];
-            }
-            string ToId = "";
-
-            if (context.Request["ToId"] != null)
-            {
-                ToId = context.Request["ToId"];
-            }
-            string ShowName = "";
-            if (context.Request["ShowName"] != null)
-            {
-                ShowName = context.Request["ShowName"];
-            }
-
-
-            HttpReSultMode jmsg = new HttpReSultMode();
-            string FileIdSet = "";//返回Id集
-            int res = 0;//成功统计
-            //string[] Types = { ".jpg", ".jpeg", ".gif", ".bmp", ".png", ".ico" };
-            int lenth = 500;//kb
-            try
-            {
-                #region
-                if (context.Request.Files.Count > 0)
-                {
-                    for (int i = 0; i < context.Request.Files.Count; i++)
-                    {
-                        HttpPostedFile hpFile = context.Request.Files[i];
-                        Sys_Files file = AddImgOne(out jmsg, hpFile, lenth, SourceTable, ToId, ShowName);
-                        if (file != null)
-                        {
-                            FileIdSet += file.FileId + ",";
-                            res += 1;
-                        }
-                    }
-                }
-                #endregion
-                jmsg.Code = res;
-                jmsg.Data = FileIdSet;
-                jmsg.Msg = "成功：" + context.Request.Files.Count + " 个文件，成功：" + res + "个";
-            }
-            catch (Exception ex)
-            {
-                jmsg.Code = -11;
-                jmsg.Data = ex.Message;
-                jmsg.Msg = "上传出错:" + ex.Message;
-            }
-
-            return jmsg;
-
-        }
-
-        /// <summary>
-        /// 上传单图片 返回全路径地址
+        /// 上传图片
         /// </summary>
         /// <param name="context"></param>
         /// <returns></returns>
@@ -248,32 +190,111 @@ namespace ESUI.httpHandle
             {
                 ShowName = context.Request["ShowName"];
             }
+
+
             HttpReSultMode jmsg = new HttpReSultMode();
+            List<Sys_Files> listFile = new List<Sys_Files>();
+            string FileIdSet = "";//返回Id集
+            int res = 0;//成功统计
             //string[] Types = { ".jpg", ".jpeg", ".gif", ".bmp", ".png", ".ico" };
+            int lenth = 500;//kb
+           
+                #region
+                if (context.Request.Files.Count > 0)
+                {
+                    for (int i = 0; i < context.Request.Files.Count; i++)
+                    {
+                        HttpPostedFile hpFile = context.Request.Files[i];
+                        Sys_Files file = AddImgOne(out jmsg, hpFile, lenth, SourceTable, ToId, ShowName);
+                        if (file != null)
+                        {
+                            FileIdSet += file.FileId + ",";
+                            res += 1;
+                            listFile.Add(file);
+                        }
+                    }
+                }
+                #endregion
+                if (!string.IsNullOrEmpty(FileIdSet))
+                {
+                    FileIdSet = FileIdSet.Substring(0, FileIdSet.Length - 1);
+                }
+
+                jmsg.Code = res;
+                jmsg.Data = JsonHelper.ToJson(listFile, true);
+                jmsg.Msg = "成功上传：" + context.Request.Files.Count + " 个图片，成功：" + res + "个";
+          
+
+            return jmsg;
+
+        }
+
+
+
+        /// <summary>
+        /// 上传文件
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
+        public HttpReSultMode addFile(HttpContext context)
+        {
+            string SourceTable = "";
+            if (context.Request["SourceTable"] != null)
+            {
+                SourceTable = context.Request["SourceTable"];
+            }
+            string ToId = "";
+
+            if (context.Request["ToId"] != null)
+            {
+                ToId = context.Request["ToId"];
+            }
+            string ShowName = "";
+            if (context.Request["ShowName"] != null)
+            {
+                ShowName = context.Request["ShowName"];
+            }
+
+
+            HttpReSultMode jmsg = new HttpReSultMode();
+            List<Sys_Files> listFile = new List<Sys_Files>();
+            string FileIdSet = "";//返回Id集
+            int res = 0;//成功统计
+            string[] Types = { ".doc", ".xls", ".ppt", ".jpg", ".gif", ".jpeg", ".bmp", ".png", ".ico" };
             int lenth = 500;//kb
 
             #region
             if (context.Request.Files.Count > 0)
             {
-                HttpPostedFile hpFile = context.Request.Files[0];
-                Sys_Files file = AddImgOne(out jmsg, hpFile, lenth, SourceTable, ToId, ShowName);
-                if (file != null)
+                for (int i = 0; i < context.Request.Files.Count; i++)
                 {
-                    jmsg.Data = file.Route + file.RelativePath;
+                    HttpPostedFile hpFile = context.Request.Files[i];
+                    Sys_Files file = AddFileOne(out jmsg, hpFile, Types, lenth, SourceTable, ToId, ShowName);
+                    if (file != null)
+                    {
+                        FileIdSet += file.FileId + ",";
+                        res += 1;
+                        listFile.Add(file);
+                    }
                 }
             }
-            else
-            {
-
-                jmsg.Code = -11;
-                jmsg.Data = "";
-                jmsg.Msg = "请选择文件";
-            }
             #endregion
+            if (!string.IsNullOrEmpty(FileIdSet))
+            {
+                FileIdSet = FileIdSet.Substring(0, FileIdSet.Length - 1);
+            }
+
+            jmsg.Code = res;
+            jmsg.Data = JsonHelper.ToJson(listFile, true);
+            jmsg.Msg = "成功：" + context.Request.Files.Count + " 个文件，成功：" + res + "个";
 
 
             return jmsg;
+
         }
+
+   
+
 
         /// <summary>
         /// 上传图片，并添加到数据库
@@ -378,6 +399,108 @@ namespace ESUI.httpHandle
 
         }
 
+        /// <summary>
+        /// 上传文件，并添加到数据库
+        /// </summary>
+        /// <param name="rsm">通知参数类</param>
+        /// <param name="hpFile">http文件</param>
+        /// <param name="lenth">最大长度，kb</param>
+        /// <param name="SourceTable">来源表</param>
+        /// <param name="ToId">主体Id</param>
+        /// <param name="ShowName">显示名</param>
+        /// <returns></returns>
+        private Sys_Files AddFileOne(out  HttpReSultMode rsm, HttpPostedFile hpFile, string[] allowExtensions, int lenth, string SourceTable, string ToId, string ShowName)
+        {
+
+            try
+            {
+                string FileName = hpFile.FileName;
+                string ext = System.IO.Path.GetExtension(FileName);// 后缀名
+                if (!String.IsNullOrEmpty(FileName))
+                {
+                    FileName = FileName.Substring(FileName.LastIndexOf("\\") + 1);
+                    Sys_Files file = new Sys_Files();
+                    file.ToId = ToId;
+                    file.AddTime = DateTime.Now;
+                    file.SourceTable = SourceTable;
+
+                    if (!string.IsNullOrEmpty(ShowName))
+                    {
+                        file.ShowName = ShowName + ext;
+                    }
+                    else
+                    {
+                        file.ShowName = FileName;
+
+                    }
+                    file.Suffix = ext;
+                    file.FileType = "图片";
+                    file.isValid = true;
+                    file.isDeleted = false;
+
+                    string HttpFileWeb = ConfigurationManager.AppSettings["HttpFileWeb"].ToString();//文件 http站点
+                    string HttpFileRoute = ConfigurationManager.AppSettings["HttpFileRoute"].ToString();//文件保存本地路径根目录
+                    string FileRelativeRoute = ConfigurationManager.AppSettings["FileRelativeRoute"].ToString();//文件保存相对目录
+                    //给文件取随及名 
+                    Guid Pguid = Guid.NewGuid();
+                    FileName = DateTime.Now.ToString("yyyyMMddhhmmss") + "_" + Pguid + "_" + FileName;
+
+
+                    file.Route = HttpFileWeb;
+                    file.RelativePath = FileRelativeRoute + FileName;
+                    file.FileName = FileName;
+
+
+                    //保存文件路径 
+                    string path = HttpFileRoute + FileRelativeRoute;
+
+                    rsm = ZFiles.FilesUpload(hpFile,allowExtensions, lenth, path, FileName);
+
+                    if (rsm.Code > 0)
+                    {
+                        /*添加一条信息;*/
+                        object resId = OPBiz.Add(file);
+                        if (resId != null)
+                        {
+                            file.FileId = long.Parse(resId.ToString());
+                            return file;
+                        }
+                        else
+                        {
+                            return null;
+                        }
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+                else
+                {
+                    rsm = new HttpReSultMode()
+                    {
+                        Code = -11,
+                        Data = "",
+                        Msg = "文件名为空"
+
+                    };
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+
+                rsm = new HttpReSultMode()
+                {
+                    Code = -13,
+                    Data = ex.Message,
+                    Msg = "系统出错:" + ex.Message
+                };
+
+                return null;
+            }
+
+        }
 
 
         public bool IsReusable
