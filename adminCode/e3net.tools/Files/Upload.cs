@@ -137,6 +137,7 @@ namespace Zephyr.Utils
                             saveName = hpFile.FileName;
 
                         }
+                        //ZFiles.CreateDirectoryIsExists(savePath);//不存在就创建
                         hpFile.SaveAs(savePath + saveName);
                         rsm.Code = 11;
                         rsm.Data = saveName;
@@ -187,10 +188,10 @@ namespace Zephyr.Utils
             {
                 fileFlag = fileByte[0].ToString() + fileByte[1].ToString();
             }
-            string[] fileTypeStr = { "255216", "7173", "6677", "13780" };//对应的图片格式jpg,gif,bmp,png
+            string[] fileTypeStr = { "255216", "7173", "6677", "13780", "7370" };//对应的图片格式jpg,gif,bmp,png
             string[] allowExtensions = { ".jpg", ".gif", ".bmp", "png" };
             bool fileAllow = false;
-            for (int i = 0; i < allowExtensions.Length; i++)
+            for (int i = 0; i < fileTypeStr.Length; i++)
             {
                 if (fileFlag == fileTypeStr[i])
                 {

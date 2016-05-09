@@ -66,6 +66,18 @@ namespace Zephyr.Utils
             if (!dir.Exists)
                 dir.Create();
         }
+
+        /// <summary>
+        /// 文件夹不存在就建立
+        /// </summary>
+        public static void CreateDirectoryIsExists(string Path)
+        {
+            if (!Directory.Exists(Path))
+            {
+                Directory.CreateDirectory(Path);
+            }
+
+        }
         #endregion
 
         #region 建立子目录
@@ -118,7 +130,26 @@ namespace Zephyr.Utils
                 dirInfo.Delete(true);
             }
         }
+
+
         #endregion
+
+        /// <summary>
+        /// 文件是否存在，存在则执行删除
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        public static bool FilePicDelete(string path)
+        {
+            bool ret = false;
+            System.IO.FileInfo file = new System.IO.FileInfo(path);
+            if (file.Exists)//文件是否存在，存在则执行删除
+            {
+                file.Delete();
+                ret = true;
+            }
+            return ret;
+        }
 
         #region 检测目录是否存在
         /// <summary>
