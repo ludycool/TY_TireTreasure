@@ -24,9 +24,9 @@ namespace e3net.Mode.Base
         /// <summary>
         /// 所禹对象Id
         /// </summary>
-        public Guid? ToId
+        public String ToId
         {
-            get { return GetPropertyValue<Guid?>("ToId"); }
+            get { return GetPropertyValue<String>("ToId"); }
             set { SetPropertyValue("ToId", value); }
         }
 

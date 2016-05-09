@@ -3,8 +3,11 @@ using e3net.Mode.Base;
 using e3net.Mode.HttpView;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
+using TZHSWEET.Common;
+using Zephyr.Utils;
 
 namespace ESUI.httpHandle
 {
@@ -21,276 +24,24 @@ namespace ESUI.httpHandle
             context.Response.ContentType = "text/plain";
             //context.Response.Write("Hello World");
             string action = context.Request["action"];
-            string SourceTable = "";
-            if (context.Request["SourceTable"] != null)
-            {
-                SourceTable = context.Request["SourceTable"];
-            }
-            Guid ToId = new Guid();
 
-            if (context.Request["ToId"] != null)
-            {
-                ToId = Guid.Parse(context.Request["ToId"]);
-            }
-            string ShowName = "";
-            if (context.Request["ShowName"] != null)
-            {
-                ShowName = context.Request["ShowName"];
-            }
-            string JsonMsg = "";
+
             HttpReSultMode jmsg = new HttpReSultMode();
             switch (action)
             {
 
-                case "addImg"://上传文件
-                    #region
-                    string FileIdSet = "";
-                    List<Sys_Files> listFile = new List<Sys_Files>();
-                    bool IsValid = true;//检查只能为图片,仅小于100k可以上传
-                    string messge = "";
-                    string[] Types = { ".jpg", ".jpeg", ".gif", ".bmp", ".png", ".ico" };
-                    int lenth = 1024 * 500;//一百k
-                    if (context.Request.Files.Count > 0)
-                    {
+                case "addImgList"://上传图片集 返回 Id集 
 
-                        for (int i = 0; i < context.Request.Files.Count; i++)
-                        {
-                            HttpPostedFile hpFile = context.Request.Files[i];
-                            if (!String.IsNullOrEmpty(hpFile.FileName))
-                            {
-                                string ext = System.IO.Path.GetExtension(hpFile.FileName);
-                                if (!Types.Contains(ext.ToLower()))
-                                {
-                                    IsValid = false;
-                                    messge = "只能为图片类型";
-                                    break;
-
-                                }
-                                else if (hpFile.ContentLength > lenth)
-                                {
-                                    IsValid = false;
-                                    messge = "文件不能大于" + lenth / 1024 + "kB";
-                                    break;
-                                }
-
-                            }
-                        }
-
-                    }
-                    if (context.Request.Files.Count > 0 && IsValid)
-                    {
-
-                        for (int i = 0; i < context.Request.Files.Count; i++)
-                        {
-
-                            Sys_Files file = new Sys_Files();
-                            if (context.Request["ToId"] == null)
-                            {
-                                //file.ToId = file.FileId;
-                            }
-                            else
-                            {
-                                file.ToId = ToId;
-                            }
-                            file.AddTime = DateTime.Now;
-                       
-                            file.SourceTable = SourceTable;
-
-                            file.ShowName = ShowName;
-                            HttpPostedFile hpFile = context.Request.Files[i];
-                            if (!String.IsNullOrEmpty(hpFile.FileName))
-                            {
-                                string ext = System.IO.Path.GetExtension(hpFile.FileName);
-                                if (hpFile.ContentType != "image/jpeg" || hpFile.ContentType != "image/pjpeg")
-                                {
-
-                                    file.FileType = "图片";
-                                    file.Suffix = ext;
-                                    //给文件取随及名 
-                                    Random ran = new Random();
-                                    file.FileName = hpFile.FileName.Substring(hpFile.FileName.LastIndexOf("\\") + 1);
-                                    if (String.IsNullOrEmpty(file.ShowName))
-                                    {
-                                        file.ShowName = file.FileName;
-                                    }
-                                    int RandKey = ran.Next(100, 999);
-                                    file.FileName = DateTime.Now.ToString("yyyyMMddhhmmss") + "_" + RandKey + ext;
-                                    string fileName = file.FileName;
-                                    //保存文件 
-                                    string path = context.Request.MapPath(fileName);
-
-                                    string uriString = System.Web.HttpContext.Current.Server.MapPath("~/Upload/").ToString();
-                                    file.Route = "/Upload/";
-                                    file.FullRoute = "/Upload/" + path.Substring(path.LastIndexOf("\\") + 1);
-                                    hpFile.SaveAs(uriString + file.FullRoute.Substring(file.FullRoute.LastIndexOf("/") + 1));
-                                    //提示上传成功 
-                                }
-
-
-                                /*添加一条信息;*/
-                                object res = OPBiz.Add(file);
-                                listFile.Add(file);
-                                FileIdSet += file.FullRoute + ",";
-                            }
-                        }
-                    }
-                    if (IsValid)
-                    {
-                        if (!String.IsNullOrEmpty(FileIdSet))
-                        {
-                            JsonMsg = JsonHelper.ToJson(new HttpReSultMode
-                            {
-                                Code = 11,
-                                Data = JsonHelper.ToJson(listFile, true),
-                                Msg = "添加成功"
-                            });
-                        }
-                        else
-                        {
-                            JsonMsg = JsonHelper.ToJson(new HttpReSultMode
-                            {
-                                Code = 11,
-                                Data = "[]",
-                                Msg = "没有数据"
-                            });
-                        }
-                    }
-                    else
-                    {
-                        JsonMsg = JsonHelper.ToJson(new HttpReSultMode
-                        {
-                            Code = -11,
-                            Data = "[]",
-                            Msg = messge
-                        });
-
-                    }
-
-                    context.Response.Write(JsonMsg);
+                    jmsg = addImgList(context);
+                    context.Response.Write(JsonHelper.ToJson(jmsg));
                     context.Response.End();
 
-                    #endregion
                     break;
-                case "addFile"://上传文件
-                    #region
-                    string FileIdSet2 = "";
-                    List<Sys_Files> listFile2 = new List<Sys_Files>();
-                    bool IsValid2 = true;//检查只能为图片,仅小于100k可以上传
-                    string messge2 = "";
-                    int lenth2 = 1024 * 200000;//一百k
-                    if (context.Request.Files.Count > 0)
-                    {
+                case "addImg"://上传单图片 返回全路径地址
 
-                        for (int i = 0; i < context.Request.Files.Count; i++)
-                        {
-                            HttpPostedFile hpFile = context.Request.Files[i];
-                            if (!String.IsNullOrEmpty(hpFile.FileName))
-                            {
-                                string ext = System.IO.Path.GetExtension(hpFile.FileName);
-
-                                if (hpFile.ContentLength > lenth2)
-                                {
-                                    IsValid = false;
-                                    messge2 = "文件不能大于" + lenth2 / 1024 + "kB";
-                                    break;
-                                }
-
-                            }
-                        }
-
-                    }
-                    if (context.Request.Files.Count > 0 && IsValid2)
-                    {
-
-                        for (int i = 0; i < context.Request.Files.Count; i++)
-                        {
-
-                            Sys_Files file = new Sys_Files();
-                            file.Id = Guid.NewGuid();
-                            if (context.Request["ToId"] == null)
-                                file.ToId = file.Id;
-                            else
-                            {
-                                file.ToId = ToId;
-                            }
-                            file.AddTime = DateTime.Now;
-                            file.UpdateTime = DateTime.Now;
-                            file.SourceTable = SourceTable;
-
-                            file.ShowName = ShowName;
-                            HttpPostedFile hpFile = context.Request.Files[i];
-                            if (!String.IsNullOrEmpty(hpFile.FileName))
-                            {
-                                string ext = System.IO.Path.GetExtension(hpFile.FileName);
-                                if (hpFile.ContentType != "image/jpeg" || hpFile.ContentType != "image/pjpeg")
-                                {
-
-                                    file.FileType = "文件";
-                                    file.Suffix = ext;
-                                    //给文件取随及名 
-                                    Random ran = new Random();
-                                    file.FileName = hpFile.FileName.Substring(hpFile.FileName.LastIndexOf("\\") + 1);
-                                    if (String.IsNullOrEmpty(file.ShowName))
-                                    {
-                                        file.ShowName = file.FileName;
-                                    }
-                                    int RandKey = ran.Next(100, 999);
-                                    file.FileName = DateTime.Now.ToString("yyyyMMddhhmmss") + "_" + RandKey + ext;
-                                    string fileName = file.FileName;
-                                    //保存文件 
-                                    string path = context.Request.MapPath(fileName);
-
-                                    string uriString = System.Web.HttpContext.Current.Server.MapPath("~/Upload/file/").ToString();
-                                    file.Route = "/Upload/file/";
-                                    file.FullRoute = "/Upload/file/" + path.Substring(path.LastIndexOf("\\") + 1);
-                                    hpFile.SaveAs(uriString + file.FullRoute.Substring(file.FullRoute.LastIndexOf("/") + 1));
-                                    //提示上传成功 
-                                }
-
-
-                                /*添加一条信息;*/
-                                object res = OPBiz.Add(file);
-                                listFile2.Add(file);
-                                FileIdSet2 += file.FullRoute + ",";
-                            }
-                        }
-                    }
-                    if (IsValid2)
-                    {
-                        if (!String.IsNullOrEmpty(FileIdSet2))
-                        {
-                            JsonMsg = JsonHelper.ToJson(new HttpReSultMode
-                            {
-                                Code = 11,
-                                Data = JsonHelper.ToJson(listFile2, true),
-                                Msg = "添加成功"
-                            });
-                        }
-                        else
-                        {
-                            JsonMsg = JsonHelper.ToJson(new HttpReSultMode
-                            {
-                                Code = 11,
-                                Data = "[]",
-                                Msg = "没有数据"
-                            });
-                        }
-                    }
-                    else
-                    {
-                        JsonMsg = JsonHelper.ToJson(new HttpReSultMode
-                        {
-                            Code = -11,
-                            Data = "[]",
-                            Msg = messge2
-                        });
-
-                    }
-
-                    context.Response.Write(JsonMsg);
+                    jmsg = addImg(context);
+                    context.Response.Write(JsonHelper.ToJson(jmsg));
                     context.Response.End();
-
-                    #endregion
                     break;
                 case "GetFileList"://根据id集获取文件列表
 
@@ -410,12 +161,225 @@ namespace ESUI.httpHandle
                     #endregion
 
                     break;
-
-
-
-
             }
         }
+        /// <summary>
+        /// 上传列表，返回Id集
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
+        public HttpReSultMode addImgList(HttpContext context)
+        {
+            string SourceTable = "";
+            if (context.Request["SourceTable"] != null)
+            {
+                SourceTable = context.Request["SourceTable"];
+            }
+            string ToId = "";
+
+            if (context.Request["ToId"] != null)
+            {
+                ToId = context.Request["ToId"];
+            }
+            string ShowName = "";
+            if (context.Request["ShowName"] != null)
+            {
+                ShowName = context.Request["ShowName"];
+            }
+
+
+            HttpReSultMode jmsg = new HttpReSultMode();
+            string FileIdSet = "";//返回Id集
+            int res = 0;//成功统计
+            //string[] Types = { ".jpg", ".jpeg", ".gif", ".bmp", ".png", ".ico" };
+            int lenth = 500;//kb
+            try
+            {
+                #region
+                if (context.Request.Files.Count > 0)
+                {
+                    for (int i = 0; i < context.Request.Files.Count; i++)
+                    {
+                        HttpPostedFile hpFile = context.Request.Files[i];
+                        Sys_Files file = AddImgOne(out jmsg, hpFile, lenth, SourceTable, ToId, ShowName);
+                        if (file != null)
+                        {
+                            FileIdSet += file.FileId + ",";
+                            res += 1;
+                        }
+                    }
+                }
+                #endregion
+                jmsg.Code = res;
+                jmsg.Data = FileIdSet;
+                jmsg.Msg = "成功：" + context.Request.Files.Count + " 个文件，成功：" + res + "个";
+            }
+            catch (Exception ex)
+            {
+                jmsg.Code = -11;
+                jmsg.Data = ex.Message;
+                jmsg.Msg = "上传出错:" + ex.Message;
+            }
+
+            return jmsg;
+
+        }
+
+        /// <summary>
+        /// 上传单图片 返回全路径地址
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
+        public HttpReSultMode addImg(HttpContext context)
+        {
+            string SourceTable = "";
+            if (context.Request["SourceTable"] != null)
+            {
+                SourceTable = context.Request["SourceTable"];
+            }
+            string ToId = "";
+
+            if (context.Request["ToId"] != null)
+            {
+                ToId = context.Request["ToId"];
+            }
+            string ShowName = "";
+            if (context.Request["ShowName"] != null)
+            {
+                ShowName = context.Request["ShowName"];
+            }
+            HttpReSultMode jmsg = new HttpReSultMode();
+            //string[] Types = { ".jpg", ".jpeg", ".gif", ".bmp", ".png", ".ico" };
+            int lenth = 500;//kb
+
+            #region
+            if (context.Request.Files.Count > 0)
+            {
+                HttpPostedFile hpFile = context.Request.Files[0];
+                Sys_Files file = AddImgOne(out jmsg, hpFile, lenth, SourceTable, ToId, ShowName);
+                if (file != null)
+                {
+                    jmsg.Data = file.Route + file.RelativePath;
+                }
+            }
+            else
+            {
+
+                jmsg.Code = -11;
+                jmsg.Data = "";
+                jmsg.Msg = "请选择文件";
+            }
+            #endregion
+
+
+            return jmsg;
+        }
+
+        /// <summary>
+        /// 上传图片，并添加到数据库
+        /// </summary>
+        /// <param name="rsm">通知参数类</param>
+        /// <param name="hpFile">http文件</param>
+        /// <param name="lenth">最大长度，kb</param>
+        /// <param name="SourceTable">来源表</param>
+        /// <param name="ToId">主体Id</param>
+        /// <param name="ShowName">显示名</param>
+        /// <returns></returns>
+        private Sys_Files AddImgOne(out  HttpReSultMode rsm, HttpPostedFile hpFile, int lenth, string SourceTable, string ToId, string ShowName)
+        {
+
+            try
+            {
+                string FileName = hpFile.FileName;
+                string ext = System.IO.Path.GetExtension(FileName);// 后缀名
+                if (!String.IsNullOrEmpty(FileName))
+                {
+                    FileName = FileName.Substring(FileName.LastIndexOf("\\") + 1);
+                    Sys_Files file = new Sys_Files();
+                    file.ToId = ToId;
+                    file.AddTime = DateTime.Now;
+                    file.SourceTable = SourceTable;
+
+                    if (!string.IsNullOrEmpty(ShowName))
+                    {
+                        file.ShowName = ShowName + ext;
+                    }
+                    else
+                    {
+                        file.ShowName = FileName;
+
+                    }
+                    file.Suffix = ext;
+                    file.FileType = "图片";
+                    file.isValid = true;
+                    file.isDeleted = false;
+
+                    string HttpFileWeb = ConfigurationManager.AppSettings["HttpFileWeb"].ToString();//文件 http站点
+                    string HttpFileRoute = ConfigurationManager.AppSettings["HttpFileRoute"].ToString();//文件保存本地路径根目录
+                    string FileRelativeRoute = ConfigurationManager.AppSettings["FileRelativeRoute"].ToString();//文件保存相对目录
+                    //给文件取随及名 
+                    Guid Pguid = Guid.NewGuid();
+                    FileName = DateTime.Now.ToString("yyyyMMddhhmmss") + "_" + Pguid + "_" + FileName;
+
+
+                    file.Route = HttpFileWeb;
+                    file.RelativePath = FileRelativeRoute + FileName;
+                    file.FileName = FileName;
+
+
+                    //保存文件路径 
+                    string path = HttpFileRoute + FileRelativeRoute;
+
+                    rsm = ZFiles.ImageUpload(hpFile, lenth, path, FileName);
+
+                    if (rsm.Code > 0)
+                    {
+                        /*添加一条信息;*/
+                        object resId = OPBiz.Add(file);
+                        if (resId != null)
+                        {
+                            file.FileId = long.Parse(resId.ToString());
+                            return file;
+                        }
+                        else
+                        {
+                            return null;
+                        }
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+                else
+                {
+                    rsm = new HttpReSultMode()
+                    {
+                        Code = -11,
+                        Data = "",
+                        Msg = "文件名为空"
+
+                    };
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+
+                rsm = new HttpReSultMode()
+                {
+                    Code = -13,
+                    Data = ex.Message,
+                    Msg = "系统出错:" + ex.Message
+                };
+
+                return null;
+            }
+
+        }
+
+
+
         public bool IsReusable
         {
             get
