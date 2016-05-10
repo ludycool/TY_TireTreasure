@@ -37,7 +37,12 @@
           }
          </script>
 </head>
+
 <body>
-   
+    <form runat="server">
+    <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
+    <asp:Button ID="aebtn" runat="server" Text="加密 " OnClick="aebtn_Click" /><asp:Button ID="debtn" runat="server" Text="解密" OnClick="debtn_Click" /><asp:TextBox ID="TextBox2" runat="server"></asp:TextBox>
+
+        </form>
 </body>
 </html>
