@@ -57,6 +57,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Base\ReferencesBiz.cs" />
     <Compile Include="Base\UserBiz.cs" />
     <Compile Include="DynamicTable\BascharvalueBiz.cs" />
     <Compile Include="DynamicTable\BaschartypeBiz.cs" />
