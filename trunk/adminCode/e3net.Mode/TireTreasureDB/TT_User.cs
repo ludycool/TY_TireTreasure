@@ -164,6 +164,14 @@ namespace e3net.Mode.TireTreasureDB
             get { return GetPropertyValue<Boolean?>("isDeleted"); }
             set { SetPropertyValue("isDeleted", value); }
         }
+        /// <summary>
+        /// 标识
+        /// </summary>
+        public Int64 Id
+        {
+            get { return GetPropertyValue<Int64>("Id"); }
+            set { SetPropertyValue("Id", value); }
+        }
     }
 
     [Table("[TT_User]", DbType.SqlServer)]
@@ -261,11 +269,14 @@ namespace e3net.Mode.TireTreasureDB
         /// 修改时间
         /// </summary>
         public static readonly FieldBase UpdateTime = new FieldBase(DbType.SqlServer, "[TT_User]", FieldType.Common, "[UpdateTime]");
-
         /// <summary>
         /// 是否删除
         /// </summary>
         public static readonly FieldBase isDeleted = new FieldBase(DbType.SqlServer, "[TT_User]", FieldType.Common, "[isDeleted]");
+        /// <summary>
+        /// 标识
+        /// </summary>Id
+        public static readonly FieldBase Id = new FieldBase(DbType.SqlServer, "[TT_User]", FieldType.Common, "[Id]");
     }
 
 }

@@ -95,6 +95,7 @@ namespace ESUI.Controllers
                 EidModle.WhereExpression = TT_UserSet.UserId.Equal(EidModle.UserId);
 				string idfilec = "UserId";
                 EidModle.ChangedMap.Remove(idfilec.ToLower());//移除主键值
+                EidModle.ChangedMap.Remove("id");//移除主键值
                 if (OPBiz.Update(EidModle) > 0)
                 {
                     ReSultMode.Code = 11;

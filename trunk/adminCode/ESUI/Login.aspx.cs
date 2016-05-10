@@ -25,13 +25,13 @@ namespace ESUI
         {
 
             string data=TextBox1.Text;
-            TextBox2.Text = XXTEAHelper.Encrypt(data, "362514");
+            TextBox2.Text = DESProvider.Encrypt(data, "362514");
         }
 
         protected void debtn_Click(object sender, EventArgs e)
         {
             string data = TextBox1.Text;
-            string res = XXTEAHelper.Decrypt(data, "362514");
+            string res = DESProvider.Decrypt(data, "362514");
             TextBox2.Text = res;
         
         }
