@@ -264,6 +264,7 @@
     <Content Include="Content\CSS\payment.css" />
     <Content Include="Content\CSS\QR_code.css" />
     <Content Include="Content\CSS\quest.css" />
+    <Content Include="Content\CSS\recommend.css" />
     <Content Include="Content\CSS\reg.css" />
     <Content Include="Content\CSS\search.css" />
     <Content Include="Content\CSS\transfer.css" />
@@ -274,6 +275,7 @@
     <Content Include="Content\iconfont\demo.html" />
     <Content Include="Content\iconfont\iconfont.css" />
     <Content Include="Content\iconfont\iconfont.svg" />
+    <Content Include="Content\images\left.png" />
     <Content Include="Content\images\loginPic.png" />
     <Content Include="Content\Scripts\bootstrap.js" />
     <Content Include="Content\Scripts\bootstrap.min.js" />
@@ -290,13 +292,13 @@
     <Content Include="Content\font\fontawesome-webfont.ttf" />
     <Content Include="Content\font\fontawesome-webfont.woff" />
     <Content Include="Content\font\FontAwesome.otf" />
+    <Content Include="Content\iconfont\iconfont.eot" />
+    <Content Include="Content\iconfont\iconfont.ttf" />
+    <Content Include="Content\iconfont\iconfont.woff" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff2" />
-    <Content Include="Content\iconfont\iconfont.eot" />
-    <Content Include="Content\iconfont\iconfont.ttf" />
-    <Content Include="Content\iconfont\iconfont.woff" />
     <None Include="Properties\PublishProfiles\ESUIConfig.pubxml" />
     <None Include="Content\Scripts\jquery-1.7.1.intellisense.js" />
     <Content Include="Content\Scripts\jquery-1.7.1.js" />
@@ -331,6 +333,7 @@
     <Content Include="Views\Home\search.cshtml" />
     <Content Include="Views\Home\transfer.cshtml" />
     <Content Include="Views\User\index.cshtml" />
+    <Content Include="Views\User\recommend.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="temp\" />

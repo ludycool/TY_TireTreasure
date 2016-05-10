@@ -60,6 +60,7 @@
     <Compile Include="Baschartype.cs" />
     <Compile Include="Bascharvalue.cs" />
     <Compile Include="Base\AppUserInfo.cs" />
+    <Compile Include="Base\References.cs" />
     <Compile Include="Base\User.cs" />
     <Compile Include="File_Image.cs" />
     <Compile Include="Money\Balance.cs" />

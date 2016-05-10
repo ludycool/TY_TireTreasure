@@ -58,6 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Base\I_AppUserInfoDao.cs" />
+    <Compile Include="Base\I_ReferencesDao.cs" />
     <Compile Include="Base\I_UserDao.cs" />
     <Compile Include="DynamicTable\IBaschartypeDao.cs" />
     <Compile Include="DynamicTable\IBascharvalueDao.cs" />

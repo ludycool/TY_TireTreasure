@@ -256,11 +256,17 @@
     <File Include="bin/WebMatrix.WebData.dll">
       <publishTime>04/26/2016 16:19:39</publishTime>
     </File>
+    <File Include="bin/WeCahtJsSdk.Utility.dll">
+      <publishTime>05/09/2016 14:31:17</publishTime>
+    </File>
+    <File Include="bin/WeChatJsSdk.SdkCore.dll">
+      <publishTime>05/09/2016 14:31:18</publishTime>
+    </File>
     <File Include="bin/WeiChatMessageHandle.dll">
-      <publishTime>05/06/2016 11:44:22</publishTime>
+      <publishTime>05/09/2016 15:17:32</publishTime>
     </File>
     <File Include="bin/ZAppUI.dll">
-      <publishTime>05/06/2016 15:13:01</publishTime>
+      <publishTime>05/10/2016 15:02:19</publishTime>
     </File>
     <File Include="bin/zh-Hans/EntityFramework.resources.dll">
       <publishTime>04/26/2016 16:19:42</publishTime>
@@ -385,6 +391,9 @@
     <File Include="Content/CSS/quest.css">
       <publishTime>04/27/2016 15:57:09</publishTime>
     </File>
+    <File Include="Content/CSS/recommend.css">
+      <publishTime>05/07/2016 15:40:46</publishTime>
+    </File>
     <File Include="Content/CSS/reg.css">
       <publishTime>05/04/2016 11:43:02</publishTime>
     </File>
@@ -453,6 +462,9 @@
     </File>
     <File Include="Content/Images/footerback.png">
       <publishTime>04/21/2016 17:02:02</publishTime>
+    </File>
+    <File Include="Content/images/left.png">
+      <publishTime>05/06/2016 10:45:30</publishTime>
     </File>
     <File Include="Content/images/loginPic.png">
       <publishTime>04/26/2016 14:11:15</publishTime>
@@ -10262,7 +10274,7 @@
       <publishTime>11/30/2015 14:37:29</publishTime>
     </File>
     <File Include="Views/Register/index.cshtml">
-      <publishTime>05/05/2016 14:11:31</publishTime>
+      <publishTime>05/10/2016 14:53:47</publishTime>
     </File>
     <File Include="Views/Role/Index.cshtml">
       <publishTime>04/21/2016 17:01:40</publishTime>
@@ -10271,7 +10283,7 @@
       <publishTime>04/26/2016 16:19:29</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
-      <publishTime>04/28/2016 17:48:37</publishTime>
+      <publishTime>05/07/2016 15:38:40</publishTime>
     </File>
     <File Include="Views/Supply/Index.cshtml">
       <publishTime>02/10/2015 14:52:52</publishTime>
@@ -10367,7 +10379,10 @@
       <publishTime>03/22/2015 10:50:26</publishTime>
     </File>
     <File Include="Views/User/Index.cshtml">
-      <publishTime>05/06/2016 11:43:11</publishTime>
+      <publishTime>05/10/2016 11:27:46</publishTime>
+    </File>
+    <File Include="Views/User/recommend.cshtml">
+      <publishTime>05/10/2016 12:17:53</publishTime>
     </File>
     <File Include="Views/UTS_Car/Index.cshtml">
       <publishTime>12/22/2015 14:30:01</publishTime>
@@ -10433,7 +10448,7 @@
       <publishTime>04/26/2016 16:19:29</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>05/06/2016 15:13:01</publishTime>
+      <publishTime>05/10/2016 15:02:19</publishTime>
     </File>
     <File Include="文档/HospitalAssistant.pdm">
       <publishTime>04/03/2015 17:40:53</publishTime>

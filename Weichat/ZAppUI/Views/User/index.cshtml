@@ -5,186 +5,188 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
-<title>用户</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>用户</title>
 
-<!-- Bootstrap -->
-<link href="~/Content/CSS/bootstrap.min.css" rel="stylesheet">
-<link href="~/Content/CSS/font-awesome.min.css" rel="stylesheet">
-<link href="~/Content/CSS/iconfont.css" rel="stylesheet">
-<link href="~/Content/CSS/global.css" rel="stylesheet">
-<link href="~/Content/CSS/user.css" rel="stylesheet">
+    <!-- Bootstrap -->
+    <link href="~/Content/CSS/bootstrap.min.css" rel="stylesheet">
+    <link href="~/Content/CSS/font-awesome.min.css" rel="stylesheet">
+    <link href="~/Content/CSS/iconfont.css" rel="stylesheet">
+    <link href="~/Content/CSS/global.css" rel="stylesheet">
+    <link href="~/Content/CSS/user.css" rel="stylesheet">
 
-<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-<!--[if lt IE 9]>
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
 <script src="//cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
 <script src="//cdn.bootcss.com/respond.~/Content/Scripts/1.4.2/respond.min.js"></script>
 <![endif]-->
-     @section Jsprepare{}
+    @section Jsprepare
+         {
+        
+    }
 </head>
 <body>
-<!-- 导航 -->
-<nav class="navbar top">
-  <div class="container">
-    <div class="navbar-header">
-      <a class="top-icon-left" href="home">
-        <i class="icon-chevron-left"></i>
-      </a>
-    </div>
-  </div>
-</nav>
+    <!-- 导航 -->
+    <nav class="navbar top">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="top-icon-left" href="home">
+                    <i class="icon-chevron-left"></i>
+                </a>
+            </div>
+        </div>
+    </nav>
 
-<!-- 内容区 -->
-<ul class="media-list">
-  <li class="media hd-media">
-    <div class="media-left">
-      <a href="#">
-        <img class="media-object img-circle" src=@ViewBag.headImgUrl alt="...">
-      </a>
-    </div>
-    <div class="media-body hd-media-body">
-      <h4 class="media-heading">昵称 : <small>@ViewBag.nickName</small></h4>
-      <h4 class="media-heading">等级 : <small>ltbb123</small></h4>
-      <h4 class="media-heading">推荐人: <small>ltbb123</small></h4>
-    </div>
-  </li>
-</ul>
-<!--  -->
+    <!-- 内容区 -->
+    <ul class="media-list">
+        <li class="media hd-media">
+            <div class="media-left">
+                <a href="#">
+                    <img class="media-object img-circle" src=@ViewBag.headImgUrl alt="...">
+                </a>
+            </div>
+            <div class="media-body hd-media-body">
+                <h4 class="media-heading">昵称 : <small>@ViewBag.nickName</small></h4>
+                <h4 class="media-heading">等级 : <small>ltbb123</small></h4>
+                <h4 class="media-heading">推荐人: <small>ltbb123</small></h4>
+            </div>
+        </li>
+    </ul>
+    <!--  -->
 
-<div class="container">
-  <div class="row">
-    <div class="col-xs-12"><h3>我的应用</h3></div>
-  </div>
-  <div class="row list">
-    <div class="col-xs-6 list-box">
-      <div class="media">
-        <div class="media-left">
-          <a href="#">
-            <i class="iconfont">&#xe613;</i>
-          </a>
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <h3>我的应用</h3>
+            </div>
         </div>
-        <div class="media-body">
-          <h4 class="media-heading">余额</h4>
-          <p class="media-heading">@ViewBag.balance</p>
+        <div class="row list">
+            <div class="col-xs-6 list-box">
+                <div class="media">
+                    <div class="media-left">
+                        <a href="#">
+                            <i class="iconfont">&#xe613;</i>
+                        </a>
+                    </div>
+                    <div class="media-body">
+                        <h4 class="media-heading">余额</h4>
+                        <p class="media-heading">@ViewBag.balance</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6 list-box">
+                <div class="media">
+                    <div class="media-left">
+                        <a href="user/recommend">
+                            <i class="iconfont">&#xe612;</i>
+                        </a>
+                    </div>
+                    <div class="media-body">
+                        <h4 class="media-heading">推荐</h4>
+                        <p class="media-heading">20个客户</p>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-    <div class="col-xs-6 list-box">
-      <div class="media">
-        <div class="media-left">
-          <a href="#">
-            <i class="iconfont">&#xe612;</i>
-          </a>
-        </div>
-        <div class="media-body">
-          <h4 class="media-heading">推荐</h4>
-          <p class="media-heading">20个客户</p>
-        </div>
-      </div>
-    </div>
-  </div>
 
-  <!--  -->
-  <div class="row">
-    <div class="col-xs-6 list-box">
-      <div class="media">
-        <div class="media-left">
-          <a href="#">
-            <i class="iconfont">&#xe611;</i>
-          </a>
+        <!--  -->
+        <div class="row">
+            <div class="col-xs-6 list-box">
+                <div class="media">
+                    <div class="media-left">
+                        <a href="#">
+                            <i class="iconfont">&#xe611;</i>
+                        </a>
+                    </div>
+                    <div class="media-body">
+                        <h4 class="media-heading">互助宝</h4>
+                        <p class="media-heading">xxxx</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6 list-box">
+                <div class="media">
+                    <div class="media-left">
+                        <a href="#">
+                            <i class="iconfont">&#xe60b;</i>
+                        </a>
+                    </div>
+                    <div class="media-body">
+                        <h4 class="media-heading">银行卡</h4>
+                        <p class="media-heading">绑定银行卡</p>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="media-body">
-          <h4 class="media-heading">互助宝</h4>
-          <p class="media-heading">xxxx</p>
-        </div>
-      </div>
-    </div>
-    <div class="col-xs-6 list-box">
-      <div class="media">
-        <div class="media-left">
-          <a href="#">
-            <i class="iconfont">&#xe60b;</i>
-          </a>
-        </div>
-        <div class="media-body">
-          <h4 class="media-heading">银行卡</h4>
-          <p class="media-heading">绑定银行卡</p>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!--  -->
+        <!--  -->
 
-  <div class="row">
-    <div class="col-xs-6 list-box">
-      <div class="media">
-        <div class="media-left">
-          <a href="#">
-            <i class="iconfont">&#xe614;</i>
-          </a>
+        <div class="row">
+            <div class="col-xs-6 list-box">
+                <div class="media">
+                    <div class="media-left">
+                        <a href="#">
+                            <i class="iconfont">&#xe614;</i>
+                        </a>
+                    </div>
+                    <div class="media-body">
+                        <h4 class="media-heading">会员升级</h4>
+                        <p class="media-heading">更多功能</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6 list-box">
+                <div class="media">
+                    <div class="media-left">
+                        <a href="#">
+                            <i class="iconfont">&#xe615;</i>
+                        </a>
+                    </div>
+                    <div class="media-body">
+                        <h4 class="media-heading">轮胎宝宝</h4>
+                        <p class="media-heading">商户管理</p>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="media-body">
-          <h4 class="media-heading">会员升级</h4>
-          <p class="media-heading">更多功能</p>
-        </div>
-      </div>
-    </div>
-    <div class="col-xs-6 list-box">
-      <div class="media">
-        <div class="media-left">
-          <a href="#">
-            <i class="iconfont">&#xe615;</i>
-          </a>
-        </div>
-        <div class="media-body">
-          <h4 class="media-heading">轮胎宝宝</h4>
-          <p class="media-heading">商户管理</p>
-        </div>
-      </div>
-    </div>
-  </div>
 
-  <!--  -->
+        <!--  -->
 
-  <div class="row">
-    <div class="col-xs-6 list-box">
-      <div class="media">
-        <div class="media-left">
-          <a href="#">
-            <i class="iconfont">&#xe617;</i>
-          </a>
+        <div class="row">
+            <div class="col-xs-6 list-box">
+                <div class="media">
+                    <div class="media-left">
+                        <a href="#">
+                            <i class="iconfont">&#xe617;</i>
+                        </a>
+                    </div>
+                    <div class="media-body">
+                        <h4 class="media-heading">我的订单</h4>
+                        <p class="media-heading">查看动态</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6 list-box">
+                <div class="media">
+                    <div class="media-left">
+                        <a href="#">
+                            <i class="iconfont">&#xe616;</i>
+                        </a>
+                    </div>
+                    <div class="media-body">
+                        <h4 class="media-heading">账单</h4>
+                        <p class="media-heading">金额动态</p>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="media-body">
-          <h4 class="media-heading">我的订单</h4>
-          <p class="media-heading">查看动态</p>
-        </div>
-      </div>
+
+        <!--  -->
     </div>
-    <div class="col-xs-6 list-box">
-      <div class="media">
-        <div class="media-left">
-          <a href="#">
-            <i class="iconfont">&#xe616;</i>
-          </a>
-        </div>
-        <div class="media-body">
-          <h4 class="media-heading">账单</h4>
-          <p class="media-heading">金额动态</p>
-        </div>
-      </div>
-    </div>
-  </div>
+    <!--  -->
 
-  <!--  -->
-</div>
-<!--  -->
 
-<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<script src="~/Content/Scripts/jquery-1.12.2.min.js"></script>
-<!-- Include all compiled plugins (below), or include individual files as needed -->
-<script src="~/Content/Scripts/bootstrap.min.js"></script>
 </body>
 </html>

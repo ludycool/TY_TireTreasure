@@ -2,6 +2,7 @@
 using e3net.BLL;
 using e3net.BLL.Base;
 using e3net.Mode.Base;
+using e3net.tools;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -23,6 +24,15 @@ namespace ZAppUI.Controllers
 
         public ActionResult Index()
         {
+            string code = Request["code"];
+            if (code != null && code != "")
+            {
+                string[] resultArray = OauthLogin.getOpenId(code);
+                GetUData.OpenId = resultArray[OauthLogin.OPEND_ID];
+                GetUData.Nick_Name = resultArray[OauthLogin.NICK_NAME];
+                GetUData.Head_Img_Url = resultArray[OauthLogin.HEAD_IMG_URL];
+            }
+
             ViewBag.src = getUserImg();
             return View();
         }
@@ -72,6 +82,7 @@ namespace ZAppUI.Controllers
 
                 ViewData["IsShowAlert"] = true;
                 ViewData["Alert"] = "注册成功";
+                return RedirectToRoute("home");
             }
             return View();
         }
@@ -92,9 +103,9 @@ namespace ZAppUI.Controllers
         {
             User newUser = new User();
             newUser.UserId = guid;
-
-            newUser.LoginName = model.Phone;
-            newUser.Password = model.FirstPassword;
+            //特殊字符过滤
+            newUser.LoginName = FilterTools.FilterSpecial(model.Phone);
+            newUser.Password = FilterTools.FilterSpecial(model.FirstPassword);
             newUser.WeiXinId = openId;
 
             newUser.CreateTime = now;
@@ -110,10 +121,10 @@ namespace ZAppUI.Controllers
             AppUserInfo userInfo = new AppUserInfo();
             userInfo.AppUserInfoId = Guid.NewGuid();
             userInfo.UserId = guid;
-
-            userInfo.Phone = phone;
-            userInfo.Nickname = nickName;
-            userInfo.ImgeUrl = imgUrl;
+            //特殊字符过滤
+            userInfo.Phone = FilterTools.FilterSpecial(phone);
+            userInfo.Nickname = FilterTools.FilterSpecial(nickName);
+            userInfo.ImgeUrl = FilterTools.FilterSpecial(imgUrl);
 
             userInfo.AddTime = now;
             userInfo.UpdateTime = now;
@@ -122,17 +133,16 @@ namespace ZAppUI.Controllers
             AppUserInfoBiz userInfoBiz = new AppUserInfoBiz();
             userInfoBiz.Add(userInfo);
         }
-        //检索手机号是否注册
-        private bool isRegistered(String phone)
+        //检索手机号是否已注册
+        private bool isRegistered(String loginName)
         {
-            AppUserInfoBiz userInfoBiz = new AppUserInfoBiz();
+            UserBiz userBiz = new UserBiz();
 
-            DataSet result = userInfoBiz.ExecuteSqlToDataSet("SELECT [LoginName] FROM [TireTreasureDB].[dbo].[TT_User] where LoginName='" + phone + "'");
+            DataSet result = userBiz.ExecuteSqlToDataSet("EXEC [TireTreasureDB].[dbo].[proc_GetUserLoginNameByLoginName] '" + loginName + "'");
             if (result.Tables.Count > 0 && result.Tables[0].Rows.Count > 0)
             {
                 return true;
             }
-
             return false;
         }
         public string getUserImg()
@@ -145,7 +155,7 @@ namespace ZAppUI.Controllers
                 AppUserInfoBiz userInfoBiz = new AppUserInfoBiz();
                 string openId = GetUData.OpenId;
 
-                DataSet result = userInfoBiz.ExecuteSqlToDataSet("EXEC [TireTreasureDB].[dbo].[proc_SearchUserInfo] '" + openId + "'");
+                DataSet result = userInfoBiz.ExecuteSqlToDataSet("EXEC [TireTreasureDB].[dbo].[proc_GetUserInfo] '" + openId + "'");
                 if (result.Tables.Count > 0 && result.Tables[0].Rows.Count > 0)
                 {
                     Object headImgUrl = result.Tables[0].Rows[0]["ImgeUrl"];
