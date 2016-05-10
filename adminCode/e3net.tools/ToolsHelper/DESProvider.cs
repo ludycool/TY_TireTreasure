@@ -37,7 +37,7 @@ namespace TZHSWEET.Common
         /// <param name="encryptString">要加密的字符串</param>
         /// <param name="key">加密的密钥</param>
         /// <returns></returns>
-        public static string EncryptString(string encryptString, string key)
+        public static string Encrypt(string encryptString, string key)
         {
             //加密加密字符串是否为空
             if (string.IsNullOrEmpty(encryptString))
@@ -66,9 +66,9 @@ namespace TZHSWEET.Common
         /// </summary>
         /// <param name="encryptString">要加密的字符串</param>
         /// <returns></returns>
-        public static string EncryptString(string encryptString)
+        public static string Encrypt(string encryptString)
         {
-            return EncryptString(encryptString, key);
+            return Encrypt(encryptString, key);
         }
         /// <summary>
         /// 采用DES算法对字节数组加密
@@ -105,7 +105,7 @@ namespace TZHSWEET.Common
         }
         #endregion
         #region 解密
-        public static string DecryptString(string decryptString, string key)
+        public static string Decrypt(string decryptString, string key)
         {
             if (string.IsNullOrEmpty(decryptString))
             {
@@ -130,9 +130,9 @@ namespace TZHSWEET.Common
         /// </summary>
         /// <param name="decryptString">要解密的字符串</param>
         /// <returns></returns>
-        public static string DecryptString(string decryptString)
+        public static string Decrypt(string decryptString)
         {
-            return DecryptString(decryptString, key);
+            return Decrypt(decryptString, key);
         }
 
         /// <summary>
