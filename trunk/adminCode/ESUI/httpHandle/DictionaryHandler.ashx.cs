@@ -38,14 +38,22 @@ namespace ESUI.httpHandle
                     break;
 
 
-                case "GetSonDictionary":
+                case "GetSonDictionary"://根据代号 获取子项
 
                     string DicNo = context.Request["DicNo"];
                     context.Response.Write(GetSonDictionary(DicNo));
                     context.Response.End();
 
                     break;
-                case "GetSonDictionaryNo"://除掉本身只要子集
+
+                case "GetDictionaryByDicType"://根据类型获取 所有的词典，树型结构
+
+                    string DicType = context.Request["DicType"];
+                    context.Response.Write(GetDictionaryByDicType(DicType));
+                    context.Response.End();
+
+                    break;
+                case "GetSonDictionaryNo"://根据代号 获取子项 除掉本身只要子集
 
                     string DicNoNO = context.Request["DicNo"];
                     context.Response.Write(GetSonDictionaryNo(DicNoNO));
@@ -55,7 +63,8 @@ namespace ESUI.httpHandle
                 case "GetSysItem"://获取自定义词典
 
                     string ItemType = context.Request["ItemType"];
-                    context.Response.Write(GetSysItem(ItemType));
+                    string ConnectionName = context.Request["CN"];
+                    context.Response.Write(GetSysItem(ItemType, ConnectionName));
                     context.Response.End();
 
                     break;
@@ -116,17 +125,34 @@ namespace ESUI.httpHandle
 
         }
      
-        public string GetSysItem(string ItemType)
+    
+
+        public string GetSysItem(string ItemType, string ConnectionName)
         {
-            var sql = SysItemSet.SelectAll().Where(SysItemSet.ItemType.Equal(ItemType)).OrderByASC(SysItemSet.OrderID);
-            List<SysItem> AllList = OPBiz.GetOwnList<SysItem>(sql);
+            SysItemBiz SIBiz = new SysItemBiz(ConnectionName);
+            var sql = SysItemSet.SelectAll().Where(SysItemSet.ItemType.Equal(ItemType).And(SysItemSet.isDeleted.Equal(0)).And(SysItemSet.isValid.Equal(1))).OrderByASC(SysItemSet.OrderID);
+            List<SysItem> AllList = SIBiz.GetOwnList(sql);
             return JsonHelper.ToJson(AllList, true);
 
         }
+        public string GetDictionaryByDicType(string DicTypeId)
+        {
+            string jsonstring = "[]";
+            var sql = Sys_DictionarySet.SelectAll().Where(Sys_DictionarySet.DicTypeId.Equal(DicTypeId).And(Sys_DictionarySet.isDeleted.Equal(0)).And(Sys_DictionarySet.isValid.Equal(1))); ;
+            List<Sys_Dictionary> listAll = OPBiz.GetOwnList<Sys_Dictionary>(sql);
+            if (listAll != null && listAll.Count > 0)
+            {
+             
+                jsonstring = OPBiz.GetCombotree(listAll);
+            }
+
+            return jsonstring;
+        }
+
         public string GetSonDictionary(string DicNo)
         {
             string jsonstring = "[]";
-            var sql = Sys_DictionarySet.SelectAll().Where(Sys_DictionarySet.DicNo.StartWith(DicNo));
+            var sql = Sys_DictionarySet.SelectAll().Where(Sys_DictionarySet.DicNo.StartWith(DicNo).And(Sys_DictionarySet.isDeleted.Equal(0)).And(Sys_DictionarySet.isValid.Equal(1)));
             List<Sys_Dictionary> listAll = OPBiz.GetOwnList<Sys_Dictionary>(sql);
             jsonstring = OPBiz.GetCombotree(listAll);
 
