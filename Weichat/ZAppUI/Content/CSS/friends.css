@@ -1,0 +1,7 @@
+.md-box{padding: 3% 5%;border-bottom: 1px solid #ddd;margin: 0;}
+
+.md-box .media-middle{width: 20%;height: 15%;padding: 0 5% 0 0;}
+.md-box .media-middle a{display: block;width: 100%;height: 0;padding-bottom: 100%;position: relative;}
+.md-box .media-middle a img{display: block;width: 100%;height: 100%;position: absolute;background-color: #018FD9;border-radius: 200px;}
+.md-box .media-body{height: 12%;margin-left: 5%;}
+.md-box .media-body h4{padding: 0.5% 0;}

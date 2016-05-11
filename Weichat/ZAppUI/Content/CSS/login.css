@@ -1,6 +1,4 @@
-.login-pic{padding: 30px 0;}
-.login-pic img{width: 100px;height: 100px;background-color: #ccc;}
-
-
-label{white-space:nowrap;height:46px;line-height:46px;}
-.send-box{margin-top: 5px;}
+.login-main{margin-top: 30%;}
+.login-main form .form-group{padding: 3% 0;}
+.login-main form .form-group label{white-space:nowrap;height: 46px;line-height: 46px;}
+.login-main form .form-group div.mar-t{margin-top: -25px;}
