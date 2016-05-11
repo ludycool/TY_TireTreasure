@@ -3517,6 +3517,7 @@
     <Content Include="Views\Sys_Dictionary\Index.cshtml" />
     <Content Include="Views\TT_AppUserInfo\Index.cshtml" />
     <Content Include="Views\TT_Shop\Index.cshtml" />
+    <Content Include="Views\TT_Missions\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="temp\" />
