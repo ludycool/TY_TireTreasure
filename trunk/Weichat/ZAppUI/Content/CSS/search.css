@@ -1,6 +1,10 @@
-.search-bar{padding: 10px;}
+.main{margin: 20% 0;}
+.main .col-xs-12{padding: 0;}
 
-.main div{padding-top: 30px;}
-.main div i{font-size: 36px;color: #10a6e2;}
-.main div span{display: block;height: 24px;line-height: 24px;font-size: 16px;white-space:nowrap;}
-/*.main div i.icon-style{display: block;margin: 10px;}*/
+
+.md-parent-box{padding: 0;margin-bottom: 4%;}
+.md-child-box{width: 33.3333%;height: 0;padding-bottom: 33.3333%;border-sizing: border-box;}
+.md-child-box div{width: 60%;height: 0;padding-bottom: 60%;position: relative;background-color: #e51c22;border-radius: 200px;}
+.md-child-box div.blue{background-color: #018fd9;}
+.md-child-box div img{display: block;width: 70%;height: 70%;top: 50%;left:50%;-webkit-transform: translate(-50%,-50%);position: absolute;}
+.md-child-box span{display: block;width: 100%;padding: 6% 0 0;color: #353535;}
