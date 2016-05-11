@@ -3518,6 +3518,8 @@
     <Content Include="Views\TT_AppUserInfo\Index.cshtml" />
     <Content Include="Views\TT_Shop\Index.cshtml" />
     <Content Include="Views\TT_Missions\Index.cshtml" />
+    <Content Include="Views\TT_Shop\Add2.cshtml" />
+    <Content Include="Views\TT_Shop\Add.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="temp\" />
@@ -3573,8 +3575,8 @@
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
-          <AutoAssignPort>False</AutoAssignPort>
-          <DevelopmentServerPort>8043</DevelopmentServerPort>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>8045</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost:31974/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>

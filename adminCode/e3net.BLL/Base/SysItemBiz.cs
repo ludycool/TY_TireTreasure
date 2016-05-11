@@ -16,7 +16,14 @@ namespace e3net.BLL.Base
         {
             SetDb(false, "BaseCN");
         }
-
+        /// <summary>
+        ///支持多数据库 数据库连接 
+        /// </summary>
+        /// <param name="ConetDB"></param>
+        public SysItemBiz(string ConnectionName)
+        {
+            SetDb(false, ConnectionName);
+        }
     }
 }
 

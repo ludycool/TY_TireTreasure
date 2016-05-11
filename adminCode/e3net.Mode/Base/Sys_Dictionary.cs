@@ -49,7 +49,7 @@ namespace e3net.Mode.Base
         }
 
         /// <summary>
-        /// 字典编号
+        /// 代号 
         /// </summary>
         public String DicNo
         {

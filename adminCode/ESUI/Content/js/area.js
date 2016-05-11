@@ -20,7 +20,7 @@ function change(v) {
             $.each(ProvinceD, function (i, n) {
                 if (selectproCode == n.TCode)
                 {
-                    prId = n.Id;//当前选的省的id
+                    prId = n.CityAreaId;//当前选的省的id
                     return true;
                 }
             });
@@ -39,7 +39,7 @@ function change(v) {
             var selectCCode = $("#" + s[1]).val();
             $.each(CityD, function (i, n) {
                 if (selectCCode == n.TCode) {
-                    CId = n.Id; //当前选的市的id
+                    CId = n.CityAreaId; //当前选的市的id
                     return true;
                 }
             });
@@ -89,16 +89,16 @@ function _init_area() {  //初始化函数
                             break;
                     }
                 });
-
-
+                for (i = 0; i < s.length - 1; i++) {
+                    document.getElementById(s[i]).onchange = new Function("change(" + (i + 1) + ")");
+                }
+                change(0);//省城市默认选择第一个
             }
         });
     }
 
 
-	for(i=0;i<s.length-1;i++){
-	  document.getElementById(s[i]).onchange=new Function("change("+(i+1)+")");
-	}
+	
 }
 
 
@@ -169,7 +169,7 @@ function changeForSearch(v) {
             var selectproCode = $("#" + d[0]).val();
             $.each(ProvinceD, function (i, n) {
                 if (selectproCode == n.TCode) {
-                    prId = n.Id;//当前选的省的id
+                    prId = n.CityAreaId;//当前选的省的id
                     return true;
                 }
             });
@@ -189,7 +189,7 @@ function changeForSearch(v) {
             var selectCCode = $("#" + d[1]).val();
             $.each(CityD, function (i, n) {
                 if (selectCCode == n.TCode) {
-                    CId = n.Id; //当前选的市的id
+                    CId = n.CityAreaId; //当前选的市的id
                     return true;
                 }
             });
