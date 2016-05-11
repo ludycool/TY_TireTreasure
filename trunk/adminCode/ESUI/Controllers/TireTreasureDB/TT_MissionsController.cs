@@ -42,7 +42,7 @@ namespace ESUI.Controllers
             int pageSize = Request["rows"] == null ? 10 : int.Parse(Request["rows"]);
             //string Where = Request["sqlSet"] == null ? "1=1" : SelectWhere.selectwherestring(Request["sqlSet"]);
             string Where = Request["sqlSet"] == null ? "1=1" : GetSql(Request["sqlSet"]);
-			     Where += " and (isDeleted=0)";
+                 //Where += " and (isDeleted=0)";
             ////字段排序
             String sortField = Request["sort"];
             String sortOrder = Request["order"];
@@ -58,6 +58,10 @@ namespace ESUI.Controllers
             Dictionary<string, object> dic = new Dictionary<string, object>();
             dic.Add("rows", ds.Tables[0]);
             dic.Add("total", pc.RCount);
+            for (int i = 0; i < pc.RCount; i++)
+			{
+                //ds.Tables[0].Columns[];
+			}
             return Json(dic, JsonRequestBehavior.AllowGet);
         }
 
