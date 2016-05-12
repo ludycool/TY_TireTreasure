@@ -35,6 +35,7 @@
               
                 GetDictionaryByDicType("CategoryId", "6");
                 getInfoList();
+                EditInfo();
             })
 
 
@@ -79,20 +80,11 @@
             //绑定修改显示详细信息的方法
             function EditInfo() {
 
-                var rows = $("#dg").datagrid('getSelected');
-                //首先取出来值判断只能选择一个
-                if (rows == null) {
-                    $.messager.alert("友情提示", "请选择", "error");
+                var ID = GetQueryString("id")
+                if (ID == null) {
                     return;
                 }
-
-
-                $("#DivEditor").dialog('open').dialog('setTitle', '修改-' /*+ rows.Name*/).window('resize', { top: 20 });
                 $(".validatebox-tip").remove();//清除验证样式
-
-                //$("#ff input[name='HouseCode']").attr("disabled", "true");
-
-                var ID = rows.ShopId;  //获取到了用选择的ID
                 $.ajax({
                     url: BaseUrl + 'GetInfo',
                     type: 'POST',
