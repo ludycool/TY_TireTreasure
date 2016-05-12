@@ -1,11 +1,13 @@
 ﻿@model ZAppUI.Models.LoginModel
 @{
     Layout = null;
+    if (ViewData["IsShowAlert"] != null && ViewData["IsShowAlert"].ToString() == "True" && ViewData["Alert"] == "注册成功")
+    {
+        Response.Write(" <script> alert('" + ViewData["Alert"] + "');window.location.href='/home '; </script>");
+    }
     if (ViewData["IsShowAlert"] != null && ViewData["IsShowAlert"].ToString() == "True")
     {
-
-        Response.Write(" <script>alert('" + ViewData["Alert"] + "'); </script>");
-
+        Response.Write(" <script> alert('" + ViewData["Alert"] + "');</script>");      
     }
 }
 
