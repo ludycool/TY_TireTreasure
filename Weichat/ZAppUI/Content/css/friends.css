@@ -5,3 +5,12 @@
 .md-box .media-middle a img{display: block;width: 100%;height: 100%;position: absolute;background-color: #018FD9;border-radius: 200px;}
 .md-box .media-body{height: 12%;margin-left: 5%;}
 .md-box .media-body h4{padding: 0.5% 0;}
+
+
+body{padding-bottom: 20%;}
+.footer-parent-box{width: 100%;padding: 0.5% 0;border-top: 1px solid #d8d8d8;background-color: #fff;}
+.footer-parent-box .footer-child-box div{width: 44%;height: 0;padding-bottom: 44%;position: relative;}
+.footer-parent-box .footer-child-box div img{display: block;width: 100%;height: 100%;background-size: cover;position: absolute;background: #767676;}
+.footer-parent-box .footer-child-box div img.active{background: #cc3103;}
+.footer-parent-box .footer-child-box span{display: block;width: 100%;height: 100%;color: #353535;}
+.footer-parent-box .footer-child-box span.current{color: #cc3103;}
