@@ -37,30 +37,50 @@ namespace ESUI.Controllers
 
         }
         /// <summary>
-        /// 操作按键列表
+        /// 操作按键列表  包含搜索
         /// </summary>
         /// <returns></returns>
         public string toolbar()
         {
 
+            return toolbar(1);
+        }
+       /// <summary>
+        /// 操作按键列表
+       /// </summary>
+        /// <param name="Ftype">1为 包含搜索，2 为不包含搜索</param>
+       /// <returns></returns>
+        public string toolbar(int  Ftype)
+        {
+
             string controller = RouteData.Values["controller"].ToString();
             string tool = " var toolbars =[";
             string search = "";
+            int cout = 0;//统计
             Manu ManuItem = UserData.ListManus.Find(p => p.manuInfo.URL.Equals(controller));
             if (ManuItem != null)//
             {
                 int listbtnCout = ManuItem.ListButtons.Count;
                 for (int i = 0; i < listbtnCout; i++)
                 {
+                    if (Ftype == 2 && ManuItem.ListButtons[i].ValueName.Equals("Search"))//搜索 不用添加进来
+                    {
 
-                    tool += "{";
-                    tool += string.Format("id: '{0}',", ManuItem.ListButtons[i].ValueName);
-                    tool += string.Format("text: '{0}',", ManuItem.ListButtons[i].ButtonName);
-                    tool += string.Format("iconCls: '{0}',", ManuItem.ListButtons[i].Icon);
-                    tool += "handler: function () { " + ManuItem.ListButtons[i].FunctionName + "(); }}";
-                    tool += ",'-',";
+
+                    }
+                    else
+                    {
+
+                        tool += "{";
+                        tool += string.Format("id: '{0}',", ManuItem.ListButtons[i].ValueName);
+                        tool += string.Format("text: '{0}',", ManuItem.ListButtons[i].ButtonName);
+                        tool += string.Format("iconCls: '{0}',", ManuItem.ListButtons[i].Icon);
+                        tool += "handler: function () { " + ManuItem.ListButtons[i].FunctionName + "(); }}";
+                        tool += ",'-',";
+                        cout += 1;
+                    }
                 }
-                if (listbtnCout > 0)
+                if (cout > 0)
                 {
                     tool = tool.Substring(0, tool.Length - 5);
                 }
@@ -68,6 +88,9 @@ namespace ESUI.Controllers
             tool += "];";
             return tool + search;
         }
+
+
+
 
         public static string GetSql(string sqlSet)
         {

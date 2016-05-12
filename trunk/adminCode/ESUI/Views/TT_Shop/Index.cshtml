@@ -21,8 +21,9 @@
          @Html.Raw(ViewBag.toolbar)
             jQuery(document).ready(function () {
                 DataGridSet();
-                $('#States').combobox('reload', '/httpHandle/DictionaryHandler.ashx?action=GetSysItem&ItemType=States');  // 使用新的URL重新载入列表数据
-                _init_area();//初始化省市区联动
+                $('#States_eq').combobox('reload', '/httpHandle/DictionaryHandler.ashx?action=GetSysItem&ItemType=States&CN=BaseCN');  // 使用新的URL重新载入列表数据
+    
+
             })
             function DataGridSet() {
                 $('#dg').datagrid({
@@ -62,7 +63,7 @@
                             if (row.States == 2) {
                                 return "已经审核";
                             } else if (row.States == 1) {
-                                return "开户";
+                                return "开启";
                             } else if (row.States == 0) {
                                 return "未审核";
                             }
@@ -72,8 +73,8 @@
                         }
                     }
                     ]],
-                    iconCls: 'icon-save',
-                    title: '店铺',
+                    //iconCls: 'icon-save',
+                    //title: '店铺',
                     nowrap: true,
                     fit: true,
                     //fitColumns: true,
@@ -105,22 +106,37 @@
                 }
                 $("#DivShow").dialog('open').dialog('setTitle', '查看-' /*+ rows.Name*/).window('resize', { top: 20 });
                 DataBaseFunction.BindForm("fshow", rows);
-                //if (rows.Types == 0) {
-                //    $("#fshow span[name='Types']").html('转账');
-                //} else {
-                //    $("#fshow span[name='Types']").html('购物');
+                if (rows.States == 2) {
+                    $("#fshow span[name='States']").html('已审核');
+                } else  if (rows.States == 0){
+                    $("#fshow span[name='States']").html('未审核');
 
-                //}
+                } else if (rows.States == -1) {
+                    $("#fshow span[name='States']").html('关闭');
+
+                } else if (rows.States == 1) {
+                    $("#fshow span[name='States']").html('开启');
+
+                }
             }
 
             function AddInfo() {
 
-
+                window.parent.JumpP("添加商店", "TT_Shop/Add", "icon-add");
 
             }
             function EditInfo()
             {
+               
 
+                var rows = $("#dg").datagrid('getSelected');
+                //首先取出来值判断只能选择一个
+                if (rows == null) {
+                    $.messager.alert("友情提示", "请选择", "error");
+                    return;
+                }
+                var ID = rows.ShopId;  //获取到了用选择的ID
+                window.parent.JumpP("修改-" + rows.TName, "TT_Shop/Add?id=" + ID, "icon-edit");
 
 
             }
@@ -145,161 +161,56 @@
     }
 
 </head>
-<body style="overflow-y: hidden">
+<body  class="easyui-layout"  >
 
-    <table id="dg"></table>
 
-    <!------------------------搜索弹出层---------------------------------->
-    <div id="Div_Searh" class="easyui-dialog" style="width: 380px; padding: 10px 20px;"
-        closed="true" resizable="true" modal="true" buttons="#dlg-buttons">
+       <!-- 一行高度是48px; -->
+    <div id="div_Searh" data-options="region:'north',split:true" style="height:48px;">
         <form id="fSearh">
 
-            <table class="stripes" style="table-layout: fixed; margin: 0 auto; width: 320px;" border="0" cellspacing="0" cellpadding="0">
+            <table class="stripes" style="table-layout: fixed;margin-top:5px; width: 100%;" border="0" cellspacing="0" cellpadding="0">
                 <tr>
                     <td style="width: 60px;">
-                        <label>业主姓名：</label></td>
-                    <td>
-                        <input type="text" class="textbox" name="Name_like" style="width: 200px;" />
+                        <label>名称：</label></td>
+                    <td style="width: 160px;">
+                            <input type="text" class="textbox" name="TName_like" style="width: 120px;" />
                     </td>
-
+                    <td style="width: 60px;">
+                        <label>用户姓名：</label></td>
+                    <td style="width: 120px;">
+                        <input type="text" class="textbox" name="TrueName_like" style="width: 120px;" />
+                    </td>
+                    <td style="width: 60px;">
+                        <label>用户账号：</label></td>
+                    <td style="width: 120px;">
+                         <input type="text" class="textbox" name="LoginName_like" style="width: 120px;" />
+                   
+                    </td>
+                     <td style="width: 60px;">
+                        <label>状态：</label></td>
+                    <td style="width: 120px;">
+                        
+                   <input id="States_eq" class="easyui-combobox" name="States_eq"
+                            data-options="valueField:'ItemValue',textField:'ItemName'"  style="width:120px;"/>
+                    </td>
+                    <td>
+    <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-undo" style="float: left;" onclick=" DataBaseFunction.ClearForm('fSearh');">清除</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" style="float: left;" iconcls="icon-search" onclick="SearchGo();">搜索</a>
+                    </td>
                 </tr>
+
+              
             </table>
 
         </form>
-        <div style="text-align: center; width: 100%; margin: 5px 0px; display: block;">
-            <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-undo" style="float: left;" onclick=" DataBaseFunction.ClearForm('fSearh');">清除</a>
-            <a href="javascript:void(0)" class="easyui-linkbutton" style="float: right;" iconcls="icon-search" onclick="SearchGo();">搜索</a>
-            <a href="javascript:void(0)" class="easyui-linkbutton" style="float: right;" iconcls="icon-cancel" onclick="$('#Div_Searh').dialog('close')">关闭</a>
-        </div>
-    </div>
-    <!------------------------弹出层---------------------------------->
-    <div id="DivEditor" class="easyui-dialog" style="width: 630px;"
-        closed="true" resizable="true" modal="true" buttons="#dlg-buttons">
-        <div id="Div_form" class="easyui-panel" style="padding: 10px 10px; overflow-x: hidden;" data-options=" height:500,width:610,border:false">
-            <form id="ff" method="post" enctype="multipart/form-data">
 
-                <table class="stripes" style="table-layout: fixed;" border="0" cellspacing="0" cellpadding="0">
-                    <input type="hidden" name="ShopId" />
-                    <input type="hidden" name="UserId" />
-                    <input type="hidden" name="ImageUrlMax" />
-                    <input type="hidden" name="ImageUrl" />
-                    <input type="hidden" name="CreateMan" />
-                    <input type="hidden" name="CallCount" />
-                    <input type="hidden" name="Praises" />
-                    <input type="hidden" name="Clicks" />
-                    <input type="hidden" name="CreateTime" />
-                    <input type="hidden" name="UpdateTime" />
-                    <input type="hidden" name="Longitude" />
-                    <input type="hidden" name="Latitude" />
-                    <input type="hidden" name="isDeleted" />
-                    <tr>
-                        <td style="width:120px;">
-                            <label>店铺名称：</label></td>
-                        <td style="width:480px;">
-                            <input class="easyui-validatebox textbox" type="text" name="TName" /></td>
-                    </tr>
-                       <tr>
-                        <td>
-                            <label>图片：</label></td>
-                        <td>
 
-                            <img alt="" id="imgLogo" src="" style="width: 100px; height: 100px; margin-top: 10px;" />
-                            <input type="file" name="file1" style="width: 50px;" onchange="FileHeadSave()" />
-                        </td>
+    </div>   
+    <div data-options="region:'center',title:'店铺管理',split:true">
+          <table id="dg"></table>
+    </div>   
 
-                    </tr>
-                      <tr>
-                        <td>
-                            <label>图片集：</label></td>
-                        <td>
-                            <input type="file" id="fileimg" name="file" style="width: 50px;" onchange="AddImg()" />
-                            <div style="display: none">
-                                <div id="content" style="display: block; width: 100px; float: left; text-align: center;">
-                                    <input id="fileId" type="hidden" />
-                                    <img alt="" id="imgShow" src="ss" style="width: 100px; height: 100px; margin-top: 10px;" />
-                                    <a id="jian" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-delete'">移除</a>
-                                </div>
-                            </div>
-                            <div id="zhi" style="display: block; width: 600px;">
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label>星级：</label></td>
-                        <td>
-                            <input class="easyui-validatebox textbox" type="text" name="Star" /></td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label>电话：</label></td>
-                        <td>
-                            <input class="easyui-validatebox textbox" type="text" name="Phone" /></td>
-                    </tr>
-       
-                    <tr>
-                        <td>
-                            <label>类别：</label></td>
-                        <td>
-                            <select id="CategoryId" name="CategoryId" class="easyui-combotree" style="width: 200px;" data-options="required:true"></select></td>
-                    </tr>
-                     <tr>
-                        <td>
-                            <label>省/市/区：</label></td>
-                        <td>
-                            <select id="ProvinceCode" name="ProvinceCode">
-                            </select>
-                            <select id="CityCode" name="CityCode">
-                            </select>
-                            <select id="AreaCode" name="AreaCode">
-                            </select>
 
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label>地址：</label></td>
-                        <td>
-                            <input class="easyui-validatebox textbox" type="text" name="Address" /></td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label>状态：</label></td>
-                        <td>
-                            <input id="States" class="easyui-combobox" name="States"
-                                data-options="valueField:'ItemValue',textField:'ItemName',required:true" />
-
-                        </td>
-                    </tr>
-                       <tr>
-                        <td colspan="2">
-                            <label>详情：</label></td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">
-                            <!--style给定宽度可以影响编辑器的最终宽度-->
-                            <script type="text/plain" id="Details" name="Details" style="width: 900px; height: 200px;">
-  
-                            </script>
-
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">
-                            <div id="Mapcontainer" style="height: 460px; width: 100%"></div>
-
-                        </td>
-                    </tr>
-                </table>
-
-            </form>
-        </div>
-
-        <div style="text-align: center; width: 100%; margin-bottom: 5px;">
-            <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-ok" onclick="SaveInfo();">确定</a>&nbsp;&nbsp;&nbsp;&nbsp;
-            <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-cancel" onclick="$('#DivEditor').dialog('close')">关闭</a>
-        </div>
-    </div>
 
     <!------------------------弹出查看层---------------------------------->
     <div id="DivShow" class="easyui-dialog" style="width: 600px;"
@@ -308,11 +219,6 @@
             <form id="fshow" method="post" enctype="multipart/form-data">
 
                 <table class="stripes" style="table-layout: fixed;" border="0" cellspacing="0" cellpadding="0">
-                    <tr>
-                        <td>
-                            <label>主键：</label></td>
-                        <td><span name="ShopId"></span></td>
-                    </tr>
                     <tr>
                         <td>
                             <label>用户Id：</label></td>
@@ -415,13 +321,8 @@
                     </tr>
                     <tr>
                         <td>
-                            <label>状态（2已审核、开启1，未审核0，关闭-1）：</label></td>
+                            <label>状态：</label></td>
                         <td><span name="States"></span></td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label>是否删除：</label></td>
-                        <td><span name="isDeleted"></span></td>
                     </tr>
                 </table>
             </form>

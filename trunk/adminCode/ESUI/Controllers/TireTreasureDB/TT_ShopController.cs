@@ -30,7 +30,7 @@ namespace ESUI.Controllers
         public ActionResult Index()
         {
             ViewBag.RuteUrl = RuteUrl();
-            ViewBag.toolbar = toolbar();
+            ViewBag.toolbar = toolbar(2);
             return View();
         }
 
@@ -61,6 +61,11 @@ namespace ESUI.Controllers
             return Json(dic, JsonRequestBehavior.AllowGet);
         }
         public ActionResult Add()
+        {
+            ViewBag.RuteUrl = RuteUrl();
+            return View();
+        }
+        public ActionResult Add(string id)
         {
             ViewBag.RuteUrl = RuteUrl();
             return View();
