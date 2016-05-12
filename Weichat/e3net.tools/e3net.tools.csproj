@@ -76,6 +76,10 @@
     <Reference Include="System.Xml">
       <Private>True</Private>
     </Reference>
+    <Reference Include="zxing, Version=0.14.0.0, Culture=neutral, PublicKeyToken=4e88037ac681fe60, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>dll\zxing.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Files\ContentType.cs" />
@@ -105,6 +109,7 @@
     <Compile Include="ToolsHelper\LogHelper.cs" />
     <Compile Include="ToolsHelper\MD5Provider.cs" />
     <Compile Include="ToolsHelper\PageValidate.cs" />
+    <Compile Include="ToolsHelper\QRCodeHelper.cs" />
     <Compile Include="ToolsHelper\RegexHelper.cs" />
     <Compile Include="ToolsHelper\RegexNormal.cs" />
     <Compile Include="ToolsHelper\Tools.cs" />
@@ -121,6 +126,7 @@
     <Content Include="dll\log4net.dll" />
     <Content Include="dll\Newtonsoft.Json.dll" />
     <Content Include="dll\Newtonsoft.Json.xml" />
+    <Content Include="dll\zxing.dll" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

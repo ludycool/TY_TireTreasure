@@ -16,7 +16,7 @@ using ZXing.QrCode.Internal;
 
 public class QRCodeHelper
 {
-
+    
     public static Bitmap GetThumbnail(Bitmap b, int destHeight, int destWidth)
     {
 
