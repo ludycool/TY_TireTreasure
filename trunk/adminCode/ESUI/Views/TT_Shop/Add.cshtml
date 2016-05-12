@@ -7,9 +7,13 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
+
+    
+   
+
     <!-- 编辑器Star-->
 
-    <link href="~/Content/umditor/themes/default/css/umeditor.css" type="text/css" rel="stylesheet">
+   <link href="~/Content/umditor/themes/default/css/umeditor.css" type="text/css" rel="stylesheet">
     <script type="text/javascript" charset="utf-8" src="~/Content/umditor/umeditor.config.js"></script>
     <script type="text/javascript" charset="utf-8" src="~/Content/umditor/umeditor.min.js"></script>
     <script type="text/javascript" src="~/Content/umditor/lang/zh-cn/zh-cn.js"></script>
@@ -18,7 +22,12 @@
     <script type="text/javascript" charset="utf-8" src="~/Content/js/Sys_FileUp.js"></script>
     <script src="~/Content/js/area.js"></script>
     <script type="text/javascript" charset="utf-8" src="~/Content/js/DictionaryHelper.js"></script>
-    @* ReSharper disable once NotAllPathsReturnValue *@
+    
+            <!-- 地图Start-->
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=a3wNd0COKjujWVCggydwQUIR"></script>
+    <!-- 地图end-->
+
+        @* ReSharper disable once NotAllPathsReturnValue *@
 
 
     @section Jsprepare{
@@ -30,12 +39,15 @@
 
             jQuery(document).ready(function () {
                
-                Init();
+               Init();
                 _init_area();//初始化省市区联动
               
                 GetDictionaryByDicType("CategoryId", "6");
                 getInfoList();
                 EditInfo();
+
+
+               
             })
 
 
@@ -50,7 +62,7 @@
                 $("#imgLogo").attr('src', "");
                 //$("#imgLogoM").attr('src', "");
 
-                UM.getEditor('Details').setContent("", false);
+               UM.getEditor('Details').setContent("", false);
 
 
                 var map = new BMap.Map("Mapcontainer");          // 创建地图实例  
@@ -270,11 +282,9 @@
 
 </head>
 <body >
-    <div id="Div_form" class="easyui-panel" title="店铺编辑"
+    <div id="Div_form" class="easyui-panel" title="编辑"
         style="background: #fafafa; padding: 10px 10px;"
         data-options="iconCls:'icon-save'">
-  
-
             <form id="ff" method="post" enctype="multipart/form-data">
             <input type="hidden" name="ShopId" />
             <input type="hidden" name="UserId" />
@@ -405,7 +415,7 @@
 
       <!------------------------ 维修人员列表---------------------------------->
     <div id="DivInfo" class="easyui-dialog" style="width: 580px; height: 600px;"
-        closed="true" resizable="true" title="请选择-维修人员" modal="true" buttons="#dlg-buttons">
+        closed="true" resizable="true" title="请选择-用户人员" modal="true" buttons="#dlg-buttons">
         <table style="width: 100%;">
             <tr>
                 <td colspan="4">
