@@ -3,6 +3,9 @@
 <head>
     <title>@ViewBag.Title</title>
     <script src="@Url.Content("~/Content/JqueryEasyUI/jquery1.9.min.js")"></script>
+
+
+
     <script src="@Url.Content("~/Content/js/CommonFunction.js")"></script>
 
     <link href="@Url.Content("~/Content/JqueryEasyUI/themes/icon.css")" rel="stylesheet" />
@@ -15,11 +18,15 @@
 
     <link href="~/Content/Style.css" rel="stylesheet" />
     <script src="@Url.Content("~/Content/Style.js")"></script>
-    <!-- 地图Start-->
+
+ 
+
+
+  @*  <!-- 地图Start-->
 
     <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=a3wNd0COKjujWVCggydwQUIR"></script>
 
-    <!-- 地图end-->
+    <!-- 地图end-->*@
     @RenderSection("Jsprepare", required: true)@*View页面自定义特定js/css使用*@
 </head>
 

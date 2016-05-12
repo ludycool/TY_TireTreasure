@@ -65,11 +65,11 @@ namespace ESUI.Controllers
             ViewBag.RuteUrl = RuteUrl();
             return View();
         }
-        public ActionResult Add(string id)
-        {
-            ViewBag.RuteUrl = RuteUrl();
-            return View();
-        }
+        //public ActionResult Add(string id)
+        //{
+        //    ViewBag.RuteUrl = RuteUrl();
+        //    return View();
+        //}
 
 
         public JsonResult EditInfo(TT_Shop EidModle)
