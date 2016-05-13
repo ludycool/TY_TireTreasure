@@ -37,16 +37,29 @@ namespace ZAppUI.Controllers
                 GetUData.OpenId = resultArray[OauthLogin.OPEND_ID];
                 GetUData.Nick_Name = resultArray[OauthLogin.NICK_NAME];
                 GetUData.Head_Img_Url = resultArray[OauthLogin.HEAD_IMG_URL];
+                if (isOpenIdExist())
+                {
+                  return  RedirectToAction("Index", "User");
+                }
             }
 
             ViewBag.src = getUserImg();
             return View();
         }
-
+        //openId是否存在
+        private bool isOpenIdExist()
+        {
+            UserBiz userBiz = new UserBiz();
+            DataSet result = userBiz.ExecuteSqlToDataSet("EXEC   [TireTreasureDB].[dbo].[proc_IsOpenIdExist]'" + GetUData.OpenId + "'");
+            if (result.Tables[0].Rows.Count > 0)
+                return true;
+            return false;
+        }
         [HttpPost]
         public ActionResult Index(LoginModel model)
         {
-            ViewBag.src = getUserImg(); ;
+            ViewBag.src = getUserImg();
+            ;
             if (model.Phone == null || model.Phone == "")
             {
                 ViewData["IsShowAlert"] = true;
@@ -86,19 +99,18 @@ namespace ZAppUI.Controllers
 
                 addUserInfo(now, guid, nickName, headImgUrl, model, userId);
 
-                if(userId!=null)
+                if (userId != null)
                 {
-                    addUserReferences(userId);
+                    addUserReferences(userId, guid);
                 }
-                
 
                 ViewData["IsShowAlert"] = true;
                 ViewData["Alert"] = "注册成功";
-                
+
             }
             return View();
         }
-       
+
 
         //判断手机号
         private bool isNumber(string s)
@@ -137,12 +149,10 @@ namespace ZAppUI.Controllers
             //特殊字符过滤
             userInfo.Phone = FilterTools.FilterSpecial(model.Phone);
             userInfo.Nickname = FilterTools.FilterSpecial(nickName);
-            userInfo.ImgeUrl =imgUrl;
+            userInfo.ImgeUrl = imgUrl;
 
             if (userId != null)
             {
-                ReferencesBiz referencesBiz = new ReferencesBiz();
-                referencesBiz.ExecuteSqlToDataSet("EXEC [TireTreasureDB].[dbo].[proc_UpdateUserRecommendInfo] '" + userId + "','" + guid + "','" + INVITE_SUCCESS + "'");
                 userInfo.ReferencesId = userId;
             }
 
@@ -174,31 +184,32 @@ namespace ZAppUI.Controllers
             else
             {
                 AppUserInfoBiz userInfoBiz = new AppUserInfoBiz();
-                
+
                 DataSet result = userInfoBiz.ExecuteSqlToDataSet("EXEC [TireTreasureDB].[dbo].[proc_GetUserInfo] '" + GetUData.OpenId + "'");
                 if (result.Tables[0].Rows.Count > 0)
                 {
-                   imgUrl = result.Tables[0].Rows[0]["ImgeUrl"].ToString();
+                    imgUrl = result.Tables[0].Rows[0]["ImgeUrl"].ToString();
                 }
             }
             return imgUrl;
         }
         //添加用户到推荐表
-        private void addUserReferences(Guid userId)
+        private void addUserReferences(Guid userId, Guid toUserId)
         {
             References references = new References();
             ReferencesBiz referencesBiz = new ReferencesBiz();
 
-            DataSet result=referencesBiz.ExecuteSqlToDataSet("EXEC [TireTreasureDB].[dbo].[proc_GetIdByUserId] '" + userId + "'");
+            DataSet result = referencesBiz.ExecuteSqlToDataSet("EXEC [TireTreasureDB].[dbo].[proc_GetIdByUserId] '" + userId + "'");
             string recommendId = result.Tables[0].Rows[0]["Id"].ToString();
-           
+
             references.UserId = userId;
+            references.ToUserId = toUserId;
             references.InvitationCode = FilterTools.FilterSpecial(recommendId);
             references.States = ConstantList.INVITE_SUCCESS;
             references.CategoryId = ConstantList.NORMAL_USER;
             references.AddTime = DateTime.Now;
             references.isDeleted = false;
-            
+
             referencesBiz.Add(references);
 
         }

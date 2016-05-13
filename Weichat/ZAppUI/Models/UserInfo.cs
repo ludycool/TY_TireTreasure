@@ -17,6 +17,7 @@ namespace ZAppUI.Models
         public string Head_Img_Url { set; get; }
 
         public Guid User_Id { get; set; }
+
     }
 
     public class UserInfo
