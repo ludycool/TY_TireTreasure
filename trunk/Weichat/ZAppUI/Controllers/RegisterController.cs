@@ -12,6 +12,7 @@ using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
 using WeiChatMessageHandle.OpenId;
+using ZAppUI.App_Code;
 using ZAppUI.Models;
 
 namespace ZAppUI.Controllers
@@ -26,17 +27,17 @@ namespace ZAppUI.Controllers
         {
             string code = Request["code"];
 
-            //if (code != null && code != "")
-            //{
-            //    if (GetUData == null)
-            //    {
-            //        GetUData = new Models.UserData();
-            //    }
-            //    string[] resultArray = OauthLogin.getOpenId(code);
-            //    GetUData.OpenId = resultArray[OauthLogin.OPEND_ID];
-            //    GetUData.Nick_Name = resultArray[OauthLogin.NICK_NAME];
-            //    GetUData.Head_Img_Url = resultArray[OauthLogin.HEAD_IMG_URL];
-            //}
+            if (code != null && code != "")
+            {
+                if (GetUData == null)
+                {
+                    GetUData = new Models.UserData();
+                }
+                string[] resultArray = OauthLogin.getOpenId(code);
+                GetUData.OpenId = resultArray[OauthLogin.OPEND_ID];
+                GetUData.Nick_Name = resultArray[OauthLogin.NICK_NAME];
+                GetUData.Head_Img_Url = resultArray[OauthLogin.HEAD_IMG_URL];
+            }
 
             ViewBag.src = getUserImg();
             return View();
@@ -45,7 +46,7 @@ namespace ZAppUI.Controllers
         [HttpPost]
         public ActionResult Index(LoginModel model)
         {
-            //ViewBag.src = getUserImg(); ;
+            ViewBag.src = getUserImg(); ;
             if (model.Phone == null || model.Phone == "")
             {
                 ViewData["IsShowAlert"] = true;
@@ -80,17 +81,24 @@ namespace ZAppUI.Controllers
 
                 DateTime now = DateTime.Now;
                 Guid guid = Guid.NewGuid();
+
                 addUser(model, now, guid, openid);
 
                 addUserInfo(now, guid, nickName, headImgUrl, model, userId);
 
+                if(userId!=null)
+                {
+                    addUserReferences(userId);
+                }
+                
+
                 ViewData["IsShowAlert"] = true;
                 ViewData["Alert"] = "注册成功";
-                return RedirectToRoute("home");
+                
             }
             return View();
         }
-        private const int INVITE_SUCCESS = 1;
+       
 
         //判断手机号
         private bool isNumber(string s)
@@ -112,7 +120,7 @@ namespace ZAppUI.Controllers
             newUser.LoginName = FilterTools.FilterSpecial(model.Phone);
             newUser.Password = FilterTools.FilterSpecial(model.FirstPassword);
             newUser.WeiXinId = openId;
-
+            newUser.TrueName = "";
             newUser.CreateTime = now;
             newUser.UpdateTime = now;
             newUser.isDeleted = false;
@@ -129,7 +137,7 @@ namespace ZAppUI.Controllers
             //特殊字符过滤
             userInfo.Phone = FilterTools.FilterSpecial(model.Phone);
             userInfo.Nickname = FilterTools.FilterSpecial(nickName);
-            userInfo.ImgeUrl = FilterTools.FilterSpecial(imgUrl);
+            userInfo.ImgeUrl =imgUrl;
 
             if (userId != null)
             {
@@ -160,22 +168,39 @@ namespace ZAppUI.Controllers
         //获取用户头像
         private string getUserImg()
         {
-            string imgSrc = GetUData.Head_Img_Url;
-            if (imgSrc != null)
-                return imgSrc;
+            string imgUrl = GetUData.Head_Img_Url;
+            if (imgUrl != null)
+                return imgUrl;
             else
             {
                 AppUserInfoBiz userInfoBiz = new AppUserInfoBiz();
-                string openId = GetUData.OpenId;
-
-                DataSet result = userInfoBiz.ExecuteSqlToDataSet("EXEC [TireTreasureDB].[dbo].[proc_GetUserInfo] '" + openId + "'");
-                if (result.Tables.Count > 0 && result.Tables[0].Rows.Count > 0)
+                
+                DataSet result = userInfoBiz.ExecuteSqlToDataSet("EXEC [TireTreasureDB].[dbo].[proc_GetUserInfo] '" + GetUData.OpenId + "'");
+                if (result.Tables[0].Rows.Count > 0)
                 {
-                    Object headImgUrl = result.Tables[0].Rows[0]["ImgeUrl"];
-                    imgSrc = headImgUrl.ToString();
+                   imgUrl = result.Tables[0].Rows[0]["ImgeUrl"].ToString();
                 }
             }
-            return imgSrc;
+            return imgUrl;
+        }
+        //添加用户到推荐表
+        private void addUserReferences(Guid userId)
+        {
+            References references = new References();
+            ReferencesBiz referencesBiz = new ReferencesBiz();
+
+            DataSet result=referencesBiz.ExecuteSqlToDataSet("EXEC [TireTreasureDB].[dbo].[proc_GetIdByUserId] '" + userId + "'");
+            string recommendId = result.Tables[0].Rows[0]["Id"].ToString();
+           
+            references.UserId = userId;
+            references.InvitationCode = FilterTools.FilterSpecial(recommendId);
+            references.States = ConstantList.INVITE_SUCCESS;
+            references.CategoryId = ConstantList.NORMAL_USER;
+            references.AddTime = DateTime.Now;
+            references.isDeleted = false;
+            
+            referencesBiz.Add(references);
+
         }
     }
 }
