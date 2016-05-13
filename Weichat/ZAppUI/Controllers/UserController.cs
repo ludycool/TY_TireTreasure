@@ -25,12 +25,6 @@ namespace ZAppUI.Controllers
         // GET: /User/
         public ActionResult Index()
         {
-            //if (GetUData == null)
-            //{
-            //    GetUData = new Models.UserData();
-            //}
-            //GetUData.OpenId = "ov0HljubVsu4mOIfZsTMry_s3CNM";
-
             getNickName();
             getBalance();
             return View();
@@ -52,15 +46,15 @@ namespace ZAppUI.Controllers
         private void getBalance()
         {
             string openId = GetUData.OpenId;
-            
+
             BalanceBiz balanceBiz = new BalanceBiz();
             DataSet getBalanceInfo = balanceBiz.ExecuteSqlToDataSet("EXEC [TireMoneyDB].[dbo].[proc_CheckBalanceInfo] '" + openId + "'");
-            if (!(getBalanceInfo.Tables.Count > 0) && !(getBalanceInfo.Tables[0].Rows.Count > 0))
+            if (getBalanceInfo.Tables[0].Rows.Count == 0)
             {
                 addUserBalanceInfo(openId);
             }
             DataSet result = balanceBiz.ExecuteSqlToDataSet("EXEC [TireMoneyDB].[dbo].[proc_CheckBalanceInfo] '" + openId + "'");
-            ViewBag.balance = result.Tables[0].Rows[0]["AMneys"].ToString();
+            ViewBag.balance = result.Tables[0].Rows[0]["AMneys"];
         }
         //添加用户余额到表
         private void addUserBalanceInfo(string openId)
@@ -120,13 +114,13 @@ namespace ZAppUI.Controllers
 
             //GetUData.OpenId = "ov0HljubVsu4mOIfZsTMry_s3CNM";
 
-            getNumOfRecommend();
+            ViewBag.num = getNumOfRecommend();
 
             generateQRImage();
             return View();
         }
 
-        
+
         public void SaveImg(string strPath, Bitmap img)
         {
             //保存图片到目录
@@ -146,52 +140,49 @@ namespace ZAppUI.Controllers
         public void generateQRImage()
         {
             string currentPath = System.Web.HttpContext.Current.Server.MapPath(System.Web.HttpContext.Current.Request.ApplicationPath + "" + @"/Content/Qr_code_img");
-           
-            Bitmap RQBmp = QRCodeHelper.Create(generateRecommendUrl(), 410);
+
+            string content=generateRecommendUrl();
+            Bitmap RQBmp = QRCodeHelper.Create(content, 410);
             RQBmp = QRCodeHelper.GetThumbnail(RQBmp, 400, 400);
 
             SaveImg(currentPath, RQBmp);
         }
-        string Key = "1234567812345678";
+        string Key = "12345678";
         //生成推荐链接
         public string generateRecommendUrl()
         {
-            string id=getUserId();
-            //id = "1";
-            id = AESHelper.Encrypt(id, Key);
-            //string url = "/user/encoderUrl?param=" + id + "&type=recommend";
-            return "http://" + Request.Url.Host + Request.Path+"/encoderUrl?param=" + id + "&type=recommend";
-            //return url;
+            string id = getUserId();
+            if (id != null)
+                id = DESProvider.Encrypt(id, Key);
+
+            return "http://" + Request.Url.Host + "/" + RouteData.Route.GetRouteData(this.HttpContext).Values["controller"] + "/encoderRecommendUrl?param=" + id + "&type=recommend";
         }
-        
+
         //获取推荐人ID
         public string getUserId()
         {
-            string id = null;
-
             UserBiz userBiz = new UserBiz();
             DataSet result = userBiz.ExecuteSqlToDataSet("EXEC [TireTreasureDB].[dbo].[proc_GeRecommendIdByWeiXinId] '" + GetUData.OpenId + "'");
-            if ((result.Tables.Count > 0) && (result.Tables[0].Rows.Count > 0))
-            {
-                id = result.Tables[0].Rows[0]["Id"].ToString();
-            }
-            return id;
+
+            return result.Tables[0].Rows[0]["Id"].ToString();
         }
-        private const int INVITING = 0;
+
 
         //推荐链接解码
         public ActionResult encoderRecommendUrl()
         {
-            string recommendId = FilterTools.FilterSpecial(AESHelper.Decrypt(Request["param"], Key));
+            string recommendId = FilterTools.FilterSpecial(DESProvider.Decrypt(Request["param"], Key));
             string type = FilterTools.FilterSpecial(Request["type"]);
 
             if (type.Equals("recommend"))
             {
                 UserBiz userBiz = new UserBiz();
                 DataSet result = userBiz.ExecuteSqlToDataSet("EXEC [TireTreasureDB].[dbo].[proc_GetUserIdByRecommendId] '" + recommendId + "'");
-                if ((result.Tables.Count > 0) && (result.Tables[0].Rows.Count > 0))
+                if (result.Tables[0].Rows.Count > 0)
                 {
-                    addUserReferences(recommendId, (Guid)result.Tables[0].Rows[0]["UserId"]);
+                    if (GetUData == null)
+                        GetUData = new Models.UserData();
+                    GetUData.User_Id = (Guid)result.Tables[0].Rows[0]["UserId"];                   
 
                     string redirect_uri = "http://test.luntaibaobao.com/register";
                     string state = "test";
@@ -202,28 +193,28 @@ namespace ZAppUI.Controllers
             return View();
         }
         //添加用户到推荐表
-        private void addUserReferences(string shareId, Guid userId)
+        private void addUserReferences()
         {
             References references = new References();
+
             references.UserId = userId;
-            references.InvitationCode = FilterTools.FilterSpecial(shareId);
+            references.InvitationCode = FilterTools.FilterSpecial(recommendId);
             references.States = INVITING;
             references.AddTime = DateTime.Now;
             references.isDeleted = false;
 
             ReferencesBiz referencesBiz = new ReferencesBiz();
             referencesBiz.Add(references);
-            
-            GetUData.User_Id = references.UserId;
+
+
         }
         //显示推荐人数
-        private void getNumOfRecommend()
+        private int getNumOfRecommend()
         {
             ReferencesBiz referencesBiz = new ReferencesBiz();
             DataSet result = referencesBiz.ExecuteSqlToDataSet("EXEC [TireTreasureDB].[dbo].[proc_NumberOfRecommend] '" + GetUData.OpenId + "'");
             int num = 0;
-            num =(int)result.Tables[0].Rows[0][0];            
-            ViewBag.num = num;
+            return num = (int)result.Tables[0].Rows[0][0];
         }
     }
 }
