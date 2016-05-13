@@ -1,0 +1,13 @@
+.search-bar{padding: 5%;}
+
+.main{}
+.main .col-xs-12{margin-top: 3%;}
+
+.media{border: 1px solid #ddd;}
+.media .media-left{width: 20%;}
+.media .media-left a{display: block;width: 100%;height: 0;padding-bottom: 100%;position: relative;}
+.media .media-left a img{display: block;width: 60%;height: 60%;position: absolute;top: 50%;left: 50%;-webkit-transform:translate(-50%,-50%);background-color: #018FD9;}
+
+.media .media-body{padding: 2% 0%;}
+.media .media-body h4{}
+.media .media-body p{}
