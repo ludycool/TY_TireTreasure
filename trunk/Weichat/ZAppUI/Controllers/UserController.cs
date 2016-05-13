@@ -16,6 +16,8 @@ using e3net.Mode.Base;
 using e3net.tools;
 using System.Drawing;
 using System.IO;
+using ZAppUI.App_Code;
+using CommonFunction;
 
 namespace ZAppUI.Controllers
 {
@@ -49,12 +51,16 @@ namespace ZAppUI.Controllers
 
             BalanceBiz balanceBiz = new BalanceBiz();
             DataSet getBalanceInfo = balanceBiz.ExecuteSqlToDataSet("EXEC [TireMoneyDB].[dbo].[proc_CheckBalanceInfo] '" + openId + "'");
+            
+            
             if (getBalanceInfo.Tables[0].Rows.Count == 0)
             {
                 addUserBalanceInfo(openId);
             }
             DataSet result = balanceBiz.ExecuteSqlToDataSet("EXEC [TireMoneyDB].[dbo].[proc_CheckBalanceInfo] '" + openId + "'");
             ViewBag.balance = result.Tables[0].Rows[0]["AMneys"];
+            
+            
         }
         //添加用户余额到表
         private void addUserBalanceInfo(string openId)
@@ -185,7 +191,7 @@ namespace ZAppUI.Controllers
                     GetUData.User_Id = (Guid)result.Tables[0].Rows[0]["UserId"];                   
 
                     string redirect_uri = "http://test.luntaibaobao.com/register";
-                    string state = "test";
+                    string state = ConstantList.INVITE_REGISTER;
                     string url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + WechatParamList.APP_ID + "&redirect_uri=" + redirect_uri + "&response_type=code&scope=snsapi_userinfo&state=" + state + "#wechat_redirect";
                     return Redirect(url);
                 }

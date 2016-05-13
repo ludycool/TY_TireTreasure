@@ -26,15 +26,13 @@ namespace ZAppUI.Controllers
         public ActionResult Index()
         {
             string code = Request["code"];
-
-            if (code != null && code != "")
+            if (GetUData == null)
             {
-                if (GetUData == null)
-                {
-                    GetUData = new Models.UserData();
-                }
-                string[] resultArray = OauthLogin.getOpenId(code);
-                GetUData.OpenId = resultArray[OauthLogin.OPEND_ID];
+                GetUData = new Models.UserData();
+            }
+            if (code != null && code != "")
+            {              
+                string[] resultArray = OauthLogin.getUserInfo(code);
                 GetUData.Nick_Name = resultArray[OauthLogin.NICK_NAME];
                 GetUData.Head_Img_Url = resultArray[OauthLogin.HEAD_IMG_URL];
                 if (isOpenIdExist())
@@ -96,10 +94,10 @@ namespace ZAppUI.Controllers
                 Guid guid = Guid.NewGuid();
 
                 addUser(model, now, guid, openid);
-
+                //TODO BUG  添加用户信息时有可能为null
                 addUserInfo(now, guid, nickName, headImgUrl, model, userId);
 
-                if (userId != null)
+                if (userId.ToString() != "00000000-0000-0000-0000-000000000000")
                 {
                     addUserReferences(userId, guid);
                 }
@@ -213,5 +211,6 @@ namespace ZAppUI.Controllers
             referencesBiz.Add(references);
 
         }
+       
     }
 }
