@@ -1,5 +1,5 @@
 .main{}
 .main h3{margin-top: 30%;}
 .main .col-xs-12{padding: 0 0 20%;}
-.main .col-xs-12 a{display: block;width: 50%;height: 0;padding-bottom: 50%;background-color: blue;position: relative;border: 1px solid #ddd;}
-.main .col-xs-12 a img{display: block;width: 100%;height: 100%;background-color: red;position: absolute;}
+.main .col-xs-12 a{display: block;width: 50%;height: 0;padding-bottom: 50%;position: relative;border: 1px solid #ddd;}
+.main .col-xs-12 a img{display: block;width: 100%;height: 100%;position: absolute;}
