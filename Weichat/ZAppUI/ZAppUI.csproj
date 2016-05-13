@@ -283,6 +283,7 @@
     <Content Include="Content\css\Register.css" />
     <Content Include="Content\css\search.css" />
     <Content Include="Content\css\shop.css" />
+    <Content Include="Content\css\shops.css" />
     <Content Include="Content\css\transfer.css" />
     <Content Include="Content\css\upload_photos.css" />
     <Content Include="Content\css\upload_success.css" />

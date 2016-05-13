@@ -21,5 +21,9 @@ namespace ZAppUI.App_Code
         public const string NORMAL_USER="1001";
         public const string VIP = "1011";
         public const string SELLER = "1012";
+
+        public const string NORMAL_REGISTER="normal";
+        public const string INVITE_REGISTER="invite";
+
     }
 }

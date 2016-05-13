@@ -21,6 +21,8 @@ using ZAppUI.Models;
 using e3net.BLL.Base;
 using System.Data;
 using WeiChatMessageHandle.OpenId;
+using WeiChatMessageHandle;
+using ZAppUI.App_Code;
 namespace ZAppUI.Controllers
 {
 
@@ -41,12 +43,8 @@ namespace ZAppUI.Controllers
             }
             GetUData.OpenId = "ov0HljubVsu4mOIfZsTMry_s3CNM";
             if (code != null && code != "")
-            {
-                string[] resultArray = OauthLogin.getOpenId(code);
-                GetUData.OpenId = resultArray[OauthLogin.OPEND_ID];
-                
-                GetUData.Nick_Name = resultArray[OauthLogin.NICK_NAME];
-                GetUData.Head_Img_Url = resultArray[OauthLogin.HEAD_IMG_URL];
+            {   
+                GetUData.OpenId = OauthLogin.getOpenId(code);
             }
             return View();
         }
@@ -63,16 +61,13 @@ namespace ZAppUI.Controllers
             {
                 return RedirectToAction("Index", "User");
             }
-            return RedirectToAction("Index", "Register");
+            string redirect_uri = "http://test.luntaibaobao.com/register";
+            string state = ConstantList.NORMAL_REGISTER;
+            string url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + WechatParamList.APP_ID + "&redirect_uri=" + redirect_uri + "&response_type=code&scope=snsapi_userinfo&state=" + state + "#wechat_redirect";
+            return Redirect(url);
+            //return RedirectToAction("Index", "Register");
         }
 
-        //private const string APP_ID = "wx5c2b91a9bbef68b4";
-        //public ActionResult getCode()
-        //{
-        //    string redirect_uri = "http://5705395e.nat123.net/register";
-        //    string state = "test";
-        //    string url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + APP_ID + "&redirect_uri=" + redirect_uri + "&response_type=code&scope=snsapi_base&state=" + state + "#wechat_redirect";
-        //    return Redirect(url);
-        //}
+        
     }
 }
