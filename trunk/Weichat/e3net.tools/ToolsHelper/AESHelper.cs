@@ -45,8 +45,8 @@ namespace BH.PalmHosp.tools.ToolsHelper
             RijndaelManaged rDel = new RijndaelManaged();
             rDel.Key = keyArray;
             rDel.IV = ivArray;
-            rDel.Mode = CipherMode.CBC;
-            rDel.Padding = PaddingMode.Zeros;
+            rDel.Mode = CipherMode.ECB;
+            rDel.Padding = PaddingMode.PKCS7;
 
             ICryptoTransform cTransform = rDel.CreateEncryptor();
             byte[] resultArray = cTransform.TransformFinalBlock(toEncryptArray, 0, toEncryptArray.Length);
@@ -68,13 +68,16 @@ namespace BH.PalmHosp.tools.ToolsHelper
             RijndaelManaged rDel = new RijndaelManaged();
             rDel.Key = keyArray;
             rDel.IV = ivArray;
-            rDel.Mode = CipherMode.CBC;
-            rDel.Padding = PaddingMode.Zeros;
+            rDel.Mode = CipherMode.ECB;
+            rDel.Padding = PaddingMode.PKCS7;
 
             ICryptoTransform cTransform = rDel.CreateDecryptor();
             byte[] resultArray = cTransform.TransformFinalBlock(toEncryptArray, 0, toEncryptArray.Length);
 
             return UTF8Encoding.UTF8.GetString(resultArray);
         }
+
+    
+ 
     }
 }

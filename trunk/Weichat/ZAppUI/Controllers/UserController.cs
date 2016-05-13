@@ -192,22 +192,7 @@ namespace ZAppUI.Controllers
             }
             return View();
         }
-        //添加用户到推荐表
-        private void addUserReferences()
-        {
-            References references = new References();
-
-            references.UserId = userId;
-            references.InvitationCode = FilterTools.FilterSpecial(recommendId);
-            references.States = INVITING;
-            references.AddTime = DateTime.Now;
-            references.isDeleted = false;
-
-            ReferencesBiz referencesBiz = new ReferencesBiz();
-            referencesBiz.Add(references);
-
-
-        }
+        
         //显示推荐人数
         private int getNumOfRecommend()
         {
