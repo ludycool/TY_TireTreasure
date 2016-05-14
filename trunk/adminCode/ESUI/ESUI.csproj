@@ -285,6 +285,12 @@
     <Compile Include="httpHandle\DictionaryHandler.ashx.cs">
       <DependentUpon>DictionaryHandler.ashx</DependentUpon>
     </Compile>
+    <Compile Include="httpHandle\FilesInsuranHandler.ashx.cs">
+      <DependentUpon>FilesInsuranHandler.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="httpHandle\FilesTransactHandler.ashx.cs">
+      <DependentUpon>FilesTransactHandler.ashx</DependentUpon>
+    </Compile>
     <Compile Include="httpHandle\ImageHandler.ashx.cs">
       <DependentUpon>ImageHandler.ashx</DependentUpon>
     </Compile>
@@ -517,6 +523,8 @@
     <Content Include="Content\js\json2.js" />
     <Content Include="Content\js\publicMethod.js" />
     <Content Include="Content\js\Sys_FileUp.js" />
+    <Content Include="Content\js\FileUpInsuran.js" />
+    <Content Include="Content\js\FileUpTransact.js" />
     <Content Include="Content\Login\wuye\base.css" />
     <Content Include="Content\Login\wuye\bc_bg.gif" />
     <Content Include="Content\Login\wuye\bc_separator.gif" />
@@ -3463,6 +3471,8 @@
     <Content Include="Login.aspx" />
     <Content Include="httpHandle\ImageHandler.ashx" />
     <Content Include="httpHandle\Sys_FilesHandler.ashx" />
+    <Content Include="httpHandle\FilesTransactHandler.ashx" />
+    <Content Include="httpHandle\FilesInsuranHandler.ashx" />
     <None Include="Properties\PublishProfiles\ESUIConfig.pubxml" />
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.7.1.js" />

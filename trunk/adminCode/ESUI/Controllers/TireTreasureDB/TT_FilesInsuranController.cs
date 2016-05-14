@@ -48,7 +48,7 @@ namespace ESUI.Controllers
             String sortOrder = Request["order"];
             PageClass pc = new PageClass();
             pc.sys_Fields = "*";
-            pc.sys_Key = "FilesInsuranId";
+            pc.sys_Key = "FileId";
             pc.sys_PageIndex = pageIndex;
             pc.sys_PageSize = pageSize;
             pc.sys_Table = "TT_FilesInsuran";
@@ -66,10 +66,10 @@ namespace ESUI.Controllers
             HttpReSultMode ReSultMode = new HttpReSultMode();
             bool IsAdd = false;
           
-             if (!(EidModle.FilesInsuranId != null && !EidModle.FilesInsuranId.ToString().Equals("00000000-0000-0000-0000-000000000000")))//id为空，是添加
+             if (!(EidModle.FileId != null && !EidModle.FileId.ToString().Equals("00000000-0000-0000-0000-000000000000")))//id为空，是添加
             {
                 IsAdd = true;
-                //EidModle.FilesInsuranId = Guid.NewGuid();
+                //EidModle.FileId = Guid.NewGuid();
                 //EidModle.CreateTime = DateTime.Now;
                 //EidModle.UpdateTime = DateTime.Now;
 				EidModle.isValid = true;
@@ -81,7 +81,7 @@ namespace ESUI.Controllers
                 {
                     OPBiz.Add(EidModle);
                     ReSultMode.Code = 11;
-                    ReSultMode.Data = EidModle.FilesInsuranId.ToString();
+                    ReSultMode.Data = EidModle.FileId.ToString();
                     ReSultMode.Msg = "添加成功";
                 }
                 catch (Exception e) {
@@ -93,8 +93,8 @@ namespace ESUI.Controllers
             }
             else
             {
-                EidModle.WhereExpression = TT_FilesInsuranSet.FilesInsuranId.Equal(EidModle.FilesInsuranId);
-				string idfilec = "FilesInsuranId";
+                EidModle.WhereExpression = TT_FilesInsuranSet.FileId.Equal(EidModle.FileId);
+				string idfilec = "FileId";
                 EidModle.ChangedMap.Remove(idfilec.ToLower());//移除主键值
                 if (OPBiz.Update(EidModle) > 0)
                 {
@@ -114,7 +114,7 @@ namespace ESUI.Controllers
         }
         public JsonResult GetInfo(string ID)
         {
-            var mql2 = TT_FilesInsuranSet.SelectAll().Where(TT_FilesInsuranSet.FilesInsuranId.Equal(ID));
+            var mql2 = TT_FilesInsuranSet.SelectAll().Where(TT_FilesInsuranSet.FileId.Equal(ID));
             TT_FilesInsuran Rmodel = OPBiz.GetEntity(mql2);
             //  groupsBiz.Add(rol);
             return Json(Rmodel, JsonRequestBehavior.AllowGet);
@@ -123,9 +123,9 @@ namespace ESUI.Controllers
 
         public JsonResult Del(string IDSet)
         {
-           // var mql2 = TT_FilesInsuranSet.FilesInsuranId.In(IDSet);
+           // var mql2 = TT_FilesInsuranSet.FileId.In(IDSet);
            // int f = OPBiz.Remove<TT_FilesInsuranSet>(mql2);
-             int f = OPBiz.DelForSetDelete("FilesInsuranId", IDSet);
+             int f = OPBiz.DelForSetDelete("FileId", IDSet);
             HttpReSultMode ReSultMode = new HttpReSultMode();
             if (f > 0)
             {

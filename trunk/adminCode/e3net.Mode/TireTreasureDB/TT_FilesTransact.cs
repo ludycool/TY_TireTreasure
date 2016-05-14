@@ -8,25 +8,25 @@ namespace e3net.Mode.TireTreasureDB
 {
 
     [Table("[TT_FilesTransact]", DbType.SqlServer)]
-    [TablesPrimaryKey(PrimaryKeyType.AutoIncrease, typeof(Int64), "FilesTransactId")]
+    [TablesPrimaryKey(PrimaryKeyType.AutoIncrease, typeof(Int64), "FileId")]
     public partial class TT_FilesTransact : EntityBase
     {
 
         /// <summary>
         /// 主键
         /// </summary>
-        public Int64 FilesTransactId
+        public Int64 FileId
         {
-            get { return GetPropertyValue<Int64>("FilesTransactId"); }
-            set { SetPropertyValue("FilesTransactId", value); }
+            get { return GetPropertyValue<Int64>("FileId"); }
+            set { SetPropertyValue("FileId", value); }
         }
 
         /// <summary>
         /// 所禹对象Id
         /// </summary>
-        public Guid? ToId
+        public String ToId
         {
-            get { return GetPropertyValue<Guid?>("ToId"); }
+            get { return GetPropertyValue<String>("ToId"); }
             set { SetPropertyValue("ToId", value); }
         }
 
@@ -140,7 +140,7 @@ namespace e3net.Mode.TireTreasureDB
         /// <summary>
         /// 主键
         /// </summary>
-        public static readonly FieldBase FilesTransactId = new FieldBase(DbType.SqlServer, "[TT_FilesTransact]", FieldType.OnlyPrimaryKey, "[FilesTransactId]");
+        public static readonly FieldBase FileId = new FieldBase(DbType.SqlServer, "[TT_FilesTransact]", FieldType.OnlyPrimaryKey, "[FileId]");
 
         /// <summary>
         /// 所禹对象Id
