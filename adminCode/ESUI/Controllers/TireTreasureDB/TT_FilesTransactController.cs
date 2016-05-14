@@ -48,7 +48,7 @@ namespace ESUI.Controllers
             String sortOrder = Request["order"];
             PageClass pc = new PageClass();
             pc.sys_Fields = "*";
-            pc.sys_Key = "FilesTransactId";
+            pc.sys_Key = "FileId";
             pc.sys_PageIndex = pageIndex;
             pc.sys_PageSize = pageSize;
             pc.sys_Table = "TT_FilesTransact";
@@ -66,10 +66,10 @@ namespace ESUI.Controllers
             HttpReSultMode ReSultMode = new HttpReSultMode();
             bool IsAdd = false;
           
-             if (EidModle.FilesTransactId ==0)//id为空，是添加
+             if (EidModle.FileId ==0)//id为空，是添加
             {
                 IsAdd = true;
-                //EidModle.FilesTransactId = Guid.NewGuid();
+                //EidModle.FileId = Guid.NewGuid();
                 //EidModle.CreateTime = DateTime.Now;
                 //EidModle.UpdateTime = DateTime.Now;
 				EidModle.isValid = true;
@@ -81,7 +81,7 @@ namespace ESUI.Controllers
                 {
                     OPBiz.Add(EidModle);
                     ReSultMode.Code = 11;
-                    ReSultMode.Data = EidModle.FilesTransactId.ToString();
+                    ReSultMode.Data = EidModle.FileId.ToString();
                     ReSultMode.Msg = "添加成功";
                 }
                 catch (Exception e) {
@@ -93,8 +93,8 @@ namespace ESUI.Controllers
             }
             else
             {
-                EidModle.WhereExpression = TT_FilesTransactSet.FilesTransactId.Equal(EidModle.FilesTransactId);
-				string idfilec = "FilesTransactId";
+                EidModle.WhereExpression = TT_FilesTransactSet.FileId.Equal(EidModle.FileId);
+				string idfilec = "FileId";
                 EidModle.ChangedMap.Remove(idfilec.ToLower());//移除主键值
                 if (OPBiz.Update(EidModle) > 0)
                 {
@@ -114,7 +114,7 @@ namespace ESUI.Controllers
         }
         public JsonResult GetInfo(string ID)
         {
-            var mql2 = TT_FilesTransactSet.SelectAll().Where(TT_FilesTransactSet.FilesTransactId.Equal(ID));
+            var mql2 = TT_FilesTransactSet.SelectAll().Where(TT_FilesTransactSet.FileId.Equal(ID));
             TT_FilesTransact Rmodel = OPBiz.GetEntity(mql2);
             //  groupsBiz.Add(rol);
             return Json(Rmodel, JsonRequestBehavior.AllowGet);
@@ -123,9 +123,9 @@ namespace ESUI.Controllers
 
         public JsonResult Del(string IDSet)
         {
-           // var mql2 = TT_FilesTransactSet.FilesTransactId.In(IDSet);
+           // var mql2 = TT_FilesTransactSet.FileId.In(IDSet);
            // int f = OPBiz.Remove<TT_FilesTransactSet>(mql2);
-             int f = OPBiz.DelForSetDelete("FilesTransactId", IDSet);
+             int f = OPBiz.DelForSetDelete("FileId", IDSet);
             HttpReSultMode ReSultMode = new HttpReSultMode();
             if (f > 0)
             {
