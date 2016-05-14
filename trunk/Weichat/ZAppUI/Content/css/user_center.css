@@ -1,0 +1,17 @@
+.head-portrait{}
+.head-portrait .media{margin-top: 3%;}
+.head-portrait .media .media-left{width: 30%;}
+.head-portrait .media .media-left a{display: block;width: 100%;height: 0;padding-bottom: 100%;position: relative;}
+.head-portrait .media .media-left a img{width: 80%;height: 80%;position: absolute;top: 50%;left: 50%;-webkit-transform: translate(-50%,-50%);border-radius: 200%;}
+
+.head-portrait .media .media-body{position: relative;}
+.head-portrait .media .media-body span{padding: 3%;position: absolute;border: 1px solid #ddd;border-radius: 5px;top: 50%;left: 50%;-webkit-transform: translate(-50%,-50%);}
+
+
+.main{}
+.main .col-xs-12{padding: 2% 0%;border: 1px solid #ddd;}
+.main .col-xs-12 .col-xs-4 h4{white-space: nowrap;}
+.main .col-xs-12 .col-xs-8{}
+.main .col-xs-12 .padding{padding: 2% 0%;}
+
+.btn-box{margin: 3% 0 10%;}
