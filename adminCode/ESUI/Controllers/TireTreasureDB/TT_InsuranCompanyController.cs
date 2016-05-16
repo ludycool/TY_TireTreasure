@@ -30,7 +30,7 @@ namespace ESUI.Controllers
         public ActionResult Index()
         {
             ViewBag.RuteUrl = RuteUrl();
-            ViewBag.toolbar = toolbar();
+            ViewBag.toolbar = toolbar(2);
             return View();
         }
 

@@ -110,7 +110,22 @@ namespace e3net.Mode.TireTreasureDB
             get { return GetPropertyValue<String>("InsuranMan"); }
             set { SetPropertyValue("InsuranMan", value); }
         }
-
+        /// <summary>
+        ///被保人身份证
+        /// </summary>
+        public String InsuranManIdCar
+        {
+            get { return GetPropertyValue<String>("InsuranManIdCar"); }
+            set { SetPropertyValue("InsuranManIdCar", value); }
+        }
+        /// <summary>
+        ///车辆
+        /// </summary>
+        public String Vehicle
+        {
+            get { return GetPropertyValue<String>("Vehicle"); }
+            set { SetPropertyValue("Vehicle", value); }
+        }
         /// <summary>
         /// 厂牌型号
         /// </summary>
@@ -308,7 +323,14 @@ namespace e3net.Mode.TireTreasureDB
         /// 被保险人
         /// </summary>
         public static readonly FieldBase InsuranMan = new FieldBase(DbType.SqlServer, "[TT_Insuran]", FieldType.Common, "[InsuranMan]");
-
+        /// <summary>
+        /// 被保险人身份证
+        /// </summary>
+        public static readonly FieldBase InsuranManIdCar = new FieldBase(DbType.SqlServer, "[TT_Insuran]", FieldType.Common, "[InsuranMan]");
+        /// <summary>
+        /// 车辆
+        /// </summary>
+        public static readonly FieldBase Vehicle = new FieldBase(DbType.SqlServer, "[TT_Insuran]", FieldType.Common, "[InsuranMan]");
         /// <summary>
         /// 厂牌型号
         /// </summary>

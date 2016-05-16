@@ -42,7 +42,7 @@ namespace ESUI.Controllers
             int pageSize = Request["rows"] == null ? 10 : int.Parse(Request["rows"]);
             //string Where = Request["sqlSet"] == null ? "1=1" : SelectWhere.selectwherestring(Request["sqlSet"]);
             string Where = Request["sqlSet"] == null ? "1=1" : GetSql(Request["sqlSet"]);
-                 //Where += " and (isDeleted=0)";
+            Where += " and (isDeleted=0)";
             ////字段排序
             String sortField = Request["sort"];
             String sortOrder = Request["order"];
@@ -51,7 +51,7 @@ namespace ESUI.Controllers
             pc.sys_Key = "MissionId";
             pc.sys_PageIndex = pageIndex;
             pc.sys_PageSize = pageSize;
-            pc.sys_Table = "TT_Missions";
+            pc.sys_Table = "v_TT_Missions";
             pc.sys_Where = Where;
             pc.sys_Order = " " + sortField + " " + sortOrder;
             DataSet ds = OPBiz.GetPagingDataP(pc);
@@ -123,8 +123,27 @@ namespace ESUI.Controllers
             //  groupsBiz.Add(rol);
             return Json(Rmodel, JsonRequestBehavior.AllowGet);
         }
-
-
+        public JsonResult Checked(TT_Missions EidModle)
+        {
+            string IdSet ="'"+ Request["MissionId"]+"'";
+            string Value = Request["isValid"];
+            int f = OPBiz.SetFiedValue("TT_Missions", "MissionId", IdSet, "isValid", Value);
+            HttpReSultMode ReSultMode = new HttpReSultMode();
+            if (f > 0)
+            {
+                ReSultMode.Code = 11;
+                ReSultMode.Data = f.ToString();
+                ReSultMode.Msg = "成功更新" + f + "条数据！";
+                return Json(ReSultMode, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                ReSultMode.Code = -13;
+                ReSultMode.Data = "0";
+                ReSultMode.Msg = "操作失败！";
+                return Json(ReSultMode, JsonRequestBehavior.AllowGet);
+            }
+        }
         public JsonResult Del(string IDSet)
         {
            // var mql2 = TT_MissionsSet.MissionId.In(IDSet);

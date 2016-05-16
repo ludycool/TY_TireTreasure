@@ -29,7 +29,16 @@ namespace e3net.IDAL
         /// <param name="entity"></param>
         /// <returns></returns>
         int Update(EntityBase entity);
-
+        /// <summary>
+        /// 更新某一列的值
+        /// </summary>
+        /// <param name="tableName">要显示的表或多个表的连接</param>
+        /// <param name="Idfied">id或列名称</param>
+        /// <param name="IdSet">id集</param>
+        /// <param name="fied">列名称</param>
+        /// <param name="value">值</param>
+        /// <returns>返回影响行数</returns>
+        int SetFiedValue(string tableName, string Idfied, string IdSet, string fied, string value);
         /// <summary>
         /// 设置数据isDeleted 为0，
         /// </summary>

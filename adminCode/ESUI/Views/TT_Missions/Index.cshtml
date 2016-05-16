@@ -6,6 +6,9 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- 地图Start-->
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=a3wNd0COKjujWVCggydwQUIR"></script>
+    <!-- 地图end-->
     @* <script type="text/javascript" charset="utf-8" src="~/Content/js/DictionaryHelper.js"></script>*@
     @* ReSharper disable once NotAllPathsReturnValue *@
     @section Jsprepare{
@@ -23,11 +26,11 @@
                     columns: [[
                         { field: 'ck', checkbox: true },
                      
-              //{ field: 'MissionId', title: '主键', width: 100, sortable: true }, 
+              { field: 'LoginName', title: '登录名', width: 100, sortable: true },
               //{ field: 'UserId', title: '用户Id', width: 100, sortable: true }, 
-              { field: 'ProvinceCode', title: '省', width: 60,   sortable: true },
-              { field: 'CityCode', title: '城市', width: 60,   sortable: true }, 
-              { field: 'AreaCode', title: '区', width: 60,   sortable: true },
+              //{ field: 'ProvinceCode', title: '省', width: 60,   sortable: true },
+              //{ field: 'CityCode', title: '城市', width: 60,   sortable: true }, 
+              //{ field: 'AreaCode', title: '区', width: 60,   sortable: true },
               { field: 'CategoryId', title: '类别', width: 100,   sortable: true },
               { field: 'Titles', title: '标题', width: 100,   sortable: true },
               { field: 'Details', title: '详情', width: 100,   sortable: true },
@@ -35,26 +38,36 @@
               { field: 'Longitude', title: '经度', width: 60,   sortable: true },
               { field: 'Latitude', title: '纬度', width: 60,   sortable: true },
               { field: 'MoneyReward', title: '赏金', width: 100,   sortable: true },
-              {
-                  field: 'States', title: '状态', width: 60,   sortable: true, formatter: function (value, row, index) {
-                      switch (row.States) {
-                          case -1: return "关闭"; break;
-                          case 0: return "待接收"; break;
-                          case 1: return "进行中"; break;
-                          case 2: return "已完成"; break;
-                          default: return "未知"; break;
-                      }
+              {field: 'States', title: '状态', width: 60,   sortable: true, formatter: function (value, row, index) {
+                  switch (row.States) {
+                      case -1: return "关闭"; break;
+                      case 0: return "待接收"; break;
+                      case 1: return "进行中"; break;
+                      case 2: return "已完成"; break;
+                      default: return "未知"; break;
+                  }
+              }
+              },
+              {field: 'isValid', title: '审核', width: 60, sortable: true, formatter: function (value, row, index) {
+                  if(row.isValid==true) {
+                      return "未通过";
+                  }
+                  else if (row.isValid==false)
+                  {
+                      return "已通过";
+              }else
+                    {return "未知";}
                   }
               },
-              { field: 'SpendTime', title: '要求完成时间', width: 100,   sortable: true },
-              { field: 'SpendHours', title: '限时（小时）', width: 120,   sortable: true },
+              //{ field: 'SpendTime', title: '要求完成时间', width: 100,   sortable: true },
+              //{ field: 'SpendHours', title: '限时（小时）', width: 120,   sortable: true },
               //{ field: 'CreateTime', title: '添加时间', width: 100, sortable: true }, 
               //{ field: 'UpdateTime', title: '修改时间', width: 100, sortable: true }, 
               //{ field: 'isValid', title: '是否有效', width: 100, sortable: true }, 
               //{ field: 'isDeleted', title: '是否删除', width: 100, sortable: true }
                     ]],
                     iconCls: 'icon-save',
-                    title: '任务管理',
+                    //title: '任务管理',
                     nowrap: true,
                     fit: true,
                     //fitColumns: true,//自动
@@ -83,14 +96,32 @@
                     // $.messager.alert("友情提示", "请选择", "error");
                     return;
                 }
-                $("#DivShow").dialog('open').dialog('setTitle', '查看-' /*+ rows.Name*/).window('resize', { top: 20 });
-                DataBaseFunction.BindForm("fshow", rows);
-                //if (rows.Types == 0) {
-                //    $("#fshow span[name='Types']").html('转账');
-                //} else {
-                //    $("#fshow span[name='Types']").html('购物');
+                $("#DivShow").dialog('open').dialog('setTitle', '查看-' + rows.Titles).window('resize', { top: 20 });
+                DataBaseFunction.BindForm("fshow", rows);                
+                switch (rows.States) {
+                    case 2:$("#fshow span[name='States']").html('已完成');break;
+                    case 1:$("#fshow span[name='States']").html('进行中');break;
+                    case 0:$("#fshow span[name='States']").html('待接收');break;
+                    case -1:$("#fshow span[name='States']").html('关闭');break;
+                    default:$("#fshow span[name='States']").html('未知');break;
+                }
+                if (rows.isValid == true) {
+                    $("#fshow span[name='isValid']").html('通过');
+                } else if (rows.isvalid == false) {
+                    $("#fshow span[name='isValid']").html('未通过');
+                } else { $("#fshow span[name='isValid']").html('未知'); }
+                var map = new BMap.Map("Mapcontainer");          // 创建地图实例  
+                var opts = { type: BMAP_NAVIGATION_CONTROL_LARGE }
+                map.addControl(new BMap.NavigationControl(opts));
+                var point = new BMap.Point(rows.Longitude, rows.Latitude);  // 创建点坐标  
+                map.centerAndZoom(point, 12);
+                map.enableScrollWheelZoom();
+                // 初始化地图，设置中心点坐标和地图级别  
+                var marker = new BMap.Marker(point);        // 创建标注    
+                map.addOverlay(marker);                     // 将标注添加到地图中
+                //marker.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
 
-                //}
+                //GetFileList(data.ShopId, "TT_Shop");//图片
             }
             //easyUI 弹出添加的对话框
             //function AddInfo() {
@@ -144,32 +175,80 @@
             //    });
 
             //}
+            function Checked() {
 
+                var rows = $("#dg").datagrid('getSelected');
+                //首先取出来值判断只能选择一个
+                if (rows == null) {
+                    $.messager.alert("友情提示", "请选择", "error");
+                    return;
+                }
+                $("#DivEditor").dialog('open').dialog('setTitle', '审核-' + rows.Titles).window('resize', { top: 20 });
+                $(".validatebox-tip").remove();//清除验证样式
+
+                //$("#ff input[name='HouseCode']").attr("disabled", "true");
+
+                var ID = rows.MissionId;  //获取到了用选择的ID
+                $.ajax({
+                    url: BaseUrl + 'GetInfo',
+                    type: 'POST',
+                    data: { ID: ID },
+                    cache: false,
+                    error: function () { alert('Error $.ajax'); },
+                    success: function (data) {
+                        //var result = eval('(' + data + ')');
+                        DataBaseFunction.BindForm("ff", data);
+                        //$("input[name='HouseNo']").focus();
+                    }
+                });
+
+            }
+            //审核更新
+            function CheckedSaveInfo() {
+
+                //判断的信息是否通过验证
+                var validate = $("#ff").form('validate');
+                if (validate == false) {
+                    return false;
+                }
+                //获取需要传递的参数传递给前台
+                var data = DataBaseFunction.GetFormData("ff")
+                //发送异步请求到后台保存数据
+                $.post(BaseUrl + 'Checked', data, function (data) {
+                    alerts(data.Msg, 2);
+                    if (data.Code > 0) {
+                        $('#DivEditor').dialog('close');
+                        $(".validatebox-tip").remove();
+                        $("#dg").datagrid("reload");
+                    }
+                });
+
+            }
             //实现的编辑，包括增查改
-            //function SaveInfo() {
+            function SaveInfo() {
 
-            //    //判断的信息是否通过验证
-            //    var validate = $("#ff").form('validate');
-            //    if (validate == false) {
-            //        return false;
-            //    }
-            //    //获取需要传递的参数传递给前台
-            //    var data = DataBaseFunction.GetFormData("ff")
-            //    //发送异步请求到后台保存数据
-            //    $.post(BaseUrl + 'EditInfo', data, function (data) {
-            //        alerts(data.Msg, 2);
-            //        if (data.Code > 0) {
-            //            $('#DivEditor').dialog('close');
-            //            $(".validatebox-tip").remove();
-            //            $("#dg").datagrid("reload");
-            //        }
-            //    });
+                //判断的信息是否通过验证
+                var validate = $("#ff").form('validate');
+                if (validate == false) {
+                    return false;
+                }
+                //获取需要传递的参数传递给前台
+                var data = DataBaseFunction.GetFormData("ff")
+                //发送异步请求到后台保存数据
+                $.post(BaseUrl + 'EditInfo', data, function (data) {
+                    alerts(data.Msg, 2);
+                    if (data.Code > 0) {
+                        $('#DivEditor').dialog('close');
+                        $(".validatebox-tip").remove();
+                        $("#dg").datagrid("reload");
+                    }
+                });
 
-            //}
+            }
             //删除
-            //function Del() {
-            //    DataBaseFunction.deleteInfo("dg", "MissionId", "Name");
-            //}
+            function Del() {
+                DataBaseFunction.deleteInfo("dg", "MissionId", "Titles");
+            }
 
             //搜索
             function SearchGo() {
@@ -186,80 +265,68 @@
     }
 
 </head>
-<body style="overflow-y: hidden">
+<body  class="easyui-layout"  >
 
-    <table id="dg"></table>
 
-    <!------------------------搜索弹出层---------------------------------->
-    <div id="Div_Searh" class="easyui-dialog" style="width: 380px; padding: 10px 20px;"
-        closed="true" resizable="true" modal="true" buttons="#dlg-buttons">
+       <!-- 一行高度是48px; -->
+    <div id="div_Searh" data-options="region:'north',split:true" style="height:48px;">
         <form id="fSearh">
 
-            <table class="stripes" style="table-layout: fixed; margin: 0 auto; width: 320px;" border="0" cellspacing="0" cellpadding="0">
+            <table class="stripes" style="table-layout: fixed;margin-top:5px; width: 100%;" border="0" cellspacing="0" cellpadding="0">
                 <tr>
                     <td style="width: 80px;">
-                        <label>标题内容：</label></td>
-                    <td>
-                        <input type="text" class="textbox" name="Titles_like" style="width: 200px;" />
+                        <label>关键字查询：</label></td>
+                    <td style="width:120px;">
+                        <input type="text" class="textbox" name="Titles|Details_like" style="width: 120px;" />
                     </td>
-                    </tr>
-                <tr>
-                    <td style="width: 80px;">
-                        <label>赏  金>=</label></td>
-                    <td>
-                        <input type="text" class="textbox" name="MoneyReward_ge" style="width: 200px;" />
+                    <td style="width: 60px;">
+                        <label>赏金大于：</label></td>
+                    <td style="width:50px;">
+                        <input type="text" class="textbox" name="MoneyReward_ge" style="width: 50px;" />
                     </td>
-                    </tr>
-                <tr>
-                    <td style="width: 80px;">
-                        <label>赏  金<=</label></td>
-                    <td>
-                        <input type="text" class="textbox" name="MoneyReward_le" style="width: 200px;" />
+                    <td style="width: 60px;">
+                        <label>赏金小于：</label></td>
+                    <td style="width:50px;">
+                        <input type="text" class="textbox" name="MoneyReward_le" style="width: 50px;" />
                     </td>
-                    </tr>
-                <tr>
-                    <td style="width: 80px;">
-                        <label>状  态：</label></td>
-                    <td>
-                        <input type="text" class="textbox" name="States_eq" style="width: 200px;" />
+                    <td style="width: 60px;">
+                        <label>状态：</label></td>
+                    <td style="width:80px">
+                        <select class="easyui-combobox" name="States_eq" >
+                        <option value="">所有</option>
+                            <option value="-1">关闭</option>
+                            <option value="0">待接收</option>
+                            <option value="1">进行中</option>
+                            <option value="2">已完成</option>
+                            </select>
                     </td>
-                    </tr>
-                <tr>
-                    <td style="width: 80px;">
-                        <label>完成时间：</label></td>
-                    <td>
-                        <input type="text" class="textbox" name="SpendHours_le" style="width: 200px;" />
-                    </td>
-                    </tr>
-                <tr>
-                    <td style="width: 80px;">
-                        <label>详情关键字：</label></td>
-                    <td>
-                        <input type="text" class="textbox" name="Details_like" style="width: 200px;" />
-                    </td>
-                    </tr>
+<td><a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-undo" style="float: left;" onclick=" DataBaseFunction.ClearForm('fSearh');">清除</a>
+                        <a href="javascript:void(0)" class="easyui-linkbutton" style="float: left;" iconcls="icon-search" onclick="SearchGo();">搜索</a>
+                    </td>            
+                </tr>
             </table>
-
         </form>
-        <div style="text-align: center; width: 100%; margin: 5px 0px; display: block;">
-            <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-undo" style="float: left;" onclick=" DataBaseFunction.ClearForm('fSearh');">清除</a>
-            <a href="javascript:void(0)" class="easyui-linkbutton" style="float: right;" iconcls="icon-search" onclick="SearchGo();">搜索</a>
-            <a href="javascript:void(0)" class="easyui-linkbutton" style="float: right;" iconcls="icon-cancel" onclick="$('#Div_Searh').dialog('close')">关闭</a>
-        </div>
     </div>
+    <div data-options="region:'center',title:'任务管理',split:true">
+          <table id="dg"></table>
+    </div>   
     <!------------------------弹出层---------------------------------->
-    @*<div id="DivEditor" class="easyui-dialog" style="width: 630px;"
+    <div id="DivEditor" class="easyui-dialog" style="width: 630px;"
         closed="true" resizable="true" modal="true" buttons="#dlg-buttons">
-        <div id="Div_form" class="easyui-panel" style="padding: 10px 10px; overflow-x: hidden;" data-options=" height:500,width:610,border:false">
+        <div id="Div_form" class="easyui-panel" style="padding: 10px 10px; overflow-x: hidden;" data-options=" height:200,width:610,border:false">
             <form id="ff" method="post" enctype="multipart/form-data">
 
                 <table class="stripes" style="table-layout: fixed;" border="0" cellspacing="0" cellpadding="0">
-                    <input type="hidden" name="OwnerID" />
+                    <input type="hidden" name="MissionId" value="" />
                     <tr>
                         <td style="width: 120px;">
-                            <label>房间门牌号：</label></td>
+                            <label>审核：</label></td>
                         <td style="width: 490px;">
-                            <input class="easyui-validatebox textbox" type="text" name="HouseNo" /></td>
+                            <select class="easyui-combobox" name="isValid">
+                                <option value="0">不通过</option>
+                                <option value="1">通过</option>
+                            </select>
+                            </td>
                     </tr>
 
                 </table>
@@ -268,10 +335,10 @@
         </div>
 
         <div style="text-align: center; width: 100%; margin-bottom: 5px;">
-            <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-ok" onclick="SaveInfo();">确定</a>&nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-ok" onclick="CheckedSaveInfo();">确定</a>&nbsp;&nbsp;&nbsp;&nbsp;
             <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-cancel" onclick="$('#DivEditor').dialog('close')">关闭</a>
         </div>
-    </div>*@
+    </div>
 
     <!------------------------弹出查看层---------------------------------->
     <div id="DivShow" class="easyui-dialog" style="width: 600px;"
@@ -280,14 +347,26 @@
             <form id="fshow" method="post" enctype="multipart/form-data">
 
                  <table class="stripes" style="table-layout: fixed;" border="0"  cellspacing="0" cellpadding="0">
-@*<tr>
-    <td style="width:120px;"><label >主键：</label></td>
-    <td style="width:480px;"><span name="MissionId"></span></td>
+<tr>
+    <td style="width:140px;"><label >登录名：</label></td>
+    <td style="width:480px;"><span name="LoginName"></span></td>
 </tr>
 <tr>
-    <td style="width:120px;"><label >用户Id：</label></td>
-    <td style="width:480px;"><span name="UserId"></span></td>
-</tr>*@
+    <td style="width:120px;"><label >姓名：</label></td>
+    <td style="width:480px;"><span name="TrueName"></span></td>
+</tr>
+                     <tr>
+    <td style="width:120px;"><label >用户类型：</label></td>
+    <td style="width:480px;"><span name="UserType"></span></td>
+</tr>
+                     <tr>
+    <td style="width:120px;"><label >等级：</label></td>
+    <td style="width:480px;"><span name="Levels"></span></td>
+</tr>
+                       <tr>
+    <td style="width:120px;"><label >积分：</label></td>
+    <td style="width:480px;"><span name="Scores"></span></td>
+</tr>
 <tr>
     <td style="width:120px;"><label >省：</label></td>
     <td style="width:480px;"><span name="ProvinceCode"></span></td>
@@ -310,15 +389,22 @@
 </tr>
 <tr><td style="width:120px;"><label >详情：</label></td><td style="width:480px;"><span name="Details"></span></td></tr>
 <tr><td style="width:120px;"><label >地址：</label></td><td style="width:480px;"><span name="Address"></span></td></tr>
-<tr><td style="width:120px;"><label >经度：</label></td><td style="width:480px;"><span name="Longitude"></span></td></tr>
-<tr><td style="width:120px;"><label >纬度：</label></td><td style="width:480px;"><span name="Latitude"></span></td></tr>
+@*<tr><td style="width:120px;"><label >经度：</label></td><td style="width:480px;"><span name="Longitude"></span></td></tr>
+<tr><td style="width:120px;"><label >纬度：</label></td><td style="width:480px;"><span name="Latitude"></span></td></tr>*@
 <tr><td style="width:120px;"><label >赏金：</label></td><td style="width:480px;"><span name="MoneyReward"></span></td></tr>
 <tr><td style="width:120px;"><label >状态: </label></td><td style="width:480px;"><span name="States"></span></td></tr>
+<tr><td style="width:120px;"><label >是否有效：</label></td><td style="width:480px;"><span name="isValid"></span></td></tr>
 <tr><td style="width:120px;"><label >要求完成时间：</label></td><td style="width:480px;"><span name="SpendTime"></span></td></tr>
 <tr><td style="width:120px;"><label >要求完成（小时）：</label></td><td style="width:480px;"><span name="SpendHours"></span></td></tr>
+                     @*显示百度地图*@
+                     <tr>
+                    <td colspan="2">
+                        <div id="Mapcontainer" style="height: 160px; width: 240px;"></div>
+
+                    </td>
+                </tr>
 @*<tr><td style="width:120px;"><label >添加时间：</label></td><td style="width:480px;"><span name="CreateTime"></span></td></tr>
 <tr><td style="width:120px;"><label >修改时间：</label></td><td style="width:480px;"><span name="UpdateTime"></span></td></tr>
-<tr><td style="width:120px;"><label >是否有效：</label></td><td style="width:480px;"><span name="isValid"></span></td></tr>
 <tr><td style="width:120px;"><label >是否删除：</label></td><td style="width:480px;"><span name="isDeleted"></span></td></tr>*@
  </table>
             </form>
