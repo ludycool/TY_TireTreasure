@@ -137,6 +137,37 @@ namespace e3net.DAL
                 return res;
             }
         }
+        /// <summary>
+        /// 更新某一列的值
+        /// </summary>
+        /// <param name="tableName">要显示的表或多个表的连接</param>
+        /// <param name="Idfied">id或列名称</param>
+        /// <param name="IdSet">id集</param>
+        /// <param name="fied">列名称</param>
+        /// <param name="value">值</param>
+        /// <returns>返回影响行数</returns>
+        public int SetFiedValue(string tableName, string Idfied, string IdSet, string fied, string value)
+        {
+            DbParameter[] parameters = {
+                                            new SqlParameter("@tableName", SqlDbType.NVarChar,200) ,     
+			           new SqlParameter("@Idfied", SqlDbType.NVarChar,200) ,            
+                        new SqlParameter("@IdSet", SqlDbType.NVarChar,1000),
+                        new SqlParameter("@fied",SqlDbType.NVarChar,200),
+                        new SqlParameter("@value",SqlDbType.NVarChar,1000)
+            };
+            parameters[0].Value = typeof(T).Name; ;
+            parameters[1].Value = Idfied;
+            parameters[2].Value = IdSet;
+            parameters[3].Value = fied;
+            parameters[4].Value = value;
+            using (var db = GetDb())
+            {
+                //  db.DebugEnabled = true;
+
+                int res = db.ExecuteProWithNonQuery("sp_public_SetFiedValue", parameters);
+                return res;
+            }
+        }
 
         #endregion
 

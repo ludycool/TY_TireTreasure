@@ -30,7 +30,7 @@ namespace ESUI.Controllers
         public ActionResult Index()
         {
             ViewBag.RuteUrl = RuteUrl();
-            ViewBag.toolbar = toolbar();
+            ViewBag.toolbar = toolbar(2);
             return View();
         }
 
@@ -48,10 +48,10 @@ namespace ESUI.Controllers
             String sortOrder = Request["order"];
             PageClass pc = new PageClass();
             pc.sys_Fields = "*";
-            pc.sys_Key = "InsuranId";
+            pc.sys_Key = "InsuranCompanyId";
             pc.sys_PageIndex = pageIndex;
             pc.sys_PageSize = pageSize;
-            pc.sys_Table = "TT_Insuran";
+            pc.sys_Table = "v_TT_Insurance";
             pc.sys_Where = Where;
             pc.sys_Order = " " + sortField + " " + sortOrder;
             DataSet ds = OPBiz.GetPagingDataP(pc);

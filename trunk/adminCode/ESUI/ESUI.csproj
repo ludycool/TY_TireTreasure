@@ -3530,6 +3530,12 @@
     <Content Include="Views\TT_Missions\Index.cshtml" />
     <Content Include="Views\TT_Shop\Add2.cshtml" />
     <Content Include="Views\TT_Shop\Add.cshtml" />
+    <Content Include="Views\TT_InsuranCompany\Index.cshtml" />
+    <Content Include="Views\TT_FundPerSon\Index.cshtml" />
+    <Content Include="Views\TT_FundInfo\Index.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\TT_Insuran\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="temp\" />
