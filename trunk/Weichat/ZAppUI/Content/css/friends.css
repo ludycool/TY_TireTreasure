@@ -1,3 +1,8 @@
+.dropdown-menu-right{margin-top: 8%;}
+.dropdown-menu-right li{}
+.dropdown-menu-right li a{display: block;padding: 6% 15px;}
+
+
 .md-box{padding: 3% 5%;border-bottom: 1px solid #ddd;margin: 0;}
 
 .md-box .media-middle{width: 20%;height: 15%;padding: 0 5% 0 0;}
