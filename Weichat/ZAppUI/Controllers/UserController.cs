@@ -37,7 +37,7 @@ namespace ZAppUI.Controllers
         {
             AppUserInfoBiz userInfoBiz = new AppUserInfoBiz();
             string openId = GetUData.OpenId;
-            DataSet result = userInfoBiz.ExecuteSqlToDataSet("EXEC	[TireTreasureDB].[dbo].[proc_GetUserInfo] '" + openId + "'");
+            DataSet result = userInfoBiz.ExecuteSqlToDataSet("EXEC	[TireTreasureDB].[dbo].[proc_GetUserInfoByWeiXinId] '" + openId + "'");
             if (result.Tables.Count > 0 && result.Tables[0].Rows.Count > 0)
             {
                 ViewBag.nickName = result.Tables[0].Rows[0]["Nickname"].ToString();
@@ -153,13 +153,13 @@ namespace ZAppUI.Controllers
 
             SaveImg(currentPath, RQBmp);
         }
-        string Key = "12345678";
+
         //生成推荐链接
         public string generateRecommendUrl()
         {
             string id = getUserId();
             if (id != null)
-                id = DESProvider.Encrypt(id, Key);
+                id = DESProvider.Encrypt(id, ConstantList.ENCRYPT_KEY);
 
             return "http://" + Request.Url.Host + "/" + RouteData.Route.GetRouteData(this.HttpContext).Values["controller"] + "/encoderRecommendUrl?param=" + id + "&type=recommend";
         }
@@ -177,7 +177,7 @@ namespace ZAppUI.Controllers
         //推荐链接解码
         public ActionResult encoderRecommendUrl()
         {
-            string recommendId = FilterTools.FilterSpecial(DESProvider.Decrypt(Request["param"], Key));
+            string recommendId = FilterTools.FilterSpecial(DESProvider.Decrypt(Request["param"], ConstantList.ENCRYPT_KEY));
             string type = FilterTools.FilterSpecial(Request["type"]);
 
             if (type.Equals("recommend"))

@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
+using TZHSWEET.Common;
 using WeiChatMessageHandle.OpenId;
 using ZAppUI.App_Code;
 using ZAppUI.Models;
@@ -63,7 +64,7 @@ namespace ZAppUI.Controllers
                 ViewData["IsShowAlert"] = true;
                 ViewData["Alert"] = "请输入正确的手机号";
             }
-            else if (!isNumber(model.Phone))
+            else if (!util.isNumber(model.Phone))
             {
                 ViewData["IsShowAlert"] = true;
                 ViewData["Alert"] = "请输入正确的手机号";
@@ -110,17 +111,7 @@ namespace ZAppUI.Controllers
         }
 
 
-        //判断手机号
-        private bool isNumber(string s)
-        {
-            string dianxin = @"^1[3578][01379]\d{8}$";
-            Regex d = new Regex(dianxin);
-            string liantong = @"^1[34578][01256]\d{8}$";
-            Regex l = new Regex(liantong);
-            string yidong = @"^(1[34578][0123456789]\d{8})$";
-            Regex y = new Regex(yidong);
-            return d.IsMatch(s) || l.IsMatch(s) || y.IsMatch(s);
-        }
+        
         //添加用户到表
         private void addUser(LoginModel model, DateTime now, Guid guid, string openId)
         {
@@ -128,7 +119,7 @@ namespace ZAppUI.Controllers
             newUser.UserId = guid;
             //特殊字符过滤
             newUser.LoginName = FilterTools.FilterSpecial(model.Phone);
-            newUser.Password = FilterTools.FilterSpecial(model.FirstPassword);
+            newUser.Password = DESProvider.Encrypt(FilterTools.FilterSpecial(model.FirstPassword), ConstantList.PASSWORD_ENCRYPT);
             newUser.WeiXinId = openId;
             newUser.TrueName = "";
             newUser.CreateTime = now;
@@ -183,7 +174,7 @@ namespace ZAppUI.Controllers
             {
                 AppUserInfoBiz userInfoBiz = new AppUserInfoBiz();
 
-                DataSet result = userInfoBiz.ExecuteSqlToDataSet("EXEC [TireTreasureDB].[dbo].[proc_GetUserInfo] '" + GetUData.OpenId + "'");
+                DataSet result = userInfoBiz.ExecuteSqlToDataSet("EXEC [TireTreasureDB].[dbo].[proc_GetUserInfoByWeiXinId] '" + GetUData.OpenId + "'");
                 if (result.Tables[0].Rows.Count > 0)
                 {
                     imgUrl = result.Tables[0].Rows[0]["ImgeUrl"].ToString();

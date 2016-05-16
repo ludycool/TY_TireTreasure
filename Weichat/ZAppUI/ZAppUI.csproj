@@ -219,11 +219,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Code\ConstantList.cs" />
+    <Compile Include="App_Code\util.cs" />
     <Compile Include="App_Start\AuthConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\AddFriendsController.cs" />
+    <Compile Include="Controllers\FriendsController.cs" />
     <Compile Include="Controllers\RegisterController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -409,6 +412,9 @@
     <Content Include="Views\Home\transfer.cshtml" />
     <Content Include="Views\User\index.cshtml" />
     <Content Include="Views\User\recommend.cshtml" />
+    <Content Include="Views\AddFriends\index.cshtml" />
+    <Content Include="Views\Friends\Index.cshtml" />
+    <Content Include="Views\AddFriends\showUserInfo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="temp\" />

@@ -30,4 +30,14 @@ namespace ZAppUI.Models
         /// </summary>
         public string UserType { get; set; }
     }
+    public class SearchUser
+    {
+        [Required]
+        [Display(Name = "账号")]
+        public string UserAccount
+        {
+            get;
+            set;
+        }
+    }
 }
