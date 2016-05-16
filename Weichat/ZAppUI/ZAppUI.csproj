@@ -231,6 +231,7 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Controllers\VipShopController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -415,6 +416,7 @@
     <Content Include="Views\AddFriends\index.cshtml" />
     <Content Include="Views\Friends\Index.cshtml" />
     <Content Include="Views\AddFriends\showUserInfo.cshtml" />
+    <Content Include="Views\VipShop\index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="temp\" />
