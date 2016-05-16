@@ -38,7 +38,7 @@
       <publishTime>04/26/2016 16:19:32</publishTime>
     </File>
     <File Include="bin/App.Core.dll">
-      <publishTime>05/12/2016 15:41:55</publishTime>
+      <publishTime>05/16/2016 08:32:10</publishTime>
     </File>
     <File Include="bin/App_Data/AdvertisingData.xml">
       <publishTime>04/07/2015 15:02:29</publishTime>
@@ -74,19 +74,19 @@
       <publishTime>04/26/2016 16:19:41</publishTime>
     </File>
     <File Include="bin/e3net.BLL.dll">
-      <publishTime>05/12/2016 15:41:55</publishTime>
+      <publishTime>05/16/2016 08:32:10</publishTime>
     </File>
     <File Include="bin/e3net.common.dll">
       <publishTime>05/03/2016 14:06:04</publishTime>
     </File>
     <File Include="bin/e3net.DAL.dll">
-      <publishTime>05/12/2016 15:41:55</publishTime>
+      <publishTime>05/16/2016 08:32:09</publishTime>
     </File>
     <File Include="bin/e3net.IDAL.dll">
-      <publishTime>05/10/2016 19:46:43</publishTime>
+      <publishTime>05/16/2016 08:32:09</publishTime>
     </File>
     <File Include="bin/e3net.Mode.dll">
-      <publishTime>05/10/2016 19:46:43</publishTime>
+      <publishTime>05/16/2016 08:32:08</publishTime>
     </File>
     <File Include="bin/e3net.tools.dll">
       <publishTime>05/12/2016 15:41:54</publishTime>
@@ -266,7 +266,7 @@
       <publishTime>05/13/2016 15:43:03</publishTime>
     </File>
     <File Include="bin/ZAppUI.dll">
-      <publishTime>05/13/2016 16:09:32</publishTime>
+      <publishTime>05/16/2016 08:32:11</publishTime>
     </File>
     <File Include="bin/zh-Hans/EntityFramework.resources.dll">
       <publishTime>04/26/2016 16:19:42</publishTime>
@@ -347,7 +347,7 @@
       <publishTime>05/12/2016 11:52:37</publishTime>
     </File>
     <File Include="Content/CSS/camera.css">
-      <publishTime>05/12/2016 11:52:37</publishTime>
+      <publishTime>05/14/2016 13:59:17</publishTime>
     </File>
     <File Include="Content/CSS/cash.css">
       <publishTime>05/12/2016 11:52:37</publishTime>
@@ -521,10 +521,10 @@
       <publishTime>05/11/2016 15:45:32</publishTime>
     </File>
     <File Include="Content/images/bill.png">
-      <publishTime>05/11/2016 15:45:32</publishTime>
+      <publishTime>05/14/2016 15:00:39</publishTime>
     </File>
     <File Include="Content/images/bill1.png">
-      <publishTime>05/11/2016 15:45:32</publishTime>
+      <publishTime>05/14/2016 15:00:39</publishTime>
     </File>
     <File Include="Content/images/camera.png">
       <publishTime>05/11/2016 15:45:31</publishTime>
@@ -539,7 +539,7 @@
       <publishTime>05/11/2016 15:45:32</publishTime>
     </File>
     <File Include="Content/images/circle.png">
-      <publishTime>05/11/2016 15:45:32</publishTime>
+      <publishTime>05/14/2016 15:00:39</publishTime>
     </File>
     <File Include="Content/Images/footerback.png">
       <publishTime>04/21/2016 17:02:02</publishTime>
@@ -8912,7 +8912,7 @@
       <publishTime>04/21/2016 17:02:19</publishTime>
     </File>
     <File Include="Content/js/npm.js">
-      <publishTime>05/11/2016 15:45:28</publishTime>
+      <publishTime>05/13/2016 17:36:33</publishTime>
     </File>
     <File Include="Content/js/publicMethod.js">
       <publishTime>04/21/2016 17:02:19</publishTime>
@@ -9023,7 +9023,7 @@
       <publishTime>04/26/2016 16:19:29</publishTime>
     </File>
     <File Include="Content/Scripts/npm.js">
-      <publishTime>04/27/2016 17:26:05</publishTime>
+      <publishTime>05/13/2016 17:36:34</publishTime>
     </File>
     <File Include="Content/Style.css">
       <publishTime>04/21/2016 17:02:02</publishTime>
@@ -10333,6 +10333,12 @@
     <File Include="Views/aa.cshtml">
       <publishTime>04/26/2016 21:08:50</publishTime>
     </File>
+    <File Include="Views/AddFriends/index.cshtml">
+      <publishTime>05/15/2016 22:27:31</publishTime>
+    </File>
+    <File Include="Views/AddFriends/showUserInfo.cshtml">
+      <publishTime>05/14/2016 17:46:21</publishTime>
+    </File>
     <File Include="Views/Advertising/Index.cshtml">
       <publishTime>11/23/2015 19:06:34</publishTime>
     </File>
@@ -10390,6 +10396,9 @@
     <File Include="Views/Excel/Index.cshtml">
       <publishTime>01/29/2016 09:40:00</publishTime>
     </File>
+    <File Include="Views/Friends/Index.cshtml">
+      <publishTime>05/14/2016 10:14:54</publishTime>
+    </File>
     <File Include="Views/HandMachines/Index.cshtml">
       <publishTime>02/12/2015 16:19:58</publishTime>
     </File>
@@ -10415,7 +10424,7 @@
       <publishTime>04/27/2016 17:37:55</publishTime>
     </File>
     <File Include="Views/Home/Index.cshtml">
-      <publishTime>05/12/2016 11:53:41</publishTime>
+      <publishTime>05/13/2016 17:36:34</publishTime>
     </File>
     <File Include="Views/Home/login.cshtml">
       <publishTime>04/29/2016 17:59:55</publishTime>
@@ -10457,7 +10466,7 @@
       <publishTime>11/23/2015 19:06:35</publishTime>
     </File>
     <File Include="Views/index.cshtml">
-      <publishTime>04/27/2016 16:49:21</publishTime>
+      <publishTime>05/13/2016 16:35:02</publishTime>
     </File>
     <File Include="Views/index.html">
       <publishTime>04/27/2016 16:20:16</publishTime>
@@ -10490,7 +10499,7 @@
       <publishTime>11/30/2015 14:37:29</publishTime>
     </File>
     <File Include="Views/Register/index.cshtml">
-      <publishTime>05/12/2016 14:14:19</publishTime>
+      <publishTime>05/15/2016 22:21:56</publishTime>
     </File>
     <File Include="Views/Role/Index.cshtml">
       <publishTime>04/21/2016 17:01:40</publishTime>
@@ -10499,7 +10508,7 @@
       <publishTime>04/26/2016 16:19:29</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
-      <publishTime>05/07/2016 15:38:40</publishTime>
+      <publishTime>05/13/2016 16:35:02</publishTime>
     </File>
     <File Include="Views/Supply/Index.cshtml">
       <publishTime>02/10/2015 14:52:52</publishTime>
@@ -10595,10 +10604,10 @@
       <publishTime>03/22/2015 10:50:26</publishTime>
     </File>
     <File Include="Views/User/Index.cshtml">
-      <publishTime>05/12/2016 11:53:41</publishTime>
+      <publishTime>05/13/2016 16:35:02</publishTime>
     </File>
     <File Include="Views/User/recommend.cshtml">
-      <publishTime>05/12/2016 11:53:41</publishTime>
+      <publishTime>05/13/2016 16:35:02</publishTime>
     </File>
     <File Include="Views/UTS_Car/Index.cshtml">
       <publishTime>12/22/2015 14:30:01</publishTime>
@@ -10661,10 +10670,10 @@
       <publishTime>11/23/2015 19:06:33</publishTime>
     </File>
     <File Include="Views/_ViewStart.cshtml">
-      <publishTime>04/26/2016 16:19:29</publishTime>
+      <publishTime>05/13/2016 16:35:02</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>05/13/2016 16:09:32</publishTime>
+      <publishTime>05/16/2016 08:32:12</publishTime>
     </File>
     <File Include="文档/HospitalAssistant.pdm">
       <publishTime>04/03/2015 17:40:53</publishTime>

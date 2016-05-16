@@ -22,11 +22,11 @@
 <title>注册</title>
 
 <!-- Bootstrap -->
-<link href="~/Content/css/bootstrap.min.css" rel="stylesheet">
-<link href="~/Content/css/font-awesome.min.css" rel="stylesheet">
-<link href="~/Content/css/global.css" rel="stylesheet">
-<link href="~/Content/css/reg.css" rel="stylesheet">
-<link href="~/Content/css/login.css" rel="stylesheet">
+<link href="/Content/css/bootstrap.min.css" rel="stylesheet">
+<link href="/Content/css/font-awesome.min.css" rel="stylesheet">
+<link href="/Content/css/global.css" rel="stylesheet">
+<link href="/Content/css/reg.css" rel="stylesheet">
+<link href="/Content/css/login.css" rel="stylesheet">
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 <!--[if lt IE 9]>
@@ -39,7 +39,7 @@
 <nav class="navbar top">
   <div class="container">
     <div class="navbar-header">
-      <a class="top-icon-left" href="home">
+      <a class="top-icon-left" href="/home">
         <i class="icon-chevron-left"></i>
       </a>
     </div>
@@ -47,8 +47,8 @@
 </nav>
     
 <!-- reg -->
-     @using (Html.BeginForm("index", "Register", FormMethod.Post))
-     {
+    
+     
     <div class="container">
         <div class="row">
             <div class="col-xs-12 login-pic">
@@ -56,21 +56,23 @@
             </div>
         </div>      
       <div class="row">
+         @using (Html.BeginForm("index", "Register", FormMethod.Post,new{@class="form-signin reg"}))
+         {
       <form class="form-signin reg">          
         <h2 class="form-signin-heading text-center">注册账户</h2>
          @Html.TextBoxFor(m => m.Phone, new {@class="form-control",@placeholder="请输入您的手机号"})
          @Html.PasswordFor(m => m.FirstPassword,new { @class="form-control",@placeholder="请输入您的密码"})  
          @Html.PasswordFor(m => m.SecondPassword,new { @class="form-control",@placeholder="确认密码"})
         
-        <button class="btn btn-lg btn-primary btn-block" type="submit">注册</button>
-          
+        <button class="btn btn-lg btn-primary btn-block" type="submit">注册</button>         
       </form>
+         }
       </div>
      </div>
-     }
+     
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<script src="~/Content/Scripts/jquery-1.12.2.min.js"></script>
+<script src="/Content/Scripts/jquery-1.12.2.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
-<script src="~/Content/Scripts/bootstrap.min.js"></script>
+<script src="/Content/Scripts/bootstrap.min.js"></script>
 </body>
 </html>

@@ -18,6 +18,8 @@ namespace ZAppUI.Models
 
         public Guid User_Id { get; set; }
 
+        public string Request_User_OpenId{get;set;}
+
     }
 
     public class UserInfo

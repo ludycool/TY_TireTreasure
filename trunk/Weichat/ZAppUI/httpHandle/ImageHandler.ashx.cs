@@ -122,7 +122,7 @@ namespace ZAppUI.httpHandle
                                     //保存文件 
                                     string path = context.Request.MapPath(fileName);
 
-                                    string uriString = System.Web.HttpContext.Current.Server.MapPath("~/Upload/").ToString();
+                                    string uriString = System.Web.HttpContext.Current.Server.MapPath("/Upload/").ToString();
                                     file.Route = "/Upload/";
                                     file.FullRoute = "/Upload/" + path.Substring(path.LastIndexOf("\\") + 1);
                                     hpFile.SaveAs(uriString + file.FullRoute.Substring(file.FullRoute.LastIndexOf("/") + 1));
@@ -243,7 +243,7 @@ namespace ZAppUI.httpHandle
                                     //保存文件 
                                     string path = context.Request.MapPath(fileName);
 
-                                    string uriString = System.Web.HttpContext.Current.Server.MapPath("~/Upload/file/").ToString();
+                                    string uriString = System.Web.HttpContext.Current.Server.MapPath("/Upload/file/").ToString();
                                     file.Route = "/Upload/file/";
                                     file.FullRoute = "/Upload/file/" + path.Substring(path.LastIndexOf("\\") + 1);
                                     hpFile.SaveAs(uriString + file.FullRoute.Substring(file.FullRoute.LastIndexOf("/") + 1));
