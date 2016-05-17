@@ -2,3 +2,8 @@
 .main .col-xs-12{background-color: green;height: 0;padding: 0% 0% 50%;margin: 5% 0%;position: relative;}
 .main .col-xs-12 a{display: block;width: 50%;height: 0;padding-bottom: 50%;background-color: blue;position: absolute;top: 50%;left: 50%;-webkit-transform: translate(-50%,-50%);}
 .main .col-xs-12 a img{width: 100%;height: 100%;position: absolute;}*/
+
+.main{}
+.main .col-xs-12{margin-top: 5%;}
+.main .col-xs-12 a{display: block;width: 100%;height: 0;padding-bottom: 30%;margin: 0 auto;position: relative;border: 1px solid #ddd;border-radius: 20px;}
+.main .col-xs-12 a span{display: block;width: 50%;height: 70%;line-height: 400%;position: absolute;top: 50%;left: 50%;-webkit-transform: translate(-50%,-50%);border-radius: 200px;vertical-align: middle;border: 1px solid #ddd;background: linear-gradient(to bottom,#fff,#ddd);}
