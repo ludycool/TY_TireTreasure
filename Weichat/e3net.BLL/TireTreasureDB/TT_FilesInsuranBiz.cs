@@ -7,6 +7,8 @@ using e3net.common;
 using e3net.DAL;
 using e3net.IDAL.TireTreasureDB;
 using e3net.Mode.TireTreasureDB;
+using e3net.common.SysMode;
+using TZHSWEET.Common;
 namespace e3net.BLL.TireTreasureDB
 {
     public class TT_FilesInsuranBiz : BaseDao<TT_FilesInsuran>, ITT_FilesInsuranDao
@@ -24,22 +26,20 @@ namespace e3net.BLL.TireTreasureDB
         public string GetJson(List<TT_FilesInsuran> list)
         {
 
-
-            string menus = " [\n";
+            List<FileJson> json = new List<FileJson>();
             if (list != null && list.Count > 0)
             {
                 for (int i = 0; i < list.Count; i++)
                 {
 
-                    menus += "{  \"ShowName\":\"" + list[i].ShowName + "\",";
-                    menus += string.Format("  \"Url\":\"{0}\"", list[i].Route + list[i].RelativePath);
-                    menus += "},";
-
+                    FileJson item = new FileJson();
+                    item.ShowName = list[i].ShowName;
+                    item.Url = list[i].Route + list[i].RelativePath;
+                    json.Add(item);
                 }
-                menus = menus.Substring(0, menus.Length - 1);
             }
-            menus = menus + "]";
-            return menus;
+
+            return JsonHelper.ToJson(json);
         }
     }
 }

@@ -7,6 +7,8 @@ using e3net.common;
 using e3net.DAL;
 using e3net.IDAL.Base;
 using e3net.Mode.Base;
+using TZHSWEET.Common;
+using e3net.common.SysMode;
 namespace e3net.BLL.Base
 {
     public class Sys_FilesBiz : BaseDao<Sys_Files>, ISys_FilesDao
@@ -26,22 +28,20 @@ namespace e3net.BLL.Base
         public string GetJson(List<Sys_Files> list)
         {
 
-
-            string menus = " [\n";
+            List<FileJson> json = new List<FileJson>();
             if (list != null && list.Count > 0)
             {
                 for (int i = 0; i < list.Count; i++)
                 {
 
-                    menus += "{  \"ShowName\":\"" + list[i].ShowName + "\",";
-                    menus += string.Format("  \"Url\":\"{0}\"", list[i].Route + list[i].RelativePath);
-                    menus += "},";
-
+                    FileJson item = new FileJson();
+                    item.ShowName = list[i].ShowName;
+                    item.Url = list[i].Route + list[i].RelativePath;
+                    json.Add(item);
                 }
-                menus = menus.Substring(0, menus.Length - 1);
             }
-            menus = menus + "]";
-            return menus;
+
+            return JsonHelper.ToJson(json);
         }
     }
 }

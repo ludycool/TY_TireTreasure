@@ -29,7 +29,7 @@ namespace ZAppUI.Controllers
             if (item != null)
             {
                 item.UserId = new Guid();//不显示给前端 安全考虑
-                var mqlimg = TT_FilesTransactSet.SelectAll().Where(TT_FilesTransactSet.SourceTable.Equal("TT_Shop").And(TT_FilesTransactSet.ToId.Equal(item.ShopId)));
+                var mqlimg = TT_FilesTransactSet.SelectAll().Where(TT_FilesTransactSet.SourceTable.Equal("TT_Shop").And(TT_FilesTransactSet.ToId.Equal(item.ShopId.ToString())));
                 List<TT_FilesTransact> listImg = OPFileBiz.GetOwnList(mqlimg);
 
 
