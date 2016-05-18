@@ -36,7 +36,7 @@
           function setimg()//首页滚动图
           {
               if (imgList != null) {
-                  var imgAll = "";//所有的数据
+                  var imgul = "";//所有的数据
                   for (var i = 0; i < imgList.length; i++) {
                       if (i == 0) {
                           imgul += '<div class="item active">';
@@ -48,7 +48,7 @@
                       imgul +='</div>';
                   }
 
-                  $('#div_lmgLit').empty().append(list);
+                  $('#div_lmgLit').empty().append(imgul);
               }
           }
          
@@ -128,7 +128,7 @@
 <div class="media main-media">
   <div class="media-left media-middle">
     <a href="#">
-      <img class="media-object" src="@Html.DisplayNameFor(model => model.ImageUrl)" alt="...">
+      <img class="media-object" src="http://192.168.3.223:82/\FileTransact\20160518034834_3db5cd1f-a0a4-4fa3-8527-ed0339e45ccb.jpg" alt="...">
     </a>
   </div>
   <div class="media-body">
