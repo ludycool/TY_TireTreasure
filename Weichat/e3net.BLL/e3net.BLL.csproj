@@ -57,8 +57,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Base\FriendsBiz.cs" />
     <Compile Include="Base\ReferencesBiz.cs" />
-    <Compile Include="Base\RequestFriendBiz.cs" />
+    <Compile Include="Base\RequestFriendsBiz.cs" />
     <Compile Include="Base\SysItemBiz.cs" />
     <Compile Include="Base\Sys_CityAreaBiz.cs" />
     <Compile Include="Base\Sys_DictionaryBiz.cs" />

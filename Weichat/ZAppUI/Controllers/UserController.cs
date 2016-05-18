@@ -5,7 +5,6 @@ using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using e3net.BLL.Money;
 using WeiChatMessageHandle;
 using System.Web.Security;
 using WeChatJsSdk.SdkCore;
@@ -18,6 +17,7 @@ using System.Drawing;
 using System.IO;
 using ZAppUI.App_Code;
 using CommonFunction;
+using e3net.BLL.TireMoneyDB;
 
 namespace ZAppUI.Controllers
 {
@@ -49,7 +49,7 @@ namespace ZAppUI.Controllers
         {
             string openId = GetUData.OpenId;
 
-            BalanceBiz balanceBiz = new BalanceBiz();
+            TM_BalceBiz balanceBiz = new TM_BalceBiz();
             DataSet getBalanceInfo = balanceBiz.ExecuteSqlToDataSet("EXEC [TireMoneyDB].[dbo].[proc_CheckBalanceInfo] '" + openId + "'");
             
             
@@ -65,7 +65,7 @@ namespace ZAppUI.Controllers
         //添加用户余额到表
         private void addUserBalanceInfo(string openId)
         {
-            BalanceBiz balanceBiz = new BalanceBiz();
+            TM_BalceBiz balanceBiz = new TM_BalceBiz();
             Guid baId = Guid.NewGuid();
             DateTime now = DateTime.Now;
             balanceBiz.ExecuteSqlToDataSet("EXEC [TireMoneyDB].[dbo].[proc_AddUserBalanceInfo] '" + openId + "','" + now + "','" + now + "'");

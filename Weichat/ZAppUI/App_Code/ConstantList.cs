@@ -30,5 +30,9 @@ namespace ZAppUI.App_Code
         public const int ADD_FRIENDS_STATUS_REQUESTING=2;
         public const int ADD_FRIENDS_STATUS_REJECT=0;
         public const int ADD_FRIENDS_STATUS_SERVICE_CLOSE=-1;
+
+        public const string FRIEND_TYPE_QR_CODE="QrCode";
+        public const string FRIEND_TYPE_SEARCH = "Search";
+        public const string FRIEND_TYPE_CONTACT = "Contact";
     }
 }

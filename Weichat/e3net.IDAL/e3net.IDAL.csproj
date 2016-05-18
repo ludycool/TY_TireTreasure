@@ -63,6 +63,7 @@
     <Compile Include="Base\ISys_DicTypeDao.cs" />
     <Compile Include="Base\ISys_FilesDao.cs" />
     <Compile Include="Base\I_AppUserInfoDao.cs" />
+    <Compile Include="Base\I_Friends.cs" />
     <Compile Include="Base\I_ReferencesDao.cs" />
     <Compile Include="Base\I_RequestFriendsDao.cs" />
     <Compile Include="Base\I_UserDao.cs" />
