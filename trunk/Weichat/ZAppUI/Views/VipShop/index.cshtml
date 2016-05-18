@@ -1,5 +1,7 @@
-﻿@{
-    ViewBag.Title = "我的Vip店";
+﻿
+@model e3net.Mode.TireTreasureDB.TT_Shop
+@{
+    ViewBag.Title = @Html.DisplayNameFor(model => model.TName);
 }
 
 <html lang="zh-CN">
@@ -26,7 +28,7 @@
      @section Jsprepare{
 
          <script type="text/javascript">
-             var imgList = [];
+             var imgList =  @Html.Raw(ViewBag.listImgJson)
           jQuery(document).ready(function () {
               
               setimg();
@@ -36,14 +38,17 @@
               if (imgList != null) {
                   var imgAll = "";//所有的数据
                   for (var i = 0; i < imgList.length; i++) {
-
-                      imgul += '<div class="item">';
-
-                      imgul += ' <img src="' + imgList[i].+ '" alt="...">'
+                      if (i == 0) {
+                          imgul += '<div class="item active">';
+                      } else {
+                          imgul += '<div class="item">';
+                      }
+                     
+                      imgul += ' <img src="' + imgList[i].Url + '" alt="">'
                       imgul +='</div>';
                   }
 
-                  $('#tblist').empty().append(list);
+                  $('#div_lmgLit').empty().append(list);
               }
           }
          
@@ -71,7 +76,7 @@
   </ol>
 
   <!-- Wrapper for slides -->
-  <div class="carousel-inner" role="listbox">
+  <div class="carousel-inner" role="listbox" id="div_lmgLit">
     <div class="item active">
       <img src="../../Content/images/pic/banner1.png" alt="...">
       <!-- <div class="carousel-caption">
@@ -123,13 +128,13 @@
 <div class="media main-media">
   <div class="media-left media-middle">
     <a href="#">
-      <img class="media-object" src="../../Content/images/pic/shop.png" alt="...">
+      <img class="media-object" src="@Html.DisplayNameFor(model => model.ImageUrl)" alt="...">
     </a>
   </div>
   <div class="media-body">
-    <p>店名：潮品阁</p>
-    <p>电话：1******6789</p>
-    <p>地址：长湖路13号长湖景苑</p>
+    <p>店名：  @Html.DisplayNameFor(model => model.TName)</p>
+    <p>电话：@Html.DisplayNameFor(model => model.Phone)</p>
+    <p>地址：@Html.DisplayNameFor(model => model.Address)</p>
   </div>
 </div><!-- /.main-media -->
 	

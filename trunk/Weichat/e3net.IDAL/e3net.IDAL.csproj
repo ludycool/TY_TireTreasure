@@ -67,9 +67,35 @@
     <Compile Include="Base\I_RequestFriendsDao.cs" />
     <Compile Include="Base\I_UserDao.cs" />
     <Compile Include="IBaseDao.cs" />
-    <Compile Include="Money\I_BalanceDao.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ISystemLogsDao.cs" />
+    <Compile Include="TireMoneyDB\ITM_BalceDao.cs" />
+    <Compile Include="TireMoneyDB\ITM_BanardDao.cs" />
+    <Compile Include="TireMoneyDB\ITM_OrderListDao.cs" />
+    <Compile Include="TireMoneyDB\ITM_PayPlatformDao.cs" />
+    <Compile Include="TireMoneyDB\ITM_TranAccDao.cs" />
+    <Compile Include="TireMoneyDB\ITM_WaterBillDao.cs" />
+    <Compile Include="TireTreasureDB\ITT_AppUserInfoDao.cs" />
+    <Compile Include="TireTreasureDB\ITT_CommentTDao.cs" />
+    <Compile Include="TireTreasureDB\ITT_FilesInsuranDao.cs" />
+    <Compile Include="TireTreasureDB\ITT_FilesTransactDao.cs" />
+    <Compile Include="TireTreasureDB\ITT_FriendsDao.cs" />
+    <Compile Include="TireTreasureDB\ITT_FundInfoDao.cs" />
+    <Compile Include="TireTreasureDB\ITT_FundPerSonDao.cs" />
+    <Compile Include="TireTreasureDB\ITT_InsuranCompanyDao.cs" />
+    <Compile Include="TireTreasureDB\ITT_InsuranDao.cs" />
+    <Compile Include="TireTreasureDB\ITT_LevelsDao.cs" />
+    <Compile Include="TireTreasureDB\ITT_MessagesDao.cs" />
+    <Compile Include="TireTreasureDB\ITT_MissionsApplyDao.cs" />
+    <Compile Include="TireTreasureDB\ITT_MissionsDao.cs" />
+    <Compile Include="TireTreasureDB\ITT_ReferencesDao.cs" />
+    <Compile Include="TireTreasureDB\ITT_RequestFriendsDao.cs" />
+    <Compile Include="TireTreasureDB\ITT_ReservationDao.cs" />
+    <Compile Include="TireTreasureDB\ITT_ShopAppUserDao.cs" />
+    <Compile Include="TireTreasureDB\ITT_ShopDao.cs" />
+    <Compile Include="TireTreasureDB\ITT_TransactionDao.cs" />
+    <Compile Include="TireTreasureDB\ITT_TransactSnapshotDao.cs" />
+    <Compile Include="TireTreasureDB\ITT_UserDao.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\e3net.common\e3net.common.csproj">
