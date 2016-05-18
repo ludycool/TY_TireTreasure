@@ -1,7 +1,7 @@
 ﻿
 @model e3net.Mode.TireTreasureDB.TT_Shop
 @{
-    ViewBag.Title = @Html.DisplayNameFor(model => model.TName);
+    ViewBag.Title =@Model.TName;
 }
 
 <html lang="zh-CN">
@@ -128,13 +128,13 @@
 <div class="media main-media">
   <div class="media-left media-middle">
     <a href="#">
-      <img class="media-object" src="http://192.168.3.223:82/\FileTransact\20160518034834_3db5cd1f-a0a4-4fa3-8527-ed0339e45ccb.jpg" alt="...">
+      <img class="media-object" src="@Model.ImageUrl" alt="...">
     </a>
   </div>
   <div class="media-body">
-    <p>店名：  @Html.DisplayNameFor(model => model.TName)</p>
-    <p>电话：@Html.DisplayNameFor(model => model.Phone)</p>
-    <p>地址：@Html.DisplayNameFor(model => model.Address)</p>
+    <p>店名：  @Model.TName</p>
+    <p>电话：@Model.Phone</p>
+    <p>地址：@Model.Address</p>
   </div>
 </div><!-- /.main-media -->
 	
