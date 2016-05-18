@@ -1,14 +1,15 @@
-﻿using e3net.Mode;
+﻿
+
+using e3net.Mode.Base;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace e3net.IDAL
+namespace e3net.IDAL.Base
 {
-    public interface IFile_ImageDao : IBaseDao<File_Image>
+    public interface ISysItemDao : IBaseDao<SysItem>
     {
-
 
     }
 }

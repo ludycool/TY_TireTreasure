@@ -238,9 +238,6 @@
     <Compile Include="httpHandle\DictionaryHandler.ashx.cs">
       <DependentUpon>DictionaryHandler.ashx</DependentUpon>
     </Compile>
-    <Compile Include="httpHandle\ImageHandler.ashx.cs">
-      <DependentUpon>ImageHandler.ashx</DependentUpon>
-    </Compile>
     <Compile Include="httpHandle\wxapi.ashx.cs">
       <DependentUpon>wxapi.ashx</DependentUpon>
     </Compile>
@@ -363,7 +360,6 @@
     <Content Include="Global.asax" />
     <Content Include="upload\file\20150319022047_psb.jpg" />
     <Content Include="httpHandle\DictionaryHandler.ashx" />
-    <Content Include="httpHandle\ImageHandler.ashx" />
     <Content Include="httpHandle\wxapi.ashx" />
     <Content Include="Content\font\fontawesome-webfont.eot" />
     <Content Include="Content\font\fontawesome-webfont.ttf" />

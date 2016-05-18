@@ -22,8 +22,33 @@
 <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
 <![endif]-->
 
+   
+     @section Jsprepare{
 
-     @section Jsprepare{}
+         <script type="text/javascript">
+             var imgList = [];
+          jQuery(document).ready(function () {
+              
+              setimg();
+            })
+          function setimg()//首页滚动图
+          {
+              if (imgList != null) {
+                  var imgAll = "";//所有的数据
+                  for (var i = 0; i < imgList.length; i++) {
+
+                      imgul += '<div class="item">';
+
+                      imgul += ' <img src="' + imgList[i].+ '" alt="...">'
+                      imgul +='</div>';
+                  }
+
+                  $('#tblist').empty().append(list);
+              }
+          }
+         
+            </script>
+         }
 </head>
 <body>
 <div class="container">

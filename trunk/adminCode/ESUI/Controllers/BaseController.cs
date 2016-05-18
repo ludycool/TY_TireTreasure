@@ -253,6 +253,8 @@ namespace ESUI.Controllers
             if (IsNull)//非法操作一律返回登录
             {
                 context.Result = RedirectToAction("Index", "Login");
+                //context.HttpContext.Response.Write("<script>location.href='Login'</script>");
+                //context.HttpContext.Response.End();
             }
             else
             {

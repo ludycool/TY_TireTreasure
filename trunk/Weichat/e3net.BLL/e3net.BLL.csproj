@@ -59,17 +59,15 @@
   <ItemGroup>
     <Compile Include="Base\ReferencesBiz.cs" />
     <Compile Include="Base\RequestFriendBiz.cs" />
+    <Compile Include="Base\SysItemBiz.cs" />
+    <Compile Include="Base\Sys_CityAreaBiz.cs" />
+    <Compile Include="Base\Sys_DictionaryBiz.cs" />
+    <Compile Include="Base\Sys_DicTypeBiz.cs" />
+    <Compile Include="Base\Sys_FilesBiz.cs" />
     <Compile Include="Base\UserBiz.cs" />
-    <Compile Include="DynamicTable\BascharvalueBiz.cs" />
-    <Compile Include="DynamicTable\BaschartypeBiz.cs" />
-    <Compile Include="File_ImageBiz.cs" />
     <Compile Include="Money\BalanceBiz.cs" />
-    <Compile Include="ParameterXmlHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Sys_DictionaryBiz.cs" />
     <Compile Include="SystemLogsBiz.cs" />
-    <Compile Include="SysItemBiz.cs" />
-    <Compile Include="Sys_CityAreaBiz.cs" />
     <Compile Include="Base\AppUserInfoBiz.cs" />
   </ItemGroup>
   <ItemGroup>

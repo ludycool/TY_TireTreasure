@@ -57,22 +57,23 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Baschartype.cs" />
-    <Compile Include="Bascharvalue.cs" />
     <Compile Include="Base\AppUserInfo.cs" />
     <Compile Include="Base\References.cs" />
     <Compile Include="Base\RequestFriends.cs" />
+    <Compile Include="Base\SysItem.cs" />
+    <Compile Include="Base\Sys_CityArea.cs" />
+    <Compile Include="Base\Sys_Config.cs" />
+    <Compile Include="Base\Sys_Dictionary.cs" />
+    <Compile Include="Base\Sys_DicType.cs" />
+    <Compile Include="Base\Sys_Files.cs" />
     <Compile Include="Base\User.cs" />
-    <Compile Include="File_Image.cs" />
     <Compile Include="Money\Balance.cs" />
-    <Compile Include="SysItem.cs" />
-    <Compile Include="Sys_CityArea.cs" />
+    <Compile Include="V_mode\v_Sys_Advertising.cs" />
+    <Compile Include="V_mode\v_Sys_AppVerSion.cs" />
     <Compile Include="V_mode\v_Sys_CityArea.cs" />
     <Compile Include="HttpView\HttpReSultMode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SystemLogs.cs" />
-    <Compile Include="Sys_Dictionary.cs" />
-    <Compile Include="Parameter.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
