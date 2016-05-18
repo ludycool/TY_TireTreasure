@@ -1,6 +1,6 @@
 ﻿using e3net.BLL;
-using e3net.Mode;
-using e3net.Mode.V_mode;
+using e3net.BLL.Base;
+using e3net.Mode.Base;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,24 +23,47 @@ namespace ZAppUI.httpHandle
             switch (action)
             {
 
-                case "GetSonDictionary":
+                ///获取所有的类型
+                case "GetSys_DicTypeDataGrid":
 
-                    string ValueName = context.Request["ValueName"];
-                    context.Response.Write(GetSonDictionary(ValueName));
+                    context.Response.Write(GetSys_DicTypeDataGrid());
+                    context.Response.End();
+                    break;
+                ///获取所有的类型
+                case "GetSys_DicTypeJson":
+
+                    context.Response.Write(GetSys_DicTypeJson());
+                    context.Response.End();
+                    break;
+
+
+                case "GetSonDictionary"://根据代号 获取子项
+
+                    string DicNo = context.Request["DicNo"];
+                    context.Response.Write(GetSonDictionary(DicNo));
                     context.Response.End();
 
                     break;
-                case "GetSonDictionaryNo"://除掉本身只要子集
 
-                    string ValueNameNO = context.Request["ValueName"];
-                    context.Response.Write(GetSonDictionaryNo(ValueNameNO));
+                case "GetDictionaryByDicType"://根据类型获取 所有的词典，树型结构
+
+                    string DicType = context.Request["DicType"];
+                    context.Response.Write(GetDictionaryByDicType(DicType));
+                    context.Response.End();
+
+                    break;
+                case "GetSonDictionaryNo"://根据代号 获取子项 除掉本身只要子集
+
+                    string DicNoNO = context.Request["DicNo"];
+                    context.Response.Write(GetSonDictionaryNo(DicNoNO));
                     context.Response.End();
 
                     break;
                 case "GetSysItem"://获取自定义词典
 
                     string ItemType = context.Request["ItemType"];
-                    context.Response.Write(GetSysItem(ItemType));
+                    string ConnectionName = context.Request["CN"];
+                    context.Response.Write(GetSysItem(ItemType, ConnectionName));
                     context.Response.End();
 
                     break;
@@ -50,58 +73,89 @@ namespace ZAppUI.httpHandle
                     context.Response.End();
 
                     break;
-   
+
             }
         }
 
 
-        //public string GetDepartment()
-        //{
-        //    RMS_DepartmentBiz DDBiz = new RMS_DepartmentBiz();
-        //    var sql = RMS_DepartmentSet.SelectAll();
-        //    List<RMS_Department> listAll = DDBiz.GetOwnList<RMS_Department>(sql);
-        //    string jsonstring = DDBiz.GetTree(listAll);
-        //    return jsonstring;
-        //}
-  
+        public string GetSys_DicTypeDataGrid()
+        {
+            Sys_DicTypeBiz DDBiz = new Sys_DicTypeBiz();
+            var sql = Sys_DicTypeSet.SelectAll().Where(Sys_DicTypeSet.isDeleted.Equal(0).And(Sys_DicTypeSet.isValid.Equal(1)));
+            List<Sys_DicType> listAll = DDBiz.GetOwnList<Sys_DicType>(sql);
+            Dictionary<string, object> dic = new Dictionary<string, object>();
+            // var mql = RMS_RoleSet.ControlId.NotEqual("");
+            dic.Add("rows", listAll);
+            dic.Add("total", listAll.Count);
+
+            return JsonHelper.ToJson(dic, true);
+        }
+        public string GetSys_DicTypeJson()
+        {
+            Sys_DicTypeBiz DDBiz = new Sys_DicTypeBiz();
+            var sql = Sys_DicTypeSet.SelectAll().Where(Sys_DicTypeSet.isDeleted.Equal(0).And(Sys_DicTypeSet.isValid.Equal(1)));
+            List<Sys_DicType> listAll = DDBiz.GetOwnList<Sys_DicType>(sql);
+            return JsonHelper.ToJson(listAll, true);
+
+        }
+
+
+ 
 
         public string GetSys_CityArea(HttpContext context)
         {
             List<Sys_CityArea> AllList = new List<Sys_CityArea>();
             var sql = Sys_CityAreaSet.SelectAll();
             AllList = OPBiz.GetOwnList<Sys_CityArea>(sql);
-           
+
             return JsonHelper.ToJson(AllList, true);
 
         }
-     
-        public string GetSysItem(string ItemType)
+
+
+
+        public string GetSysItem(string ItemType, string ConnectionName)
         {
-            var sql = SysItemSet.SelectAll().Where(SysItemSet.ItemType.Equal(ItemType)).OrderByASC(SysItemSet.OrderID);
-            List<SysItem> AllList = OPBiz.GetOwnList<SysItem>(sql);
+            SysItemBiz SIBiz = new SysItemBiz(ConnectionName);
+            var sql = SysItemSet.SelectAll().Where(SysItemSet.ItemType.Equal(ItemType).And(SysItemSet.isDeleted.Equal(0)).And(SysItemSet.isValid.Equal(1))).OrderByASC(SysItemSet.OrderID);
+            List<SysItem> AllList = SIBiz.GetOwnList(sql);
             return JsonHelper.ToJson(AllList, true);
 
         }
-        public string GetSonDictionary(string ValueName)
+        public string GetDictionaryByDicType(string DicTypeId)
         {
             string jsonstring = "[]";
-            var sql = Sys_DictionarySet.SelectAll().Where(Sys_DictionarySet.ValueName.StartWith(ValueName));
+            var sql = Sys_DictionarySet.SelectAll().Where(Sys_DictionarySet.DicTypeId.Equal(DicTypeId).And(Sys_DictionarySet.isDeleted.Equal(0)).And(Sys_DictionarySet.isValid.Equal(1))); ;
+            List<Sys_Dictionary> listAll = OPBiz.GetOwnList<Sys_Dictionary>(sql);
+            if (listAll != null && listAll.Count > 0)
+            {
+
+                jsonstring = OPBiz.GetCombotree(listAll);
+            }
+
+            return jsonstring;
+        }
+
+        public string GetSonDictionary(string DicNo)
+        {
+            string jsonstring = "[]";
+            var sql = Sys_DictionarySet.SelectAll().Where(Sys_DictionarySet.DicNo.StartWith(DicNo).And(Sys_DictionarySet.isDeleted.Equal(0)).And(Sys_DictionarySet.isValid.Equal(1)));
             List<Sys_Dictionary> listAll = OPBiz.GetOwnList<Sys_Dictionary>(sql);
             jsonstring = OPBiz.GetCombotree(listAll);
 
 
             return jsonstring;
         }
-        public string GetSonDictionaryNo(string ValueName)
+        public string GetSonDictionaryNo(string DicNo)
         {
             string jsonstring = "[]";
-            var sql = Sys_DictionarySet.SelectAll().Where(Sys_DictionarySet.ValueName.StartWith(ValueName));
+            var sql = Sys_DictionarySet.SelectAll().Where(Sys_DictionarySet.DicNo.StartWith(DicNo));
             List<Sys_Dictionary> listAll = OPBiz.GetOwnList<Sys_Dictionary>(sql);
             if (listAll != null && listAll.Count > 0)
             {
                 for (int i = 0; i < listAll.Count; i++)
                 {
-                    if (listAll[i].ValueName.Equals(ValueName))//去除父级
+                    if (listAll[i].DicNo.Equals(DicNo))//去除父级
                     {
                         listAll.Remove(listAll[i]);
                         break;

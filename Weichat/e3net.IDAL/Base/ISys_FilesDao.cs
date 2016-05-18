@@ -1,14 +1,12 @@
 ﻿
-
-using e3net.Mode;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
-namespace e3net.IDAL.YhSys
+using e3net.Mode.Base;
+namespace e3net.IDAL.Base
 {
-    public interface ISysItemDao : IBaseDao<SysItem>
+    public interface ISys_FilesDao : IBaseDao<Sys_Files>
     {
 
     }

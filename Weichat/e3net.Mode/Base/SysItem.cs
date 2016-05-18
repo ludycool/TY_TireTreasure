@@ -4,21 +4,21 @@ using System.Collections;
 using System.Collections.Generic;
 using Moon.Orm;
 
-namespace e3net.Mode
+namespace e3net.Mode.Base
 {
 
     [Table("[SysItem]", DbType.SqlServer)]
-    [TablesPrimaryKey(PrimaryKeyType.AutoIncrease, typeof(Int32), "Id")]
+    [TablesPrimaryKey(PrimaryKeyType.AutoIncrease, typeof(Int32), "ItemID")]
     public partial class SysItem : EntityBase
     {
 
         /// <summary>
-        /// 
+        /// 主键
         /// </summary>
-        public Int32 Id
+        public Int32 ItemID
         {
-            get { return GetPropertyValue<Int32>("Id"); }
-            set { SetPropertyValue("Id", value); }
+            get { return GetPropertyValue<Int32>("ItemID"); }
+            set { SetPropertyValue("ItemID", value); }
         }
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace e3net.Mode
         }
 
         /// <summary>
-        /// 图标
+        /// Icon
         /// </summary>
         public String Icon
         {
@@ -76,7 +76,7 @@ namespace e3net.Mode
         }
 
         /// <summary>
-        /// 
+        /// 添加时间
         /// </summary>
         public String CreateTime
         {
@@ -85,7 +85,7 @@ namespace e3net.Mode
         }
 
         /// <summary>
-        /// 
+        /// CreateMan
         /// </summary>
         public String CreateMan
         {
@@ -94,11 +94,11 @@ namespace e3net.Mode
         }
 
         /// <summary>
-        /// 是否生效
+        /// 是否有效
         /// </summary>
-        public Int32? isValid
+        public Boolean? isValid
         {
-            get { return GetPropertyValue<Int32?>("isValid"); }
+            get { return GetPropertyValue<Boolean?>("isValid"); }
             set { SetPropertyValue("isValid", value); }
         }
 
@@ -115,19 +115,23 @@ namespace e3net.Mode
     [Table("[SysItem]", DbType.SqlServer)]
     public  partial class SysItemSet : MQLBase
     {
-        public static new MQLBase Select(params FieldBase[] fields)
+        public static  MQLBase Select(params FieldBase[] fields)
         {
             return MQLBase.Select(DbType.SqlServer,"[SysItem]",fields);
         }
-        public static new MQLBase SelectAll()
+        public static  MQLBase SelectAll()
         {
             return MQLBase.SelectAll(DbType.SqlServer,"[SysItem]");
         }
+        public static MQLBase SelectAllBut(params FieldBase[] fields)
+        {
+            return MQLBase.SelectAllBut(typeof(SysItemSet),DbType.SqlServer,"[SysItem]",fields);
+        }
 
         /// <summary>
-        /// 
+        /// 主键
         /// </summary>
-        public static readonly FieldBase Id = new FieldBase(DbType.SqlServer, "[SysItem]", FieldType.OnlyPrimaryKey, "[Id]");
+        public static readonly FieldBase ItemID = new FieldBase(DbType.SqlServer, "[SysItem]", FieldType.OnlyPrimaryKey, "[ItemID]");
 
         /// <summary>
         /// 类型
@@ -145,7 +149,7 @@ namespace e3net.Mode
         public static readonly FieldBase ItemName = new FieldBase(DbType.SqlServer, "[SysItem]", FieldType.Common, "[ItemName]");
 
         /// <summary>
-        /// 图标
+        /// Icon
         /// </summary>
         public static readonly FieldBase Icon = new FieldBase(DbType.SqlServer, "[SysItem]", FieldType.Common, "[Icon]");
 
@@ -160,17 +164,17 @@ namespace e3net.Mode
         public static readonly FieldBase Remark = new FieldBase(DbType.SqlServer, "[SysItem]", FieldType.Common, "[Remark]");
 
         /// <summary>
-        /// 
+        /// 添加时间
         /// </summary>
         public static readonly FieldBase CreateTime = new FieldBase(DbType.SqlServer, "[SysItem]", FieldType.Common, "[CreateTime]");
 
         /// <summary>
-        /// 
+        /// CreateMan
         /// </summary>
         public static readonly FieldBase CreateMan = new FieldBase(DbType.SqlServer, "[SysItem]", FieldType.Common, "[CreateMan]");
 
         /// <summary>
-        /// 是否生效
+        /// 是否有效
         /// </summary>
         public static readonly FieldBase isValid = new FieldBase(DbType.SqlServer, "[SysItem]", FieldType.Common, "[isValid]");
 

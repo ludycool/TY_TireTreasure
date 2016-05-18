@@ -1,15 +1,16 @@
 ﻿
 using e3net.common;
 using e3net.DAL;
-using e3net.IDAL;
+using e3net.IDAL.Base;
 using e3net.Mode;
+using e3net.Mode.Base;
 using System;
 using System.Collections.Generic;
 //using System.ComponentModel.Composition;
 using System.Linq;
 using System.Text;
 
-namespace e3net.BLL
+namespace e3net.BLL.Base
 {
     //  [Export(typeof(ISys_DictionaryDao))]
     public class Sys_DictionaryBiz : BaseDao<Sys_Dictionary>, ISys_DictionaryDao
@@ -26,20 +27,21 @@ namespace e3net.BLL
             List<Sys_Dictionary> listAll = GetOwnList<Sys_Dictionary>(sql);
             return listAll;
         }
+
         /// <summary>
         /// 根据值 取所有的子集数据 
         /// </summary>
         /// <param name="ValueName"></param>
         /// <returns></returns>
-        public List<Sys_Dictionary> GetAllSonbyValueName(string ValueName)
+        public List<Sys_Dictionary> GetAllSonbyValueName(string DicNo)
         {
-            var sql = Sys_DictionarySet.SelectAll().Where(Sys_DictionarySet.ValueName.StartWith(ValueName));
+            var sql = Sys_DictionarySet.SelectAll().Where(Sys_DictionarySet.DicNo.StartWith(DicNo));
             List<Sys_Dictionary> listAll = GetOwnList<Sys_Dictionary>(sql);
             if (listAll != null && listAll.Count > 0)
             {
                 for (int i = 0; i < listAll.Count; i++)
                 {
-                    if (listAll[i].ValueName.Equals(ValueName))//去除父级
+                    if (listAll[i].DicNo.Equals(DicNo))//去除父级
                     {
                         listAll.Remove(listAll[i]);
                         break;
@@ -59,18 +61,18 @@ namespace e3net.BLL
             string menus = " [\n";
             for (int i = 0; i < list.Count; i++)
             {
-                if (list.Find(p => p.Id == list[i].ParentId) == null)//此项没有父级
+                if (list.Find(p => p.DicId == list[i].ParentId) == null)//此项没有父级
                 {
 
-                    menus += "{  \"Id\":\"" + list[i].Id + "\",";
-                    menus += string.Format("  \"Name\":\"{0}\",", list[i].Name);
+                    menus += "{  \"Id\":\"" + list[i].DicId + "\",";
+                    menus += string.Format("  \"DicTypeId\":\"{0}\",", list[i].DicTypeId);
+                    menus += string.Format("  \"Name\":\"{0}\",", list[i].DicName);
+                    menus += string.Format("  \"DicNo\":\"{0}\",", list[i].DicNo);
                     menus += string.Format("  \"ParentId\":\"{0}\",", list[i].ParentId);
-                    menus += string.Format("  \"OrderNo\":\"{0}\",", list[i].OrderNo);
+                    menus += string.Format("  \"OrderId\":\"{0}\",", list[i].OrderId);
                     menus += string.Format("  \"Remarks\":\"{0}\",", list[i].Remarks);
                     menus += string.Format("  \"CreateTime\":\"{0}\",", list[i].CreateTime);
-                    menus += string.Format("  \"ModifyTime\":\"{0}\",", list[i].ModifyTime);
                     menus += string.Format("  \"iconCls\":\"{0}\",", list[i].Icon);
-                    menus += string.Format("  \"ValueName\":\"{0}\",", list[i].ValueName);
                     menus += GetSonTree(list, list[i]);//添加children
                     menus += "},";
                 }
@@ -83,21 +85,21 @@ namespace e3net.BLL
         private string GetSonTree(List<Sys_Dictionary> listAll, Sys_Dictionary SonItem)
         {
             string menus = "\"children\":[";
-            List<Sys_Dictionary> list = listAll.FindAll(p => p.ParentId.Equals(SonItem.Id));
+            List<Sys_Dictionary> list = listAll.FindAll(p => p.ParentId.Equals(SonItem.DicId));
             if (list != null && list.Count > 0)
             {
                 for (int i = 0; i < list.Count; i++)
                 {
 
-                    menus += "{  \"Id\":\"" + list[i].Id + "\",";
-                    menus += string.Format("  \"Name\":\"{0}\",", list[i].Name);
+                    menus += "{  \"Id\":\"" + list[i].DicId + "\",";
+                    menus += string.Format("  \"Name\":\"{0}\",", list[i].DicName);
+                    menus += string.Format("  \"DicTypeId\":\"{0}\",", list[i].DicTypeId);
+                    menus += string.Format("  \"DicNo\":\"{0}\",", list[i].DicNo);
                     menus += string.Format("  \"ParentId\":\"{0}\",", list[i].ParentId);
-                    menus += string.Format("  \"OrderNo\":\"{0}\",", list[i].OrderNo);
+                    menus += string.Format("  \"OrderId\":\"{0}\",", list[i].OrderId);
                     menus += string.Format("  \"Remarks\":\"{0}\",", list[i].Remarks);
                     menus += string.Format("  \"CreateTime\":\"{0}\",", list[i].CreateTime);
-                    menus += string.Format("  \"ModifyTime\":\"{0}\",", list[i].ModifyTime);
                     menus += string.Format("  \"iconCls\":\"{0}\",", list[i].Icon);
-                    menus += string.Format("  \"ValueName\":\"{0}\",", list[i].ValueName);
                     menus += GetSonTree(listAll, list[i]);//添加children
                     menus += "},";
 
@@ -117,11 +119,11 @@ namespace e3net.BLL
             string menus = " [\n";
             for (int i = 0; i < list.Count; i++)
             {
-                if (list.Find(p => p.Id == list[i].ParentId) == null)//此项没有父级
+                if (list.Find(p => p.DicId == list[i].ParentId) == null)//此项没有父级
                 {
 
-                    menus += "{  \"Id\":\"" + list[i].ValueName + "\",";
-                    menus += string.Format("  \"Name\":\"{0}\",", list[i].Name);
+                    menus += "{  \"Id\":\"" + list[i].DicNo + "\",";
+                    menus += string.Format("  \"Name\":\"{0}\",", list[i].DicName);
                     menus += string.Format("  \"iconCls\":\"{0}\",", list[i].Icon);
                     menus += GetSonGetCombotree(list, list[i]);//添加children
                     menus += "},";
@@ -135,14 +137,14 @@ namespace e3net.BLL
         private string GetSonGetCombotree(List<Sys_Dictionary> listAll, Sys_Dictionary SonItem)
         {
             string menus = "\"children\":[";
-            List<Sys_Dictionary> list = listAll.FindAll(p => p.ParentId.Equals(SonItem.Id));
+            List<Sys_Dictionary> list = listAll.FindAll(p => p.ParentId.Equals(SonItem.DicId));
             if (list != null && list.Count > 0)
             {
                 for (int i = 0; i < list.Count; i++)
                 {
 
-                    menus += "{  \"Id\":\"" + list[i].ValueName + "\",";
-                    menus += string.Format("  \"Name\":\"{0}\",", list[i].Name);
+                    menus += "{  \"Id\":\"" + list[i].DicNo + "\",";
+                    menus += string.Format("  \"Name\":\"{0}\",", list[i].DicName);
                     menus += string.Format("  \"iconCls\":\"{0}\",", list[i].Icon);
                     menus += GetSonGetCombotree(listAll, list[i]);//添加children
                     menus += "},";
