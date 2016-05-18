@@ -58,6 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Base\AppUserInfo.cs" />
+    <Compile Include="Base\Friends.cs" />
     <Compile Include="Base\References.cs" />
     <Compile Include="Base\RequestFriends.cs" />
     <Compile Include="Base\SysItem.cs" />
@@ -95,7 +96,6 @@
     <Compile Include="TireTreasureDB\TT_Transaction.cs" />
     <Compile Include="TireTreasureDB\TT_TransactSnapshot.cs" />
     <Compile Include="TireTreasureDB\TT_User.cs" />
-    <Compile Include="V_mode\v_Sys_Advertising.cs" />
     <Compile Include="V_mode\v_Sys_AppVerSion.cs" />
     <Compile Include="V_mode\v_Sys_CityArea.cs" />
     <Compile Include="HttpView\HttpReSultMode.cs" />

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using e3net.BLL.Base;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -13,6 +14,12 @@ namespace ZAppUI.Controllers
 
         public ActionResult Index()
         {
+            //string controller=RouteData.Values["controller"].ToString();
+            //string action=RouteData.Values["action"].ToString();
+            //isRegister(controller,action);
+
+            FriendsBiz friendsBiz=new FriendsBiz();
+            friendsBiz.ExecuteSqlToDataSet("");
             return View();
         }
 

@@ -415,6 +415,7 @@
     <Content Include="Views\VipShop\index.cshtml" />
     <Content Include="Views\VipShop\Transaction.cshtml" />
     <Content Include="Views\VipShop\View1.cshtml" />
+    <Content Include="Views\AddFriends\requestFriendList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="temp\" />

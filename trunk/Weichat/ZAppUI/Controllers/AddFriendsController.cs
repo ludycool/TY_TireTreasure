@@ -6,8 +6,10 @@ using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using TZHSWEET.Common;
 using ZAppUI.App_Code;
 using ZAppUI.Models;
+using e3net.BLL.Base;
 
 namespace ZAppUI.Controllers
 {
@@ -20,9 +22,9 @@ namespace ZAppUI.Controllers
         {
             return View();
         }
-       
+        //通过手机号搜索用户
         [HttpPost]
-        public ActionResult searchUser(SearchUser user)
+        public ActionResult searchUserInfo(SearchUser user)
         {
             if (user.UserAccount == null || user.UserAccount == "" || !util.isNumber(user.UserAccount))
             {
@@ -38,9 +40,9 @@ namespace ZAppUI.Controllers
                 string loginName = result.Tables[0].Rows[0]["LoginName"].ToString();
                 this.TempData["LonginName"] = loginName;
             }
-
             return RedirectToAction("showUserInfo");
         }
+        //显示搜索用户信息
         public ActionResult showUserInfo()
         {
             string loginName = this.TempData["LonginName"] as string;
@@ -58,12 +60,19 @@ namespace ZAppUI.Controllers
                 {
                     ViewBag.nickName = result.Tables[0].Rows[0]["Nickname"].ToString();
                     ViewBag.headImgUrl = result.Tables[0].Rows[0]["ImgeUrl"].ToString();
+
+                    //result=userBiz.ExecuteSqlToDataSet("SELECT UserId FROM [TireTreasureDB].[dbo].[TT_User] where WeiXinId='" + openId + "'");
+
+                    //RequestFriendsBiz requestFriendsBiz=new RequestFriendsBiz();
+                    //requestFriendsBiz.ExecuteSqlToDataSet("SELECT ToUserId FROM [TireTreasureDB].[dbo].[TT_RequestFriends] where ToUserId='' and States=");
+                    //ViewBag.states=1;
+                    //TODO 判断搜索账号与搜索的状态关系
                 }
             }
             return View();
         }
-
-        public void addFriend()
+        //添加好友请求
+        public void addToFriend()
         {
             UserBiz userBiz = new UserBiz();
             DataSet result = userBiz.ExecuteSqlToDataSet("SELECT UserId FROM [TireTreasureDB].[dbo].[TT_User] where WeiXinId='" + GetUData.OpenId + "'");
@@ -77,17 +86,82 @@ namespace ZAppUI.Controllers
 
                 requestFriends.ToUserId = (Guid)result.Tables[0].Rows[0][0];
                 requestFriends.States = ConstantList.ADD_FRIENDS_STATUS_REQUESTING;
-                requestFriends.AddTime=DateTime.Now;
-                requestFriends.isDeleted=false;
+                requestFriends.AddTime = DateTime.Now;
+                requestFriends.isDeleted = false;
 
                 RequestFriendsBiz requestFriendsBiz = new RequestFriendsBiz();
                 requestFriendsBiz.Add(requestFriends);
-                //页面相应部分有bug 在库里生成两条数据
             }
             else
             {
                 //TODO
             }
+        }
+        //请求好友列表
+        public ActionResult requestFriendList()
+        {
+            RequestFriendsBiz requestFriendsBiz = new RequestFriendsBiz();
+            DataSet result = requestFriendsBiz.ExecuteSqlToDataSet("EXEC [dbo].[proc_GetUserInfoBy_v_RequestFriends] '" + GetUData.OpenId + "'");
+            if (result.Tables[0].Rows.Count > 0)
+            {
+                List<Dictionary<string, string>> list = new List<Dictionary<string, string>>();
+                for (int count = 0; count < result.Tables[0].Rows.Count; count++)
+                {
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    dictionary.Add("Nickname", result.Tables[0].Rows[count]["Nickname"].ToString());
+                    dictionary.Add("ImgeUrl", result.Tables[0].Rows[count]["ImgeUrl"].ToString());
+                    dictionary.Add("States", result.Tables[0].Rows[count]["States"].ToString());
+                    list.Add(dictionary);
+                }
+                ViewBag.messageList = list;
+            }
+            return View();
+        }
+        //同意
+        
+        public ActionResult agree()
+        {
+            string src = Request["src"];
+
+            AppUserInfoBiz appUserInfoBiz = new AppUserInfoBiz();
+            DataSet result = appUserInfoBiz.ExecuteSqlToDataSet("SELECT UserId FROM [TireTreasureDB].[dbo].[TT_AppUserInfo] where  ImgeUrl= '" + src + "'");
+
+            if (result.Tables[0].Rows.Count > 0)
+            {
+                RequestFriendsBiz requestFriendsBiz = new RequestFriendsBiz();
+                requestFriendsBiz.ExecuteSqlToDataSet("EXEC [TireTreasureDB].[dbo].[proc_UpdateRequestFriendsSates] '" + GetUData.OpenId + "'," + ConstantList.ADD_FRIENDS_STATUS_SUCCESS + "");
+                
+                Guid user = (Guid)result.Tables[0].Rows[0]["UserId"];
+                result = requestFriendsBiz.ExecuteSqlToDataSet("SELECT UserId FROM [TireTreasureDB].[dbo].[TT_User] where  WeiXinId= '" + GetUData.OpenId + "'");
+
+                DateTime now = DateTime.Now;
+                Friends friends = new Friends();
+
+                friends.FriendsId = Guid.NewGuid();
+                friends.UserId = user;
+                friends.ToUserId = (Guid)result.Tables[0].Rows[0]["UserId"];
+                friends.isDeleted = false;
+                friends.ByWay = ConstantList.FRIEND_TYPE_SEARCH;
+                friends.BlackList = false;
+                friends.AddTime = now;
+                friends.UpdateTime = now;
+
+                FriendsBiz friendsBiz = new FriendsBiz();
+                friendsBiz.Add(friends);
+
+                friends.FriendsId = Guid.NewGuid();
+                friends.UserId = (Guid)result.Tables[0].Rows[0]["UserId"];
+                friends.ToUserId=user;
+                friendsBiz.Add(friends);
+            }
+            return RedirectToAction("Index", "Friends");
+        }
+        //拒绝
+        public ActionResult reject()
+        {
+            RequestFriendsBiz requestFriendsBiz = new RequestFriendsBiz();
+            requestFriendsBiz.ExecuteSqlToDataSet("EXEC [TireTreasureDB].[dbo].[proc_UpdateRequestFriendsSates] '" + GetUData.OpenId + "'," + ConstantList.ADD_FRIENDS_STATUS_REJECT + "");
+            return RedirectToAction("Index", "Friends");
         }
     }
 }
