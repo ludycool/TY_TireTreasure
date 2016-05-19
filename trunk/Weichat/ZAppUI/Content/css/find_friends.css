@@ -13,5 +13,6 @@
 .main .col-xs-12 .col-xs-5 .row{}
 .main .col-xs-12 .col-xs-5 .row .col-xs-6{padding: 0;padding-top: 8%;}
 .main .col-xs-12 .col-xs-5 .row .col-xs-6 a{}
-.main .col-xs-12 .col-xs-5 .row p{padding-top: 10%;color: #999;}
+.main .col-xs-12 .col-xs-5 .row .col-xs-12 p{padding-top: 10%;color: #999;}
+.main .col-xs-12 .col-xs-5 .row .border-none{border: none;}
 
