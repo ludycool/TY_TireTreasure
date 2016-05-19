@@ -8,9 +8,10 @@
            <script src="~/Content/js/Buttons.js"></script>
     @* ReSharper disable once NotAllPathsReturnValue *@
     <style type="text/css">
-        #iconlist li { display:block; float:left;}
-
-
+        #iconlist li {
+            display: block;
+            float: left;
+        }
     </style>
       @section Jsprepare{  
   <script type="text/javascript">
@@ -41,16 +42,27 @@
               { field: 'DicTypeId', title: '所属类型编号', width: 100, sortable: true },
                 { title: '名称', field: 'Name', width: 180 },
                 { title: '键值', field: 'DicNo', width: 80 },
+                 {
+                     title: '图标', field: 'iconCls', width: 80, formatter: function (value, row, index) {
+
+                         var bool = value.indexOf("/");
+
+                         if (bool>0) {
+                             return '<img  src="'+value+'" style="width: 50px; height: 50px;" />';
+                     
+                     }
+                 }
+                 },
                { title: '排序', field: 'OrderId', width: 80 },
               { field: 'CreateTime', title: '添加时间', width: 100 }
-              ]],
-              toolbar: toolbars
-          });
-          $('#DicTypeId').combobox({
-              width: 150,
-              emptyText: '请选择'
-          });
-          //SetTreeGridData();
+          ]],
+          toolbar: toolbars
+      });
+      $('#DicTypeId').combobox({
+          width: 150,
+          emptyText: '请选择'
+      });
+      //SetTreeGridData();
 
       }
 
@@ -93,7 +105,7 @@
               }
           });
           $('#DicTypeId').combobox('reload', '/httpHandle/DictionaryHandler.ashx?action=GetSys_DicTypeJson');  // 使用新的URL重新载入列表数据
-         
+
 
       }
       //easyUI 弹出添加的对话框
@@ -122,7 +134,7 @@
           if (rows != null) {
               $('#ParentId').combotree('setValue', rows.Id);
           }
-          
+
 
       }
       //绑定修改显示详细信息的方法
@@ -221,6 +233,31 @@
           }
       }
 
+      function FileHeadSave() {
+          //----上传头像
+          var FileId = "";
+          $("#ff").form('submit', {
+              url: "/httpHandle/Sys_FilesHandler.ashx?action=addImg&SourceTable=Sys_Dictionary",
+              onSubmit: function () {
+
+              },
+              success: function (data) {
+                  var d = eval('(' + data + ')');
+                  if (d.Code > 0) {
+                      var imgList = eval('(' + d.Data + ')');
+                      $("input[name='Icon']").val(imgList[0].Route + imgList[0].RelativePath)
+
+                      var file = $("input[name='file1']");//清空文件
+                      file.after(file.clone().val(""));
+                      file.remove();
+                  }
+                  else {
+                      alerts(d.Msg, 5);
+                  }
+
+              }
+          })
+      }
 </script>
            }
 </head>
@@ -270,7 +307,8 @@
                             <label>图标：</label></td>
                         <td>
                             <input class="easyui-validatebox textbox" type="text" id="Icon" name="Icon" /><a id="selecticon" ref="javascript:;"
-                                plain="true" class="easyui-linkbutton" icon="icon-search" title="选择图标"></a></td>
+                                plain="true" class="easyui-linkbutton" icon="icon-search" title="选择图标"></a>
+                            <input type="file" name="file1" style="width: 50px;" onchange="FileHeadSave()" /></td>
                     </tr>
                     <tr>
                         <td>
