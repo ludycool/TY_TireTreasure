@@ -1,7 +1,7 @@
 ﻿
-@model e3net.Mode.TireTreasureDB.TT_Shop
+@model ZAppUI.Models.VipShopModel
 @{
-    ViewBag.Title =@Model.TName;
+    ViewBag.Title = @Model.ShopItem.TName;
 }
 
 <html lang="zh-CN">
@@ -30,7 +30,6 @@
          <script type="text/javascript">
              var imgList =  @Html.Raw(ViewBag.listImgJson)
           jQuery(document).ready(function () {
-              
               setimg();
             })
           function setimg()//首页滚动图
@@ -77,7 +76,8 @@
 
   <!-- Wrapper for slides -->
   <div class="carousel-inner" role="listbox" id="div_lmgLit">
-    <div class="item active">
+
+          <div class="item active">
       <img src="../../Content/images/pic/banner1.png" alt="...">
       <!-- <div class="carousel-caption">
         ...
@@ -128,13 +128,13 @@
 <div class="media main-media">
   <div class="media-left media-middle">
     <a href="#">
-      <img class="media-object" src="@Model.ImageUrl" alt="...">
+      <img class="media-object" src="@Model.ShopItem.ImageUrl" alt="...">
     </a>
   </div>
   <div class="media-body">
-    <p>店名：  @Model.TName</p>
-    <p>电话：@Model.Phone</p>
-    <p>地址：@Model.Address</p>
+    <p>店名：  @Model.ShopItem.TName</p>
+    <p>电话：@Model.ShopItem.Phone</p>
+    <p>地址：@Model.ShopItem.Address</p>
   </div>
 </div><!-- /.main-media -->
 	
