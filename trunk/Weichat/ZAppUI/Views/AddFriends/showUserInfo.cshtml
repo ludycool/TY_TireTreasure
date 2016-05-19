@@ -6,7 +6,7 @@
 <head>
     @section Jsprepare
         {
-        @if (@ViewBag.nickName == null)
+        @if (ViewBag.nickName == null)
         {
 <script type="text/javascript">
     $(document).ready(function () {
@@ -14,13 +14,17 @@
     });
             </script>
         }
+        @if(ViewBag.states!='1'||!ViewBag.states != '2')
+        {
         <script type="text/javascript">
             $(document).ready(function () {
+
                 $('#sendRequest').click(function () {
-                     @Html.Action("addToFriend", "AddFriends")
-                 });
-             });
+                    @Html.Action("addToFriend", "AddFriends")
+                });
+            });
         </script>
+    }
     }
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -66,12 +70,30 @@
                 <div class="col-xs-12 add-btn text-right">
                     <a class="btn btn-default btn-success" id="sendRequest" role="button" data-toggle="modal" data-target=".bs-example-modal-sm1">添加好友</a>
                     <div class="modal fade bs-example-modal-sm1" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+
                         <div class="modal-dialog modal-sm">
                             <div class="modal-content text-center">
-                                <div class="modal-header">
-                                    <h4 class="modal-title" id="myModalLabel">添加成功</h4>
-                                </div>
-                                <div class="modal-body">等待对方通过验证……</div>
+                                @if (ViewBag.states == 1)
+                                {
+                                    <div class="modal-header">
+                                        <h4 class="modal-title" id="myModalLabel">添加失败</h4>
+                                    </div>
+                                    <div class="modal-body">对方已是您好友，请勿重复添加…</div>
+                                }
+                                else if (ViewBag.states == 2)
+                                {
+                                    <div class="modal-header">
+                                        <h4 class="modal-title" id="myModalLabel">申请中…</h4>
+                                    </div>
+                                    <div class="modal-body">请耐心等待对方通过验证…</div>
+                                }
+                                else
+                                {
+                                    <div class="modal-header">
+                                        <h4 class="modal-title" id="myModalLabel">添加成功</h4>
+                                    </div>
+                                    <div class="modal-body">等待对方通过验证……</div>
+                                }
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-default btn-success" data-dismiss="modal">确定</button>
                                 </div>

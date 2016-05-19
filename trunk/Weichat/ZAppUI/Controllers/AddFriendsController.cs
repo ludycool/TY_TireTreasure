@@ -61,12 +61,20 @@ namespace ZAppUI.Controllers
                     ViewBag.nickName = result.Tables[0].Rows[0]["Nickname"].ToString();
                     ViewBag.headImgUrl = result.Tables[0].Rows[0]["ImgeUrl"].ToString();
 
-                    //result=userBiz.ExecuteSqlToDataSet("SELECT UserId FROM [TireTreasureDB].[dbo].[TT_User] where WeiXinId='" + openId + "'");
-
-                    //RequestFriendsBiz requestFriendsBiz=new RequestFriendsBiz();
-                    //requestFriendsBiz.ExecuteSqlToDataSet("SELECT ToUserId FROM [TireTreasureDB].[dbo].[TT_RequestFriends] where ToUserId='' and States=");
-                    //ViewBag.states=1;
-                    //TODO 判断搜索账号与搜索的状态关系
+                    
+                    //TODO 判断搜索账号与搜索的状态关系 可分离出方法
+                    RequestFriendsBiz requestFriendsBiz = new RequestFriendsBiz();
+                    result = requestFriendsBiz.ExecuteSqlToDataSet("EXEC	[TireTreasureDB].[dbo].[proc_IsAlreadyFriend] '" + GetUData.OpenId + "','" + GetUData.Request_User_OpenId + "'");
+                    if (result.Tables[0].Rows.Count > 0)
+                    {
+                        ViewBag.states = ConstantList.ADD_FRIENDS_STATUS_SUCCESS;
+                    }
+                    result = requestFriendsBiz.ExecuteSqlToDataSet("EXEC [TireTreasureDB].[dbo].[proc_GetRequestUserId] '" + GetUData.OpenId + "'," + ConstantList.ADD_FRIENDS_STATUS_REQUESTING + "");
+                    if (result.Tables[0].Rows.Count > 0)
+                    {
+                        ViewBag.states = ConstantList.ADD_FRIENDS_STATUS_REQUESTING;
+                    }
+                    
                 }
             }
             return View();
@@ -74,17 +82,20 @@ namespace ZAppUI.Controllers
         //添加好友请求
         public void addToFriend()
         {
+            //TODO 多次点击会生成多条数据 设置一个flag
             UserBiz userBiz = new UserBiz();
             DataSet result = userBiz.ExecuteSqlToDataSet("SELECT UserId FROM [TireTreasureDB].[dbo].[TT_User] where WeiXinId='" + GetUData.OpenId + "'");
             if (result.Tables[0].Rows.Count > 0)
             {
                 RequestFriends requestFriends = new RequestFriends();
 
-                requestFriends.UserId = (Guid)result.Tables[0].Rows[0][0];
+                Guid userId = (Guid)result.Tables[0].Rows[0][0];
+                requestFriends.UserId = userId;
 
                 result = userBiz.ExecuteSqlToDataSet("SELECT UserId FROM [TireTreasureDB].[dbo].[TT_User] where WeiXinId='" + GetUData.Request_User_OpenId + "'");
 
-                requestFriends.ToUserId = (Guid)result.Tables[0].Rows[0][0];
+                Guid toUserId = (Guid)result.Tables[0].Rows[0][0];
+                requestFriends.ToUserId = toUserId;
                 requestFriends.States = ConstantList.ADD_FRIENDS_STATUS_REQUESTING;
                 requestFriends.AddTime = DateTime.Now;
                 requestFriends.isDeleted = false;
@@ -118,7 +129,7 @@ namespace ZAppUI.Controllers
             return View();
         }
         //同意
-        
+
         public ActionResult agree()
         {
             string src = Request["src"];
@@ -130,7 +141,7 @@ namespace ZAppUI.Controllers
             {
                 RequestFriendsBiz requestFriendsBiz = new RequestFriendsBiz();
                 requestFriendsBiz.ExecuteSqlToDataSet("EXEC [TireTreasureDB].[dbo].[proc_UpdateRequestFriendsSates] '" + GetUData.OpenId + "'," + ConstantList.ADD_FRIENDS_STATUS_SUCCESS + "");
-                
+
                 Guid user = (Guid)result.Tables[0].Rows[0]["UserId"];
                 result = requestFriendsBiz.ExecuteSqlToDataSet("SELECT UserId FROM [TireTreasureDB].[dbo].[TT_User] where  WeiXinId= '" + GetUData.OpenId + "'");
 
@@ -151,7 +162,7 @@ namespace ZAppUI.Controllers
 
                 friends.FriendsId = Guid.NewGuid();
                 friends.UserId = (Guid)result.Tables[0].Rows[0]["UserId"];
-                friends.ToUserId=user;
+                friends.ToUserId = user;
                 friendsBiz.Add(friends);
             }
             return RedirectToAction("Index", "Friends");
