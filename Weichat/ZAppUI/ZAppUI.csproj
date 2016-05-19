@@ -243,6 +243,7 @@
     </Compile>
     <Compile Include="Models\UserInfo.cs" />
     <Compile Include="Models\ViewModes.cs" />
+    <Compile Include="Models\VipShopModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

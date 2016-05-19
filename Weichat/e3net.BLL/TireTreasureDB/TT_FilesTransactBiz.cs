@@ -42,7 +42,29 @@ namespace e3net.BLL.TireTreasureDB
 
             return JsonHelper.ToJson(json);
         }
+        /// <summary>
+        /// 拼接url获取List
+        /// </summary>
+        /// <param name="mql"></param>
+        /// <returns></returns>
+        public List<FileJson> GetFList(List<TT_FilesTransact> list)
+        {
 
+            List<FileJson> json = new List<FileJson>();
+            if (list != null && list.Count > 0)
+            {
+                for (int i = 0; i < list.Count; i++)
+                {
+
+                    FileJson item = new FileJson();
+                    item.ShowName = list[i].ShowName;
+                    item.Url = list[i].Route + list[i].RelativePath;
+                    json.Add(item);
+                }
+            }
+
+            return json;
+        }
     }
 }
 
