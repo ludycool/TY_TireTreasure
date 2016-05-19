@@ -28,19 +28,7 @@ namespace e3net.BLL.Base
         public string GetJson(List<Sys_Files> list)
         {
 
-            List<FileJson> json = new List<FileJson>();
-            if (list != null && list.Count > 0)
-            {
-                for (int i = 0; i < list.Count; i++)
-                {
-
-                    FileJson item = new FileJson();
-                    item.ShowName = list[i].ShowName;
-                    item.Url = list[i].Route + list[i].RelativePath;
-                    json.Add(item);
-                }
-            }
-
+            List<FileJson> json = GetFList(list);
             return JsonHelper.ToJson(json);
         }
 

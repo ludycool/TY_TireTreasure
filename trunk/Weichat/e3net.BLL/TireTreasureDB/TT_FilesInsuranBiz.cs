@@ -25,21 +25,9 @@ namespace e3net.BLL.TireTreasureDB
         /// <returns></returns>
         public string GetJson(List<TT_FilesInsuran> list)
         {
-
-            List<FileJson> json = new List<FileJson>();
-            if (list != null && list.Count > 0)
-            {
-                for (int i = 0; i < list.Count; i++)
-                {
-
-                    FileJson item = new FileJson();
-                    item.ShowName = list[i].ShowName;
-                    item.Url = list[i].Route + list[i].RelativePath;
-                    json.Add(item);
-                }
-            }
-
+            List<FileJson> json = GetFList(list);
             return JsonHelper.ToJson(json);
+  
         }
 
         /// <summary>

@@ -12,9 +12,6 @@
 <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
 <title>我的Vip店</title>
 
-<!-- Bootstrap -->
-<link href="../../Content/css/bootstrap.min.css" rel="stylesheet">
-<link href="../../Content/css/global.css" rel="stylesheet">
 <link href="../../Content/css/shop.css" rel="stylesheet">
 
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -36,18 +33,24 @@
           {
               if (imgList != null) {
                   var imgul = "";//所有的数据
+                  var doo = "";
                   for (var i = 0; i < imgList.length; i++) {
                       if (i == 0) {
                           imgul += '<div class="item active">';
+                          doo += ' <li data-target="#carousel-example-generic" data-slide-to="'+i+'" class="active"></li>'
+
                       } else {
                           imgul += '<div class="item">';
+
+                          doo += ' <li data-target="#carousel-example-generic" data-slide-to="' + i + '"></li>'
                       }
                      
                       imgul += ' <img src="' + imgList[i].Url + '" alt="">'
                       imgul +='</div>';
                   }
 
-                  $('#div_lmgLit').empty().append(imgul);
+                  $('#div_lmgLit').empty().append(imgul); 
+                  $('#idicators').empty().append(doo);
               }
           }
          
@@ -68,7 +71,7 @@
 <!-- main -->
 <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
   <!-- Indicators -->
-  <ol class="carousel-indicators">
+  <ol class="carousel-indicators" id="idicators">
     <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
     <li data-target="#carousel-example-generic" data-slide-to="1"></li>
     <li data-target="#carousel-example-generic" data-slide-to="2"></li>
@@ -110,8 +113,8 @@
 
 <div class="container">
 	<div class="row main-nav">
-		<a href="http://www.jslover.com/demo/pano2016/" class="col-xs-4 none text-center"><span class="glyphicon glyphicon-star" aria-hidden="true"></span> 店铺全景</a>
-		<a href="#" class="col-xs-4 text-center"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> 价目表</a>
+		<a href=" @Model.ShopItem.ImageUrlMax" class="col-xs-4 none text-center"><span class="glyphicon glyphicon-star" aria-hidden="true"></span> 店铺全景</a>
+		<a href="VipShop/Transaction" class="col-xs-4 text-center"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> 价目表</a>
 		<a href="#" class="col-xs-4 text-center"><span class="glyphicon glyphicon-file" aria-hidden="true"></span> 消费记录</a>
 	</div><!-- /.main-nav -->
 
@@ -139,11 +142,5 @@
 </div><!-- /.main-media -->
 	
 </div><!-- /.container -->
-
-
-<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<script src="../../Content/js/jquery-1.12.3.min.js"></script>
-<!-- Include all compiled plugins (below), or include individual files as needed -->
-<script src="../../Content/js/bootstrap.min.js"></script>
 </body>
 </html>

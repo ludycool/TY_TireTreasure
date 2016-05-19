@@ -1,159 +1,82 @@
 ﻿@model IEnumerable<e3net.Mode.TireTreasureDB.TT_Transaction>
 
-@{
-    ViewBag.Title = "Transaction";
-}
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+<title>3W联盟</title>
 
-<h2>Transaction</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table>
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.TransactionId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ShopId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Title)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ImageUrl)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CategoryId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Brand)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Models)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Details)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Phone)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Price)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ProvinceCode)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CityCode)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.AreaCode)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CallCount)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Praises)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Clicks)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CreateTime)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Versions)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.UpdateTime)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.States)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.isValid)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.isDeleted)
-        </th>
-        <th></th>
-    </tr>
+<link href="../../Content/css/price_list.css" rel="stylesheet">
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.TransactionId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ShopId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ImageUrl)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CategoryId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Brand)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Models)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Details)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Phone)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Price)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ProvinceCode)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CityCode)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.AreaCode)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CallCount)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Praises)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Clicks)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CreateTime)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Versions)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UpdateTime)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.States)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.isValid)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.isDeleted)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-        </td>
-    </tr>
-}
+<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="//cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+<script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
 
-</table>
+
+    
+     @section Jsprepare{
+
+         <script type="text/javascript">
+        
+          jQuery(document).ready(function () {
+         
+          })
+           
+
+            </script>
+         }
+</head>
+<body>
+<div class="container">
+<!-- top nav -->
+<div class="row">
+  <div class="col-xs-12 top-parent-box">
+    <a class="col-xs-6 top-child-box" href="store.html"><div class=""><img class="center-block" src="../../Content/images/left.png" alt=""></div></a>
+    <!-- <a class="col-xs-6 top-child-box" href="#"><div class="box-right"><img class="center-block" src="images/plus.png" alt=""></div></a> -->
+  </div>
+</div>
+<!-- main -->
+<div class="row main">
+
+      @foreach (var item in Model)
+      { 
+        <div class="col-xs-12">
+    <div class="col-xs-4">
+      <a class="img-box" href="#"><img src="@item.ImageUrl" alt=""></a>
+    </div>
+    <div class="col-xs-4">
+      <div class="text-box">
+        <p>@item.Title</p>
+        <p>@item.Price</p>
+        <p>@item.Details</p>
+      </div>
+    </div>
+    <div class="col-xs-4">
+      <div class="text-box">
+        <p>@item.Clicks 件 </p>
+        <a class="btn btn-default btn-success" href="#" role="button">立即购买</a>
+      </div>
+    </div> 
+  </div><!-- /.col-xs-12  -->
+      
+      
+      
+      }
+
+
+
+
+</div><!-- /.row  -->
+
+
+</div><!-- /.container  -->
+
+
+</body>
+</html>
