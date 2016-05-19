@@ -76,6 +76,10 @@ namespace App.Core
              container.RegisterType<ITT_ShopAppUserDao, TT_ShopAppUserBiz>();
              container.RegisterType<ITT_TransactionDao, TT_TransactionBiz>();
              container.RegisterType<ITT_TransactSnapshotDao, TT_TransactSnapshotBiz>();
+
+             container.RegisterType<ITT_InsuranItermDao, TT_InsuranItermBiz>();
+             container.RegisterType<ITT_InsuranItermSeelDao, TT_InsuranItermSeelBiz>();
+             container.RegisterType<ITT_UserCardDao, TT_UserCardBiz>();  
              #endregion
         }
     }

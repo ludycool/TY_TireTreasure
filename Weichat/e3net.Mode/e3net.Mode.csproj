@@ -84,6 +84,8 @@
     <Compile Include="TireTreasureDB\TT_FundPerSon.cs" />
     <Compile Include="TireTreasureDB\TT_Insuran.cs" />
     <Compile Include="TireTreasureDB\TT_InsuranCompany.cs" />
+    <Compile Include="TireTreasureDB\TT_InsuranIterm.cs" />
+    <Compile Include="TireTreasureDB\TT_InsuranItermSeel.cs" />
     <Compile Include="TireTreasureDB\TT_Levels.cs" />
     <Compile Include="TireTreasureDB\TT_Messages.cs" />
     <Compile Include="TireTreasureDB\TT_Missions.cs" />
@@ -96,6 +98,7 @@
     <Compile Include="TireTreasureDB\TT_Transaction.cs" />
     <Compile Include="TireTreasureDB\TT_TransactSnapshot.cs" />
     <Compile Include="TireTreasureDB\TT_User.cs" />
+    <Compile Include="TireTreasureDB\TT_UserCard.cs" />
     <Compile Include="V_mode\v_Sys_AppVerSion.cs" />
     <Compile Include="V_mode\v_Sys_CityArea.cs" />
     <Compile Include="HttpView\HttpReSultMode.cs" />
