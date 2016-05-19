@@ -21,11 +21,19 @@ namespace ZAppUI.Controllers
         [Dependency]
         public ITT_FilesTransactDao OPFileBiz { get; set; }
 
+
+        [Dependency]
+        public ITT_TransactionDao OPTranBiz { get; set; }
+
+
+     
+
+        string userId = "a3e8f66f-3552-4626-9ee2-f7ddd8b106d8";  //GetUData.User_Id;
         public ActionResult Index()
         {
 
             VipShopModel vshopMode = new VipShopModel();
-            string userId = "a3e8f66f-3552-4626-9ee2-f7ddd8b106d8";  //GetUData.User_Id;
+           
             var mql = TT_ShopSet.SelectAll().Where(TT_ShopSet.ShopId.In(TT_ShopAppUserSet.Select(TT_ShopAppUserSet.ShopId).Where(TT_ShopAppUserSet.UserId.Equal(userId))));
             TT_Shop item = OPBiz.GetEntity(mql);
 
@@ -49,6 +57,24 @@ namespace ZAppUI.Controllers
             }
            
         }
+        /// <summary>
+        /// 商品表
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult Transaction()
+        {
+            var mql = TT_TransactionSet.SelectAll().Where(TT_TransactionSet.ShopId.In(TT_ShopAppUserSet.Select(TT_ShopAppUserSet.ShopId).Where(TT_ShopAppUserSet.UserId.Equal(userId))));
+            List<TT_Transaction> list = OPTranBiz.GetOwnList(mql);
 
+            if (list != null)
+            {
+                return View(list);
+            }
+            else
+            {
+                return RedirectToAction("Index", "User");
+            }
+
+        }
     }
 }
