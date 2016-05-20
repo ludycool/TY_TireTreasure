@@ -266,7 +266,7 @@
       <publishTime>05/20/2016 10:06:13</publishTime>
     </File>
     <File Include="bin/ZAppUI.dll">
-      <publishTime>05/20/2016 14:59:53</publishTime>
+      <publishTime>05/20/2016 16:18:43</publishTime>
     </File>
     <File Include="bin/zh-Hans/EntityFramework.resources.dll">
       <publishTime>04/26/2016 16:19:42</publishTime>
@@ -10691,7 +10691,7 @@
       <publishTime>05/17/2016 08:53:00</publishTime>
     </File>
     <File Include="Views/Register/index.cshtml">
-      <publishTime>05/20/2016 14:59:52</publishTime>
+      <publishTime>05/20/2016 16:18:17</publishTime>
     </File>
     <File Include="Views/Role/Index.cshtml">
       <publishTime>04/21/2016 17:01:40</publishTime>
@@ -10874,7 +10874,7 @@
       <publishTime>05/13/2016 16:35:02</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>05/20/2016 15:11:25</publishTime>
+      <publishTime>05/20/2016 16:18:43</publishTime>
     </File>
     <File Include="文档/HospitalAssistant.pdm">
       <publishTime>04/03/2015 17:40:53</publishTime>
