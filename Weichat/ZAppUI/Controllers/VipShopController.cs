@@ -26,7 +26,8 @@ namespace ZAppUI.Controllers
         public ITT_TransactionDao OPTranBiz { get; set; }
 
 
-     
+        [Dependency]
+        public Iv_TT_UserCardDao OPCardBiz { get; set; }
 
         string userId = "a3e8f66f-3552-4626-9ee2-f7ddd8b106d8";  //GetUData.User_Id;
         public ActionResult Index()
@@ -73,6 +74,27 @@ namespace ZAppUI.Controllers
             else
             {
                 return RedirectToAction("Index", "User");
+            }
+
+        }
+
+        /// <summary>
+        /// vip卡
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult VipCard()
+        {
+            var mql = v_TT_UserCardSet.SelectAll().Where(v_TT_UserCardSet.UserId.Equal(userId));
+          List<v_TT_UserCard> item = OPCardBiz.GetOwnList(mql);
+
+            if (item != null && item.Count>0)
+            {
+                item[0].UserId = new Guid();
+                return View(item);
+            }
+            else
+            {
+              return RedirectToAction("Index", "User");
             }
 
         }

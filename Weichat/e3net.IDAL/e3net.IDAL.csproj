@@ -100,6 +100,7 @@
     <Compile Include="TireTreasureDB\ITT_TransactSnapshotDao.cs" />
     <Compile Include="TireTreasureDB\ITT_UserCardDao.cs" />
     <Compile Include="TireTreasureDB\ITT_UserDao.cs" />
+    <Compile Include="TireTreasureDB\Iv_TT_UserCardDao.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\e3net.common\e3net.common.csproj">

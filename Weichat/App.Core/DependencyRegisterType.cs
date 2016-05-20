@@ -79,7 +79,8 @@ namespace App.Core
 
              container.RegisterType<ITT_InsuranItermDao, TT_InsuranItermBiz>();
              container.RegisterType<ITT_InsuranItermSeelDao, TT_InsuranItermSeelBiz>();
-             container.RegisterType<ITT_UserCardDao, TT_UserCardBiz>();  
+             container.RegisterType<ITT_UserCardDao, TT_UserCardBiz>();
+             container.RegisterType<Iv_TT_UserCardDao, v_TT_UserCardBiz>();  
              #endregion
         }
     }

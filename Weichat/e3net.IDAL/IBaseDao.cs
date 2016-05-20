@@ -192,5 +192,20 @@ namespace e3net.IDAL
         /// <returns></returns>
         T GetModelByWhere(string sql, string classname);
 
+        #region 获取 DataSet
+
+         DataSet ExecuteSqlToDataSet(string sql);
+
+         DataSet ExecuteSqlToDataSet(string sql, params object[] values);
+         DataSet ExecuteProToDataSet(string procName, params DbParameter[] parameters);
+        /// <summary>
+        /// 自定义执行存储过程
+        /// </summary>
+        /// <param name="procName"></param>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
+         DataSet ExecuteProToDataSetNew(string procName, PageClass pc);
+        #endregion
+
     }
 }
