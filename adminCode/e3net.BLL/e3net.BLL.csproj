@@ -93,6 +93,7 @@
     <Compile Include="TireTreasureDB\TT_FundPerSonBiz.cs" />
     <Compile Include="TireTreasureDB\TT_InsuranBiz.cs" />
     <Compile Include="TireTreasureDB\TT_InsuranCompanyBiz.cs" />
+    <Compile Include="TireTreasureDB\TT_InsuranItermSeelBiz.cs" />
     <Compile Include="TireTreasureDB\TT_LevelsBiz.cs" />
     <Compile Include="TireTreasureDB\TT_MessagesBiz.cs" />
     <Compile Include="TireTreasureDB\TT_MissionsApplyBiz.cs" />

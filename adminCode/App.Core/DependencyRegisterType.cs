@@ -80,6 +80,7 @@ namespace App.Core
              container.RegisterType<ITT_FundPerSonDao, TT_FundPerSonBiz>();
              container.RegisterType<ITT_InsuranDao, TT_InsuranBiz>();
              container.RegisterType<ITT_InsuranCompanyDao, TT_InsuranCompanyBiz>();
+             container.RegisterType<ITT_InsuranItermSeelDao, TT_InsuranItermSeelBiz>();
              container.RegisterType<ITT_LevelsDao, TT_LevelsBiz>();
              container.RegisterType<ITT_MessagesDao, TT_MessagesBiz>();
              container.RegisterType<ITT_MissionsDao, TT_MissionsBiz>();

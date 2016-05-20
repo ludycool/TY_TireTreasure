@@ -265,6 +265,7 @@
     <Compile Include="Controllers\TireTreasureDB\TT_FundPerSonController.cs" />
     <Compile Include="Controllers\TireTreasureDB\TT_InsuranCompanyController.cs" />
     <Compile Include="Controllers\TireTreasureDB\TT_InsuranController.cs" />
+    <Compile Include="Controllers\TireTreasureDB\TT_InsuranItermSeelController.cs" />
     <Compile Include="Controllers\TireTreasureDB\TT_LevelsController.cs" />
     <Compile Include="Controllers\TireTreasureDB\TT_MessagesController.cs" />
     <Compile Include="Controllers\TireTreasureDB\TT_MissionsApplyController.cs" />
@@ -3529,13 +3530,17 @@
     <Content Include="Views\TT_Shop\Index.cshtml" />
     <Content Include="Views\TT_Missions\Index.cshtml" />
     <Content Include="Views\TT_Shop\Add2.cshtml" />
-    <Content Include="Views\TT_Shop\Add.cshtml" />
     <Content Include="Views\TT_InsuranCompany\Index.cshtml" />
     <Content Include="Views\TT_FundPerSon\Index.cshtml" />
     <Content Include="Views\TT_FundInfo\Index.cshtml">
       <SubType>Code</SubType>
     </Content>
     <Content Include="Views\TT_Insuran\Index.cshtml" />
+    <Content Include="Views\TT_Insuran\Add.cshtml" />
+    <Content Include="Views\TT_ShopAppUser\Index.cshtml" />
+    <Content Include="Views\TT_Shop\Add.cshtml" />
+    <Content Include="Views\TT_InsuranItermSeel\Index.cshtml" />
+    <Content Include="Views\TT_Levels\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="temp\" />

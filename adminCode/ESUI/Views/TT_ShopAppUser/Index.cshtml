@@ -1,0 +1,405 @@
+﻿<!DOCTYPE html>
+@{
+    ViewBag.Title = "Index";
+}
+
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+     <script type="text/javascript" charset="utf-8" src="~/Content/js/Sys_FileUp.js"></script>
+    <script src="~/Content/js/area.js"></script>
+    <script type="text/javascript" charset="utf-8" src="~/Content/js/DictionaryHelper.js"></script>
+    @section Jsprepare{
+
+        <script type="text/javascript">
+            @Html.Raw(ViewBag.RuteUrl)
+         @Html.Raw(ViewBag.toolbar)
+            jQuery(document).ready(function () {
+                DataGridSet();
+                //GetDictionaryByDicType("UserType", "8");
+                getInfoList();
+                getShopList();
+            })
+            function DataGridSet() {
+                $('#dg').datagrid({
+                    url: BaseUrl + 'Search',
+                    columns: [[
+                        { field: 'ck', checkbox: true },
+                     
+              //{ field: 'ShopUserId', title: '主键', width: 100, sortable: true }, 
+              //{ field: 'ShopId', title: '商店Id', width: 100, sortable: true }, 
+              //{ field: 'UserId', title: '用户Id', width: 100, sortable: true }, 
+              { field: 'WeiXinId', title: '用户微信', width: 100, sortable: true }, 
+              { field: 'UserType', title: '用户类型', width: 100, sortable: true }, 
+              { field: 'Levels', title: '等级', width: 100, sortable: true }, 
+              { field: 'Scores', title: '积分', width: 100, sortable: true }, 
+              //{ field: 'CreateTime', title: '添加时间', width: 100, sortable: true }, 
+              //{ field: 'UpdateTime', title: '修改时间', width: 100, sortable: true }, 
+              {
+                  field: 'States', title: '状态', width: 100, sortable: true, formatter: function (value, row, index) {
+                     
+                          switch (row.States) {
+                              case 2:
+                                  return "已审核";
+                              case 1:
+                                  return "开启";
+                              case 0:
+                                  return "未审核";
+                              case -1:
+                                  return "关闭";
+                              default:
+                                  return "未知";
+                          }
+                  }
+              },
+              { field: 'isDeleted', title: '是否删除', width: 100, sortable: true }
+                    ]],
+                    iconCls: 'icon-save',
+                    title: 'TT_ShopAppUser',
+                    nowrap: true,
+                    fit: true,
+                    fitColumns: true,
+                    singleSelect: true,
+                    striped: true,
+                    collapsible: true,
+                    pageSize: 20,
+                    pagination: true,
+                    rownumbers: true,
+                    sortName: 'CreateTime',
+                    sortOrder: 'desc',
+                    toolbar: toolbars
+                });
+            }
+            //刷新
+            function ReloadOP() {
+                $("#dg").datagrid("reload");
+            }
+            //easyUI 弹出添加的对话框
+            function AddInfo() {
+                //弹出层
+                // $("#DivEditor").dialog('open').dialog('setTitle', '添加信息');
+                $('#DivEditor').dialog({
+                    title: '添加',
+                    //width: 400,
+                    //height: 200,
+                    closed: false,
+                    cache: false,
+                    // href: 'get_content.php',
+                    modal: true, top: 20,
+                    onClose: function () {
+                        //解决弹出窗口关闭后，验证消息还显示在最上面
+
+                    }
+                });
+                $(".validatebox-tip").remove();//清除验证样式
+                DataBaseFunction.ClearForm("ff");
+                //$("input[name='HouseNo']").focus();
+                //$("#ff input[name='Tel']").removeAttr("disabled");
+
+            }
+
+            //查看
+            function ShowOP() {
+                var rows = $("#dg").datagrid('getSelected');
+                //首先取出来值判断只能选择一个
+                if (rows == null) {
+                    // $.messager.alert("友情提示", "请选择", "error");
+                    return;
+                }
+                $("#DivShow").dialog('open').dialog('setTitle', '查看-' /*+ rows.Name*/).window('resize', { top: 20 });
+                DataBaseFunction.BindForm("fshow", rows);
+                //if (rows.Types == 0) {
+                //    $("#fshow span[name='Types']").html('转账');
+                //} else {
+                //    $("#fshow span[name='Types']").html('购物');
+
+                //}
+            }
+            //绑定修改显示详细信息的方法
+            function EditInfo() {
+
+                var rows = $("#dg").datagrid('getSelected');
+                //首先取出来值判断只能选择一个
+                if (rows == null) {
+                    $.messager.alert("友情提示", "请选择", "error");
+                    return;
+                }
+                $("#DivEditor").dialog('open').dialog('setTitle', '修改-' /*+ rows.Name*/).window('resize', { top: 20 });
+                $(".validatebox-tip").remove();//清除验证样式
+
+                //$("#ff input[name='HouseCode']").attr("disabled", "true");
+
+                var ID = rows.ShopUserId;  //获取到了用选择的ID
+                $.ajax({
+                    url: BaseUrl + 'GetInfo',
+                    type: 'POST',
+                    data: { ID: ID },
+                    cache: false,
+                    error: function () { alert('Error $.ajax'); },
+                    success: function (data) {
+                        //var result = eval('(' + data + ')');
+                        DataBaseFunction.BindForm("ff", data);
+                        //$("input[name='HouseNo']").focus();
+                    }
+                });
+
+            }
+            //商铺搜索
+            function ShopSearchGo() {
+                DataBaseFunction.Search("fshow", "SPInfo");
+                //$("#Div_Searh").dialog('close');
+            }
+            function UserSearchGo() {
+                DataBaseFunction.Search("ushow", "tbInfo");
+            }
+            //实现的编辑，包括增查改
+            function SaveInfo() {
+
+                //判断的信息是否通过验证
+                var validate = $("#ff").form('validate');
+                if (validate == false) {
+                    return false;
+                }
+                var ShopName;
+                var LoginName;
+                //获取需要传递的参数传递给前台
+                var data = DataBaseFunction.GetFormData("ff");
+                for(var i=0;i<data.length;i++)
+                {
+                    if (data[i].name == "TName") {
+                        ShopName = data[i].value;
+                    }
+                    if (data[i].name == "LoginName") {
+                        LoginName = data[i].value;
+                    }
+                }
+                $.messager.confirm('提示', '是否将用户名' + ShopName + '添加到店铺' + LoginName+'的商铺', function (r) {
+                    if (r) {
+                        //发送异步请求到后台保存数据
+                        $.post(BaseUrl + 'EditInfo', data, function (data) {
+                            alerts(data.Msg, 2);
+                            if (data.Code > 0) {
+                                $('#DivEditor').dialog('close');
+                                $(".validatebox-tip").remove();
+                                $("#dg").datagrid("reload");
+                            }
+                        });
+                    }
+                });
+            }
+            //人员
+            function getInfoList() {
+
+                $('#tbInfo').datagrid({
+                    url: BaseUrl + 'getUser',
+                    columns: [[
+                        { field: 'RealName', title: '姓名', width: 100 },
+                        { field: 'LoginName', title: '用户名', width: 100, sortable: true },
+                    ]],
+                    iconCls: 'icon-save',
+                    nowrap: true,
+                    width: 560,
+                    height: 360,
+                    fitColumns: true,
+                    singleSelect: true,
+                    striped: true,
+                    collapsible: true,
+                    pageSize: 20,
+                    pagination: true,
+                    rownumbers: true,
+                    sortName: 'CreateTime',
+                    sortOrder: 'desc'
+                });
+
+            }
+            ///选择用户
+            function SetInfo() {
+
+                var rows = $("#tbInfo").datagrid("getSelected");
+                if (rows == null || rows == undefined || rows == '') {
+                    alerts("请选择用户", 2);
+                    return false;
+                }
+                $('#DivInfo').dialog('close');
+                $("#ff [name='UserId']").val(rows.UserId);
+                $("#ff [name='LoginName']").val(rows.LoginName);
+                $("#ff [name='UserName']").html(rows.TrueName + "-" + rows.LoginName);
+                $("#ff [name='WeiXinId']").val(rows.WeiXinId);
+            }
+            //商铺
+            function getShopList() {
+
+                $('#SPInfo').datagrid({
+                    url: BaseUrl + 'GetShop',
+                    columns: [[
+                        {field:'ShopId',hidden:true},
+                        { field: 'TName', title: '商铺名', width: 100 },
+                        //{ field: 'LoginName', title: '用户名', width: 100, sortable: true },
+                    ]],
+                    iconCls: 'icon-save',
+                    nowrap: true,
+                    width: 560,
+                    height: 360,
+                    fitColumns: true,
+                    singleSelect: true,
+                    striped: true,
+                    collapsible: true,
+                    pageSize: 20,
+                    pagination: true,
+                    rownumbers: true,
+                    sortName: 'CreateTime',
+                    sortOrder: 'desc'
+                });
+            }
+            ///绑定商铺
+            function ShopSetInfo() {
+                var rows = $("#SPInfo").datagrid("getSelected");
+                if (rows == null || rows == undefined || rows == '') {
+                    alerts("请选择商铺", 2);
+                    return false;
+                }
+                $('#DivShop').dialog('close');
+                $("#ff [name='ShopId']").val(rows.ShopId);
+                $("#ff [name='TName']").val(rows.TName);
+                $("#ff [name='ShopName']").html(rows.TName);                               
+            }
+            //搜索
+            function Search() {
+                DataBaseFunction.Search("fSearh", "dg");
+                $("#Div_Searh").dialog('close');
+            }
+        </script>
+    }
+
+</head>
+    <table id="dg"></table>
+<body style="overflow-y: hidden">
+    <div id="Div_form" class="easyui-panel" title="会员添加"
+        style="background: #fafafa; padding: 10px 10px;"
+        data-options="iconCls:'icon-save'">
+            <form id="ff" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="ShopId" />
+            <input type="hidden" name="UserId" />
+            <input type="hidden" name="LoginName" />
+            <input type="hidden" name="TName" />
+                @*<input type="hidden" name="ShopUserId" />*@
+                <input type="hidden" name="WeiXinId" />
+            <table class="stripes" style="table-layout: fixed; width: 100%;" border="0" cellspacing="0" cellpadding="0">
+
+                <tr>
+                        <td style="width:120px">
+                            <label>店铺：</label></td>
+                        <td><span name="ShopName"></span>&nbsp;&nbsp;<a href="#" id="SelectShop" class="easyui-linkbutton" data-options="iconCls:'icon-search'"
+                            onclick="$('#DivShop').dialog('open')">选择</a></td>
+                    </tr>
+                 <tr>
+                        <td>
+                            <label>用户：</label></td>
+                        <td><span name="UserName"></span>&nbsp;&nbsp;<a href="#" id="SelectUser" class="easyui-linkbutton" data-options="iconCls:'icon-search'"
+                            onclick="$('#DivInfo').dialog('open')">选择</a></td>
+                    </tr>
+                <tr>
+                    <td>
+                        <label>类别：</label></td>
+                    <td>
+                        <select id="UserType" name="UserType" class="easyui-combobox" style="width: 200px;" data-options="required:true">
+                            <option value="1">普通用户</option>
+                            <option value="2">VIP用户</option>
+                        </select></td>
+                </tr>
+            </table>
+        </form>
+      
+        <div style="text-align: center; width: 100%; margin-bottom: 5px;">
+            <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-ok" onclick="SaveInfo();">添加</a>
+        </div>
+    </div>    
+    <!------------------------搜索弹出层---------------------------------->
+    <div id="Div_Searh" class="easyui-dialog" style="width: 380px; padding: 10px 20px;"
+        closed="true" resizable="true" modal="true" buttons="#dlg-buttons">
+        <form id="fSearh">
+
+            <table class="stripes" style="table-layout: fixed; margin: 0 auto; width: 320px;" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td style="width: 60px;">
+                        <label>业主姓名：</label></td>
+                    <td>
+                        <input type="text" class="textbox" name="Name_like" style="width: 200px;" />
+                    </td>
+
+                </tr>
+            </table>
+
+        </form>
+        <div style="text-align: center; width: 100%; margin: 5px 0px; display: block;">
+            <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-undo" style="float: left;" onclick=" DataBaseFunction.ClearForm('fSearh');">清除</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" style="float: right;" iconcls="icon-search" onclick="SearchGo();">搜索</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" style="float: right;" iconcls="icon-cancel" onclick="$('#Div_Searh').dialog('close')">关闭</a>
+        </div>
+    </div>
+    <!------------------------ 维修人员列表---------------------------------->
+    <div id="DivInfo" class="easyui-dialog" style="width: 580px; height:500px;"
+        closed="true" resizable="true" title="请选择-用户人员" modal="true" buttons="#dlg-buttons">
+        <form id="ushow" method="post" enctype="multipart/form-data">
+        <table style="width: 100%;">
+            <tr>
+                    <td style="width: 120px;">
+                        <label>用户登录名搜索：</label></td>
+                    <td style="width:120px;">
+                        <input type="text" class="textbox" name="LoginName_like" style="width:120px;" />
+                    </td>
+                <td colspan="1" >
+                    <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-ok" onclick="UserSearchGo();">搜索</a></td>
+                    
+            </tr>
+            <tr>
+                <td colspan="4">
+
+                    <table id="tbInfo"></table>
+                </td>
+
+            </tr>
+
+            <tr>
+                <td colspan="4" style="text-align: center; padding-top: 10px">
+                    <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-ok" onclick="SetInfo();">确定</a>
+                    <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-cancel" onclick="$('#DivInfo').dialog('close')">关闭</a>
+                </td>
+            </tr>
+        </table>
+            </form>
+    </div>
+     <!------------------------ 商铺列表---------------------------------->
+    <div id="DivShop" class="easyui-dialog" style="width: 580px; height: 500px;"
+        closed="true" resizable="true" title="请选择-商铺" modal="true" buttons="#dlg-buttons">
+        <form id="fshow" method="post" enctype="multipart/form-data">
+        <table style="width: 100%;">
+            <tr>
+                    <td style="width: 80px;">
+                        <label>店铺名搜索：</label></td>
+                    <td style="width:120px;">
+                        <input type="text" class="textbox" name="TName_like" style="width:120px;" />
+                    </td>
+                <td colspan="1" >
+                    <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-ok" onclick="ShopSearchGo();">搜索</a></td>
+                    
+            </tr>
+            <tr>
+                <td colspan="4">
+                    <table id="SPInfo"></table>
+                </td>
+
+            </tr>
+
+            <tr>
+                <td colspan="4" style="text-align: center; padding-top: 10px">
+                    <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-ok" onclick="ShopSetInfo();">确定</a>
+                    <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-cancel" onclick="$('#DivShop').dialog('close')">关闭</a>
+                </td>
+            </tr>
+        </table>
+            </form>
+    </div>
+</body>
+</html>
+

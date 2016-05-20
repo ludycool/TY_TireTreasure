@@ -19,14 +19,14 @@ using e3net.BLL.TireTreasureDB;
 namespace ESUI.Controllers
 {
     //[Export]
-    public class TT_InsuranController : JsonNetController
+    public class TT_InsuranItermSeelController : JsonNetController
     {
 
       
        // [Dependency]
-       // public TT_InsuranBiz OPBiz { get; set; }
+       // public TT_InsuranCompanyBiz OPBiz { get; set; }
         [Dependency]
-        public ITT_InsuranDao OPBiz { get; set; }
+        public ITT_InsuranItermSeelDao OPBiz { get; set; }
         public ActionResult Index()
         {
             ViewBag.RuteUrl = RuteUrl();
@@ -48,10 +48,10 @@ namespace ESUI.Controllers
             String sortOrder = Request["order"];
             PageClass pc = new PageClass();
             pc.sys_Fields = "*";
-            pc.sys_Key = "InsuranCompanyId";
+            pc.sys_Key = "ItermSeelId";
             pc.sys_PageIndex = pageIndex;
             pc.sys_PageSize = pageSize;
-            pc.sys_Table = "v_TT_Insurance";
+            pc.sys_Table = "TT_InsuranItermSeel";
             pc.sys_Where = Where;
             pc.sys_Order = " " + sortField + " " + sortOrder;
             DataSet ds = OPBiz.GetPagingDataP(pc);
@@ -60,20 +60,16 @@ namespace ESUI.Controllers
             dic.Add("total", pc.RCount);
             return Json(dic, JsonRequestBehavior.AllowGet);
         }
-        public ActionResult Add()
-        {
-            ViewBag.RuteUrl = RuteUrl();
-            return View();
-        }
-        public JsonResult EditInfo(TT_Insuran EidModle)
+
+        public JsonResult EditInfo(TT_InsuranItermSeel EidModle)
         {
             HttpReSultMode ReSultMode = new HttpReSultMode();
             bool IsAdd = false;
           
-             if (!(EidModle.InsuranId != null && !EidModle.InsuranId.ToString().Equals("00000000-0000-0000-0000-000000000000")))//id为空，是添加
+             if (EidModle.ItermSeelId==0)//id为空，是添加
             {
                 IsAdd = true;
-			    EidModle.InsuranId = Guid.NewGuid();
+                //EidModle.InsuranCompanyId = Guid.NewGuid();
                 EidModle.CreateTime = DateTime.Now;
                 EidModle.UpdateTime = DateTime.Now;
 				EidModle.isValid = true;
@@ -85,7 +81,7 @@ namespace ESUI.Controllers
                 {
                     OPBiz.Add(EidModle);
                     ReSultMode.Code = 11;
-                    ReSultMode.Data = EidModle.InsuranId.ToString();
+                    ReSultMode.Data = EidModle.ItermSeelId.ToString();
                     ReSultMode.Msg = "添加成功";
                 }
                 catch (Exception e) {
@@ -97,8 +93,8 @@ namespace ESUI.Controllers
             }
             else
             {
-                EidModle.WhereExpression = TT_InsuranSet.InsuranId.Equal(EidModle.InsuranId);
-				string idfilec = "InsuranId";
+                EidModle.WhereExpression = TT_InsuranItermSeelSet.ItermSeelId.Equal(EidModle.ItermSeelId);
+                string idfilec = "ItermSeelId";
                 EidModle.ChangedMap.Remove(idfilec.ToLower());//移除主键值
                 if (OPBiz.Update(EidModle) > 0)
                 {
@@ -118,40 +114,18 @@ namespace ESUI.Controllers
         }
         public JsonResult GetInfo(string ID)
         {
-            var mql2 = TT_InsuranSet.SelectAll().Where(TT_InsuranSet.InsuranId.Equal(ID));
-            TT_Insuran Rmodel = OPBiz.GetEntity(mql2);
+            var mql2 = TT_InsuranItermSeelSet.SelectAll().Where(TT_InsuranItermSeelSet.ItermSeelId.Equal(ID));
+            TT_InsuranItermSeel Rmodel = OPBiz.GetEntity(mql2);
             //  groupsBiz.Add(rol);
             return Json(Rmodel, JsonRequestBehavior.AllowGet);
         }
-        public JsonResult InsuranceApply()
-        {
-            HttpReSultMode ReSultMode = new HttpReSultMode();
-            var PayType=Request["PayType"];
-            var OMuney=Request["OMuney"];
-            var Remarks=Request["Remarks"];
-            var parameters = new System.Data.SqlClient.SqlParameter[]{
-            new System.Data.SqlClient.SqlParameter("@Number",""+OPBiz.GetTime().ToString("yyyyMMddHHmmss")),
-            new System.Data.SqlClient.SqlParameter("@Type","1"),
-            new System.Data.SqlClient.SqlParameter("@UOId",Guid.NewGuid()),
-            new System.Data.SqlClient.SqlParameter("@SOId",Guid.NewGuid()),
-            new System.Data.SqlClient.SqlParameter("@Money",OMuney),
-            new System.Data.SqlClient.SqlParameter("@Remarks",Remarks),
-            new System.Data.SqlClient.SqlParameter("@PayType",PayType)
-            };
-            var res = OPBiz.ExecuteProWithNonQuery("proc_InsuranceApplication", parameters);
-            if (res > 0)
-                {
-                    ReSultMode.Code = 11;
-                    ReSultMode.Data = "";
-                    ReSultMode.Msg = "修改成功";
-                }
-            return Json(ReSultMode,JsonRequestBehavior.AllowGet);
-        }
+
+
         public JsonResult Del(string IDSet)
         {
-           // var mql2 = TT_InsuranSet.InsuranId.In(IDSet);
-           // int f = OPBiz.Remove<TT_InsuranSet>(mql2);
-             int f = OPBiz.DelForSetDelete("InsuranId", IDSet);
+           // var mql2 = TT_InsuranCompanySet.InsuranCompanyId.In(IDSet);
+           // int f = OPBiz.Remove<TT_InsuranCompanySet>(mql2);
+            int f = OPBiz.DelForSetDelete("ItermSeelId", IDSet);
             HttpReSultMode ReSultMode = new HttpReSultMode();
             if (f > 0)
             {

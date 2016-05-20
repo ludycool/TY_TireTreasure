@@ -46,8 +46,11 @@ namespace e3net.IDAL
         /// <param name="IdSet">id集，","号隔开如："3","4"</param>
         /// <returns></returns>
         int DelForSetDelete(string Idfied, string IdSet);
-       
-
+        /// <summary>
+        /// 获取服务器时间
+        /// </summary>
+        /// <returns></returns>
+        DateTime GetTime();
         /// <summary>
         /// 获取指定实体集
         /// </summary>

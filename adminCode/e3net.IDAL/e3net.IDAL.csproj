@@ -93,6 +93,7 @@
     <Compile Include="TireTreasureDB\ITT_FundPerSonDao.cs" />
     <Compile Include="TireTreasureDB\ITT_InsuranCompanyDao.cs" />
     <Compile Include="TireTreasureDB\ITT_InsuranDao.cs" />
+    <Compile Include="TireTreasureDB\ITT_InsuranItermSeelDao.cs" />
     <Compile Include="TireTreasureDB\ITT_LevelsDao.cs" />
     <Compile Include="TireTreasureDB\ITT_MessagesDao.cs" />
     <Compile Include="TireTreasureDB\ITT_MissionsApplyDao.cs" />
