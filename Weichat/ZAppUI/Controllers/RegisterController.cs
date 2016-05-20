@@ -27,38 +27,31 @@ namespace ZAppUI.Controllers
         public ActionResult Index()
         {
             string code = Request["code"];
+            string state=Request["state"];
+            ViewBag.url = "/" + state;
             if (GetUData == null)
             {
                 GetUData = new Models.UserData();
             }
             if (code != null && code != "")
-            {              
-                string[] resultArray = OauthLogin.getUserInfo(code);
-                GetUData.Nick_Name = resultArray[OauthLogin.NICK_NAME];
-                GetUData.Head_Img_Url = resultArray[OauthLogin.HEAD_IMG_URL];
-                if (isOpenIdExist())
-                {
-                  return  RedirectToAction("Index", "User");
-                }
+            {
+                Dictionary<string,string> result = OauthLogin.getUserInfo(code);
+                GetUData.OpenId = result[OauthLogin.OPEN_ID];
+                GetUData.Nick_Name = result[OauthLogin.NICK_NAME];
+                GetUData.Head_Img_Url = result[OauthLogin.HEAD_IMG_URL];
             }
-
-            ViewBag.src = getUserImg();
+            if (util.isOpenIdExist(GetUData.OpenId))
+            {
+                return RedirectToAction("Index", "User");
+            }
+            ViewBag.src = GetUData.Head_Img_Url;
             return View();
-        }
-        //openId是否存在
-        private bool isOpenIdExist()
-        {
-            UserBiz userBiz = new UserBiz();
-            DataSet result = userBiz.ExecuteSqlToDataSet("EXEC   [TireTreasureDB].[dbo].[proc_IsOpenIdExist]'" + GetUData.OpenId + "'");
-            if (result.Tables[0].Rows.Count > 0)
-                return true;
-            return false;
         }
         [HttpPost]
         public ActionResult Index(LoginModel model)
         {
-            ViewBag.src = getUserImg();
-            ;
+            ViewBag.src = GetUData.Head_Img_Url;
+
             if (model.Phone == null || model.Phone == "")
             {
                 ViewData["IsShowAlert"] = true;
@@ -69,7 +62,7 @@ namespace ZAppUI.Controllers
                 ViewData["IsShowAlert"] = true;
                 ViewData["Alert"] = "请输入正确的手机号";
             }
-            else if (isRegistered(model.Phone))
+            else if (isNumberExist(model.Phone))
             {
                 ViewData["IsShowAlert"] = true;
                 ViewData["Alert"] = "手机已注册";
@@ -86,41 +79,32 @@ namespace ZAppUI.Controllers
             }
             else
             {
-                string openid = GetUData.OpenId;
-                string nickName = GetUData.Nick_Name;
-                string headImgUrl = GetUData.Head_Img_Url;
-                Guid userId = GetUData.User_Id;
-
                 DateTime now = DateTime.Now;
                 Guid guid = Guid.NewGuid();
 
-                addUser(model, now, guid, openid);
+                addUser(model, now, guid);
                 //TODO BUG  添加用户信息时有可能为null
-                addUserInfo(now, guid, nickName, headImgUrl, model, userId);
+                addUserInfo(now, guid, model);
 
-                if (userId.ToString() != "00000000-0000-0000-0000-000000000000")
+                if (GetUData.User_Id.ToString() != "00000000-0000-0000-0000-000000000000")
                 {
-                    addUserReferences(userId, guid);
+                    addUserReferences(GetUData.User_Id, guid);
                 }
-
                 ViewData["IsShowAlert"] = true;
                 ViewData["Alert"] = "注册成功";
-
             }
             return View();
         }
 
-
-        
         //添加用户到表
-        private void addUser(LoginModel model, DateTime now, Guid guid, string openId)
+        private void addUser(LoginModel model, DateTime now, Guid guid)
         {
             User newUser = new User();
             newUser.UserId = guid;
             //特殊字符过滤
             newUser.LoginName = FilterTools.FilterSpecial(model.Phone);
             newUser.Password = DESProvider.Encrypt(FilterTools.FilterSpecial(model.FirstPassword), ConstantList.PASSWORD_ENCRYPT);
-            newUser.WeiXinId = openId;
+            newUser.WeiXinId = GetUData.OpenId;
             newUser.TrueName = "";
             newUser.CreateTime = now;
             newUser.UpdateTime = now;
@@ -130,20 +114,17 @@ namespace ZAppUI.Controllers
             userBiz.Add(newUser);
         }
         //添加用户信息到表
-        private void addUserInfo(DateTime now, Guid guid, String nickName, String imgUrl, LoginModel model, Guid userId)
+        private void addUserInfo(DateTime now, Guid guid, LoginModel model)
         {
             AppUserInfo userInfo = new AppUserInfo();
             userInfo.AppUserInfoId = Guid.NewGuid();
             userInfo.UserId = guid;
             //特殊字符过滤
             userInfo.Phone = FilterTools.FilterSpecial(model.Phone);
-            userInfo.Nickname = FilterTools.FilterSpecial(nickName);
-            userInfo.ImgeUrl = imgUrl;
+            userInfo.Nickname = FilterTools.FilterSpecial(GetUData.Nick_Name);
+            userInfo.ImgeUrl = GetUData.Head_Img_Url;
 
-            if (userId != null)
-            {
-                userInfo.ReferencesId = userId;
-            }
+            userInfo.ReferencesId = GetUData.User_Id;
 
             userInfo.AddTime = now;
             userInfo.UpdateTime = now;
@@ -153,7 +134,7 @@ namespace ZAppUI.Controllers
             userInfoBiz.Add(userInfo);
         }
         //检索手机号是否已注册
-        private bool isRegistered(String loginName)
+        private bool isNumberExist(String loginName)
         {
             UserBiz userBiz = new UserBiz();
 
@@ -164,32 +145,37 @@ namespace ZAppUI.Controllers
             }
             return false;
         }
-        //获取用户头像
-        private string getUserImg()
-        {
-            string imgUrl = GetUData.Head_Img_Url;
-            if (imgUrl != null)
-                return imgUrl;
-            else
-            {
-                AppUserInfoBiz userInfoBiz = new AppUserInfoBiz();
 
-                DataSet result = userInfoBiz.ExecuteSqlToDataSet("EXEC [TireTreasureDB].[dbo].[proc_GetUserInfoByWeiXinId] '" + GetUData.OpenId + "'");
-                if (result.Tables[0].Rows.Count > 0)
-                {
-                    imgUrl = result.Tables[0].Rows[0]["ImgeUrl"].ToString();
-                }
-            }
-            return imgUrl;
-        }
+        ////获取用户头像
+        //private string getUserImg()
+        //{
+        //    string imgUrl = GetUData.Head_Img_Url;
+        //    if (imgUrl != null)
+        //    {
+        //        return imgUrl;
+        //    }
+        //    else
+        //    {
+        //        AppUserInfoBiz userInfoBiz = new AppUserInfoBiz();
+
+        //        DataSet result = userInfoBiz.ExecuteSqlToDataSet("EXEC [TireTreasureDB].[dbo].[proc_GetUserInfoByWeiXinId] '" + GetUData.OpenId + "'");
+        //        if (result.Tables[0].Rows.Count > 0)
+        //        {
+        //            imgUrl = result.Tables[0].Rows[0]["ImgeUrl"].ToString();
+        //        }
+        //    }
+        //    return imgUrl;
+        //}
+
         //添加用户到推荐表
         private void addUserReferences(Guid userId, Guid toUserId)
         {
-            References references = new References();
             ReferencesBiz referencesBiz = new ReferencesBiz();
 
             DataSet result = referencesBiz.ExecuteSqlToDataSet("EXEC [TireTreasureDB].[dbo].[proc_GetIdByUserId] '" + userId + "'");
             string recommendId = result.Tables[0].Rows[0]["Id"].ToString();
+
+            References references = new References();
 
             references.UserId = userId;
             references.ToUserId = toUserId;
@@ -200,8 +186,7 @@ namespace ZAppUI.Controllers
             references.isDeleted = false;
 
             referencesBiz.Add(references);
-
         }
-       
+
     }
 }

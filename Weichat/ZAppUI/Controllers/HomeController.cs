@@ -43,31 +43,31 @@ namespace ZAppUI.Controllers
             }
             GetUData.OpenId = "ov0HljubVsu4mOIfZsTMry_s3CNM";
             if (code != null && code != "")
-            {   
-                GetUData.OpenId = OauthLogin.getOpenId(code);
+            {
+                GetUData.OpenId = OauthLogin.getOpenId(code);     
             }
             return View();
         }
 
         //判断是否注册
         public ActionResult isRegister()
-        {
+        {       
+            //string openId = GetUData.OpenId;
+            //UserBiz userBiz = new UserBiz();
 
-            string openId = GetUData.OpenId;
-            UserBiz userBiz = new UserBiz();
-
-            DataSet result = userBiz.ExecuteSqlToDataSet("EXEC [TireTreasureDB].[dbo].[proc_GetUserLoginNameByWeiXinID] '" + openId + "'");
-            if (result.Tables.Count > 0 && result.Tables[0].Rows.Count > 0)
+            //DataSet result = userBiz.ExecuteSqlToDataSet("EXEC [TireTreasureDB].[dbo].[proc_GetUserLoginNameByWeiXinID] '" + openId + "'");
+            //if (result.Tables.Count > 0 && result.Tables[0].Rows.Count > 0)
+            //{
+            //    
+            //}
+            if (util.isOpenIdExist(GetUData.OpenId))
             {
                 return RedirectToAction("Index", "User");
             }
             string redirect_uri = "http://test.luntaibaobao.com/register";
-            string state = ConstantList.NORMAL_REGISTER;
+            string state = ConstantList.REGISTER_TYPE_NORMAL;
             string url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + WechatParamList.APP_ID + "&redirect_uri=" + redirect_uri + "&response_type=code&scope=snsapi_userinfo&state=" + state + "#wechat_redirect";
-            return Redirect(url);
-            //return RedirectToAction("Index", "Register");
-        }
-
-        
+            return Redirect(url);          
+        }        
     }
 }

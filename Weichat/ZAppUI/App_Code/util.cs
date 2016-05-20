@@ -1,5 +1,7 @@
-﻿using System;
+﻿using e3net.BLL.Base;
+using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web;
@@ -8,6 +10,16 @@ namespace ZAppUI.App_Code
 {
     public class util
     {
+        //openId是否存在
+        public static bool isOpenIdExist(string openId)
+        {
+            UserBiz userBiz = new UserBiz();
+            DataSet result = userBiz.ExecuteSqlToDataSet("EXEC   [TireTreasureDB].[dbo].[proc_IsOpenIdExist]'" + openId + "'");
+            if (result.Tables[0].Rows.Count > 0)
+                return true;
+            return false;
+        }
+        
         //判断手机号
         public static bool isNumber(string s)
         {
