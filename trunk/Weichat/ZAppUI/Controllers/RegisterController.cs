@@ -28,7 +28,7 @@ namespace ZAppUI.Controllers
         {
             string code = Request["code"];
             string state=Request["state"];
-            ViewBag.url = "/" + state;
+           
             if (GetUData == null)
             {
                 GetUData = new Models.UserData();
@@ -39,6 +39,7 @@ namespace ZAppUI.Controllers
                 GetUData.OpenId = result[OauthLogin.OPEN_ID];
                 GetUData.Nick_Name = result[OauthLogin.NICK_NAME];
                 GetUData.Head_Img_Url = result[OauthLogin.HEAD_IMG_URL];
+                GetUData.Controller=state;
             }
             if (util.isOpenIdExist(GetUData.OpenId))
             {
@@ -92,6 +93,7 @@ namespace ZAppUI.Controllers
                 }
                 ViewData["IsShowAlert"] = true;
                 ViewData["Alert"] = "注册成功";
+                ViewBag.url=GetUData.Controller;
             }
             return View();
         }

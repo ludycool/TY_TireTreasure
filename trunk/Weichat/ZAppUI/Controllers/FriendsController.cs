@@ -17,7 +17,7 @@ namespace ZAppUI.Controllers
 
         public ActionResult Index()
         {
-            
+            //判断是否已经注册
             if(!isRegister())
             {
                 string redirect_uri = "http://test.luntaibaobao.com/register";

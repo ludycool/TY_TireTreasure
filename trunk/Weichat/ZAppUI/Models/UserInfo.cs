@@ -20,6 +20,7 @@ namespace ZAppUI.Models
 
         public string Request_User_OpenId{get;set;}
 
+        public string Controller{get;set;}
     }
 
     public class UserInfo

@@ -27,6 +27,15 @@ namespace ZAppUI.Controllers
         // GET: /User/
         public ActionResult Index()
         {
+            //判断是否已经注册
+            if (!isRegister())
+            {
+                string redirect_uri = "http://test.luntaibaobao.com/register";
+                string state = RouteData.Values["controller"].ToString();
+                string url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + WechatParamList.APP_ID + "&redirect_uri=" + redirect_uri + "&response_type=code&scope=snsapi_userinfo&state=" + state + "#wechat_redirect";
+                return Redirect(url);
+            }
+            
             getNickName();
             getBalance();
             return View();
