@@ -5,6 +5,8 @@ using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using WeiChatMessageHandle;
+using ZAppUI.App_Code;
 
 namespace ZAppUI.Controllers
 {
@@ -15,9 +17,14 @@ namespace ZAppUI.Controllers
 
         public ActionResult Index()
         {
-            //string controller=RouteData.Values["controller"].ToString();
-            //string action=RouteData.Values["action"].ToString();
-            //isRegister(controller,action);
+            
+            if(!isRegister())
+            {
+                string redirect_uri = "http://test.luntaibaobao.com/register";
+                string state = RouteData.Values["controller"].ToString();
+                string url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + WechatParamList.APP_ID + "&redirect_uri=" + redirect_uri + "&response_type=code&scope=snsapi_userinfo&state=" + state + "#wechat_redirect";
+                return Redirect(url);
+            }
 
             FriendsBiz friendsBiz=new FriendsBiz();
             DataSet result=friendsBiz.ExecuteSqlToDataSet("EXEC	[TireTreasureDB].[dbo].[proc_GetUserInfoBy_v_FriendsList] '" + GetUData.OpenId + "'");

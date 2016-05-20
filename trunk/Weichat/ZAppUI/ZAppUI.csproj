@@ -227,6 +227,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AddFriendsController.cs" />
     <Compile Include="Controllers\FriendsController.cs" />
+    <Compile Include="Controllers\RecommendController.cs" />
     <Compile Include="Controllers\RegisterController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -461,7 +462,7 @@
     <Content Include="Views\Home\search.cshtml" />
     <Content Include="Views\Home\transfer.cshtml" />
     <Content Include="Views\User\index.cshtml" />
-    <Content Include="Views\User\recommend.cshtml" />
+    <Content Include="Views\Recommend\index.cshtml" />
     <Content Include="Views\AddFriends\index.cshtml" />
     <Content Include="Views\Friends\Index.cshtml" />
     <Content Include="Views\AddFriends\showUserInfo.cshtml" />

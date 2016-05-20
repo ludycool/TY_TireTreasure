@@ -61,7 +61,7 @@ namespace ZAppUI.Controllers
                     ViewBag.nickName = result.Tables[0].Rows[0]["Nickname"].ToString();
                     ViewBag.headImgUrl = result.Tables[0].Rows[0]["ImgeUrl"].ToString();
 
-                    
+
                     //TODO 判断搜索账号与搜索的状态关系 可分离出方法
                     RequestFriendsBiz requestFriendsBiz = new RequestFriendsBiz();
                     result = requestFriendsBiz.ExecuteSqlToDataSet("EXEC	[TireTreasureDB].[dbo].[proc_IsAlreadyFriend] '" + GetUData.OpenId + "','" + GetUData.Request_User_OpenId + "'");
@@ -74,7 +74,7 @@ namespace ZAppUI.Controllers
                     {
                         ViewBag.states = ConstantList.ADD_FRIENDS_STATUS_REQUESTING;
                     }
-                    
+
                 }
             }
             return View();
@@ -82,26 +82,32 @@ namespace ZAppUI.Controllers
         //添加好友请求
         public void addToFriend()
         {
+            RequestFriendsBiz requestFriendsBiz = new RequestFriendsBiz();
+
+            DataSet result = requestFriendsBiz.ExecuteSqlToDataSet("EXEC [TireTreasureDB].[dbo].[proc_GetRequestUserId] '" + GetUData.OpenId + "'," + ConstantList.ADD_FRIENDS_STATUS_REQUESTING + "");
             //TODO 多次点击会生成多条数据 设置一个flag
-            UserBiz userBiz = new UserBiz();
-            DataSet result = userBiz.ExecuteSqlToDataSet("SELECT UserId FROM [TireTreasureDB].[dbo].[TT_User] where WeiXinId='" + GetUData.OpenId + "'");
-            if (result.Tables[0].Rows.Count > 0)
+            if (!(result.Tables[0].Rows.Count > 0))
             {
-                RequestFriends requestFriends = new RequestFriends();
+                UserBiz userBiz = new UserBiz();
+                result = userBiz.ExecuteSqlToDataSet("SELECT UserId FROM [TireTreasureDB].[dbo].[TT_User] where WeiXinId='" + GetUData.OpenId + "'");
+                if (result.Tables[0].Rows.Count > 0)
+                {
+                    RequestFriends requestFriends = new RequestFriends();
 
-                Guid userId = (Guid)result.Tables[0].Rows[0][0];
-                requestFriends.UserId = userId;
+                    Guid userId = (Guid)result.Tables[0].Rows[0][0];
+                    requestFriends.UserId = userId;
 
-                result = userBiz.ExecuteSqlToDataSet("SELECT UserId FROM [TireTreasureDB].[dbo].[TT_User] where WeiXinId='" + GetUData.Request_User_OpenId + "'");
+                    result = userBiz.ExecuteSqlToDataSet("SELECT UserId FROM [TireTreasureDB].[dbo].[TT_User] where WeiXinId='" + GetUData.Request_User_OpenId + "'");
 
-                Guid toUserId = (Guid)result.Tables[0].Rows[0][0];
-                requestFriends.ToUserId = toUserId;
-                requestFriends.States = ConstantList.ADD_FRIENDS_STATUS_REQUESTING;
-                requestFriends.AddTime = DateTime.Now;
-                requestFriends.isDeleted = false;
+                    Guid toUserId = (Guid)result.Tables[0].Rows[0][0];
+                    requestFriends.ToUserId = toUserId;
+                    requestFriends.States = ConstantList.ADD_FRIENDS_STATUS_REQUESTING;
+                    requestFriends.AddTime = DateTime.Now;
+                    requestFriends.isDeleted = false;
 
-                RequestFriendsBiz requestFriendsBiz = new RequestFriendsBiz();
-                requestFriendsBiz.Add(requestFriends);
+                    //RequestFriendsBiz requestFriendsBiz = new RequestFriendsBiz();
+                    requestFriendsBiz.Add(requestFriends);
+                }
             }
             else
             {
@@ -111,6 +117,7 @@ namespace ZAppUI.Controllers
         //请求好友列表
         public ActionResult requestFriendList()
         {
+
             RequestFriendsBiz requestFriendsBiz = new RequestFriendsBiz();
             DataSet result = requestFriendsBiz.ExecuteSqlToDataSet("EXEC [dbo].[proc_GetUserInfoBy_v_RequestFriends] '" + GetUData.OpenId + "'");
             if (result.Tables[0].Rows.Count > 0)

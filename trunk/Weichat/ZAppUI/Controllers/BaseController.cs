@@ -14,6 +14,8 @@ using Newtonsoft.Json;
 using ZAppUI.Models;
 using System.Data;
 using e3net.BLL.Base;
+using ZAppUI.App_Code;
+using WeiChatMessageHandle;
 
 namespace ZAppUI.Controllers
 {
@@ -49,7 +51,14 @@ namespace ZAppUI.Controllers
         #endregion
         #endregion
 
-
+        public bool isRegister()
+        {          
+            if (util.isOpenIdExist(GetUData.OpenId))
+            {
+                return true;
+            }
+           return false;
+        }  
 
     }
 

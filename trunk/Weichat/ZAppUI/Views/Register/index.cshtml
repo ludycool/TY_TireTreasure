@@ -3,7 +3,7 @@
     Layout = null;
     if (ViewData["IsShowAlert"] != null && ViewData["IsShowAlert"].ToString() == "True" && ViewData["Alert"] == "注册成功")
     {
-        Response.Write(" <script> alert('" + ViewData["Alert"] + "');window.location.href='/home '; </script>");
+        Response.Write(" <script> alert('" + ViewData["Alert"] + "');window.location.href='" + ViewBag.url + "'; </script>");
     }
     if (ViewData["IsShowAlert"] != null && ViewData["IsShowAlert"].ToString() == "True")
     {
@@ -52,11 +52,11 @@
     <div class="container">
         <div class="row">
             <div class="col-xs-12 login-pic">
-                <img src=@ViewBag.src class="img-responsive center-block img-circle" alt="">
+                <img src="@ViewBag.src" class="img-responsive center-block img-circle" alt="">
             </div>
         </div>      
       <div class="row">
-         @using (Html.BeginForm("index", "Register", FormMethod.Post,new{@class="form-signin reg"}))
+         @using (Html.BeginForm("Index", "Register", FormMethod.Post,new{@class="form-signin reg"}))
          {
       <form class="form-signin reg">          
         <h2 class="form-signin-heading text-center">注册账户</h2>
