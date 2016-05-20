@@ -168,7 +168,14 @@ namespace e3net.DAL
                 return res;
             }
         }
-
+        public DateTime GetTime()
+        {
+            using (var db=GetDb())
+            {
+                string sql = "SELECT GETDATE() as time ";
+                return DateTime.Parse(db.ExecuteSqlToScalar(sql, null).ToString()) ;
+            }
+        }
         #endregion
 
         #region 获取实体 或实体列表
