@@ -1,4 +1,10 @@
-.search-bar{padding: 5%;}
+.search-bar{
+	padding: 5%;
+}
 
-.btn-box{margin-top: 10%;}
-.btn-box .col-xs-4{padding: 0;}
+.btn-box{
+	margin-top: 10%;
+}
+.btn-box .col-xs-4{
+	padding: 0;
+}

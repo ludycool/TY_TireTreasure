@@ -1,7 +1,13 @@
 .main{}
 .main .col-xs-12{}
 .main .col-xs-12 h4{}
-.main .col-xs-12 p{padding: 10% 2%;background-color: #fff8ed;color: #666;}
+.main .col-xs-12 p{
+	padding: 10% 2%;
+	background-color: #fff8ed;
+	color: #666;
+}
 
 
-.main .col-xs-10{padding-top: 6%;}
+.main .col-xs-10{
+	padding-top: 6%;
+}

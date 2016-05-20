@@ -1,9 +1,29 @@
-.main{color: #fff;}
-.main .main-top{border-bottom: 1px solid #ddd;margin-bottom: 3%;background-color: #ff7800;}
-.main .main-top .col-xs-6{margin: 3% 0;padding: 10% 0;}
+.main{
+	color: #fff;
+}
+.main .main-top{
+	border-bottom: 1px solid #ddd;
+	margin-bottom: 3%;
+	background-color: #ff7800;
+}
+.main .main-top .col-xs-6{
+	margin: 3% 0;
+	padding: 10% 0;
+}
 
-.main .main-body{color: #fff;}
-.main .main-body .col-xs-12{border: 1px solid #ccc;margin: 3% 0;padding: 10% 0;border-radius: 10px;background: linear-gradient(to bottom,#6ad1ff,#0091d1);}
-.main .main-body .col-xs-12.red{background: linear-gradient(to bottom,#ff786a,#d11500);}
-.main .main-body .col-xs-12.green{background: linear-gradient(to bottom,#8edc8d,#339d31);}
-/*.main .main-body .col-xs-12.blue{background: linear-gradient(to bottom,#6ad1ff,#0091d1);}*/
+.main .main-body{
+	color: #fff;
+}
+.main .main-body .col-xs-12{
+	border: 1px solid #ccc;
+	margin: 3% 0;
+	padding: 10% 0;
+	border-radius: 10px;
+	background: linear-gradient(to bottom,#6ad1ff,#0091d1);
+}
+.main .main-body .col-xs-12.red{
+	background: linear-gradient(to bottom,#ff786a,#d11500);
+}
+.main .main-body .col-xs-12.green{
+	background: linear-gradient(to bottom,#8edc8d,#339d31);
+}

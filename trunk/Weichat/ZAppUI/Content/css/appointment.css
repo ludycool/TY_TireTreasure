@@ -1,7 +1,18 @@
 .main-top{}
-.main-top .col-xs-12{white-space: nowrap;padding: 3% 5% 5%;}
-.main-top .col-xs-12 .col-xs-3{padding: 0;}
-.main-top .col-xs-12 .col-xs-1{padding: 6px 6px;}
+.main-top .col-xs-12{
+	white-space: nowrap;
+	padding: 3% 5% 5%;
+}
+.main-top .col-xs-12 .col-xs-3{
+	padding: 0;
+}
+.main-top .col-xs-12 .col-xs-1{
+	padding: 6px 6px;
+}
 
 .main-body{}
-.main-body .child-box{margin-bottom: 3%;background: linear-gradient(to bottom,#ffe363,#ffd200);border: 1px solid #ffcc00;}
+.main-body .child-box{
+	margin-bottom: 3%;
+	background: linear-gradient(to bottom,#ffe363,#ffd200);
+	border: 1px solid #ffcc00;
+}
