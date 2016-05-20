@@ -9,8 +9,9 @@ namespace WeiChatMessageHandle.OpenId
 {
     public class OauthLogin
     {
-        public const int NICK_NAME = 0;
-        public const int HEAD_IMG_URL = 1;
+        public const string NICK_NAME = "NickName";
+        public const string HEAD_IMG_URL ="ImgUrl";
+        public const string OPEN_ID = "OpenId";
 
         static HttpUtil request = new HttpUtil();
         static JObject obj;
@@ -25,9 +26,9 @@ namespace WeiChatMessageHandle.OpenId
             return obj["openid"].ToString();
         }
 
-        public static string[] getUserInfo(string code)
+        public static Dictionary<string,string> getUserInfo(string code)
         {
-            string[] strArray = new String[2];
+            Dictionary<string,string> dictionary=new Dictionary<string,string>();
             if (code != null)
             {
                 string url = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=" + WechatParamList.APP_ID + "&secret=" + WechatParamList.APP_SECRET + "&code=" + code + "&grant_type=authorization_code";
@@ -44,10 +45,11 @@ namespace WeiChatMessageHandle.OpenId
                 string nickName = obj["nickname"].ToString();
                 string headImgUrl = obj["headimgurl"].ToString();
 
-                strArray[NICK_NAME] = nickName;
-                strArray[HEAD_IMG_URL] = headImgUrl;
+                dictionary.Add(OPEN_ID,openid);
+                dictionary.Add(NICK_NAME,nickName);
+                dictionary.Add(HEAD_IMG_URL,headImgUrl);
             }
-            return strArray;
+            return dictionary;
         }
     }
 }
