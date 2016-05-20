@@ -10,7 +10,7 @@
 <!-- Bootstrap -->
 <link href="../../Content/css/bootstrap.min.css" rel="stylesheet">
 <link href="../../Content/css/global.css" rel="stylesheet">
-<link href="../../Content/css/payee.css" rel="stylesheet">
+<link href="../../Content/css/payee_QRcode.css" rel="stylesheet">
 
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -21,24 +21,22 @@
 </head>
 <body>
 <div class="container">
-  <!-- top nav -->
-  <div class="row">
-    <div class="col-xs-12 top-parent-box">
-      <a class="col-xs-6 top-child-box" href="index.html"><div class=""><img class="center-block" src="../../Content/images/left.png" alt=""></div></a>
-      <!-- <a class="col-xs-6 top-child-box" href="#"><div class="box-right"><img class="center-block" src="images/plus.png" alt=""></div></a> -->
-    </div>
-  </div>
- 	<!-- main -->
- 	<form class="" action="">
-	 <div class="input-group col-xs-12">
-		  <span class="input-group-addon input-lg">￥</span>
-		  <input type="text" class="form-control input-lg" aria-label="Amount (to the nearest dollar)" placeholder="请输入金额">
-		  <span class="input-group-addon input-lg">.00</span>
+	<!-- top nav -->
+	<div class="row">
+		<div class="col-xs-12 top-parent-box">
+			<a class="col-xs-6 top-child-box" href="index.html"><div class=""><img class="center-block" src="../../Content/images/left.png" alt=""></div></a>
+			<!-- <a class="col-xs-6 top-child-box" href="#"><div class="box-right"><img class="center-block" src="images/plus.png" alt=""></div></a> -->
 		</div>
-		<div class="btn-group col-xs-12" role="group" aria-label="...">
-		  <a href="payee_QRcode.html" type="button" class="btn btn-default btn-lg btn-block btn-success" role="button">确认</a>
-		</div>		
- 	</form>
+	</div>
+<!-- main -->
+
+<div class="row">
+ <div class="col-xs-12 main">
+		<h4 class="text-center">扫一扫,向我付款</h4>
+		<div class="QRcode-box"><img src="../../Content/images/pic/QR_code.png" alt=""></div>
+		<p class="text-center">￥：500</p>
+	</div>
+</div>
 
 
 </div><!-- /.container  -->
