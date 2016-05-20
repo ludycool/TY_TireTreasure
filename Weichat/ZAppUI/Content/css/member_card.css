@@ -1,6 +1,17 @@
-.main{margin-top: 10%;}
+.main{
+	margin-top: 10%;
+}
 .main .col-xs-12{}
 .main .col-xs-12 .list-group{}
-.main .col-xs-12 .list-group .list-group-item{background: linear-gradient(to bottom,gold,orange);}
-.main .col-xs-12 .list-group .list-group-item .list-group-item-heading{padding: 3% 0%;border-bottom: 2px dotted #fff;color: #C72226;}
-.main .col-xs-12 .list-group .list-group-item .list-group-item-text{padding: 3% 0%;border-bottom: 2px dotted #fff;}
+.main .col-xs-12 .list-group .list-group-item{
+	background: linear-gradient(to bottom,gold,orange);
+}
+.main .col-xs-12 .list-group .list-group-item .list-group-item-heading{
+	padding: 3% 0%;
+	border-bottom: 2px dotted #fff;
+	color: #C72226;
+}
+.main .col-xs-12 .list-group .list-group-item .list-group-item-text{
+	padding: 3% 0%;
+	border-bottom: 2px dotted #fff;
+}

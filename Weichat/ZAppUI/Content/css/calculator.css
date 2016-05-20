@@ -1,14 +1,32 @@
 .main{}
-.main .main-top{padding: 1% 0%;border: 1px solid #ddd;}
+.main .main-top{
+	padding: 1% 0%;
+	border: 1px solid #ddd;
+}
 .main .main-top h3{}
 .main .main-top .col-xs-4,
-.main .main-top .col-xs-2{white-space: nowrap;padding: 0;line-height: 240%;border-left: 1px solid #ddd;}
-.main .main-top .border-none{border-left: 0;}
+.main .main-top .col-xs-2{
+	white-space: nowrap;
+	padding: 0;
+	line-height: 240%;
+	border-left: 1px solid #ddd;
+}
+.main .main-top .border-none{
+	border-left: 0;
+}
 
 .main .main-top .col-xs-4 form{}
-.main .main-top .col-xs-4 form div{margin: 0% 2%;}
+.main .main-top .col-xs-4 form div{
+	margin: 0% 2%;
+}
 
-.main-md{padding: 2% 0%;white-space: nowrap;border-bottom: 1px solid #ddd;}
+.main-md{
+	padding: 2% 0%;
+	white-space: nowrap;
+	border-bottom: 1px solid #ddd;
+}
 .main-md .col-xs-3{}
 
-.main-bt{margin: 5% 0% 10%;}
+.main-bt{
+	margin: 5% 0% 10%;
+}

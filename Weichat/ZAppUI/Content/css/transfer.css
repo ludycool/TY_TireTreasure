@@ -1,7 +1,30 @@
-/*.md-parent-box{margin-top: 15%;}*/
-.md-parent-box .media{margin-top: 0;padding: 3% 15px;border-radius: 0;}
 
-.md-parent-box .media .media-middle{width: 20%;height: 15%;padding: 0 5% 0 0;}
-.md-parent-box .media .media-middle a{display: block;width: 80%;height: 0;padding-bottom: 80%;position: relative;}
-.md-parent-box .media .media-middle a img{display: block;width: 100%;height: 100%;position: absolute;background-color: #018FD9;}
-.md-parent-box .media .media-body{height: 12%;vertical-align: middle;}
+.md-parent-box .media{
+	margin-top: 0;
+	padding: 3% 15px;
+	border-radius: 0;
+}
+
+.md-parent-box .media .media-middle{
+	width: 20%;
+	height: 15%;
+	padding: 0 5% 0 0;
+}
+.md-parent-box .media .media-middle a{
+	display: block;
+	width: 80%;
+	height: 0;
+	padding-bottom: 80%;
+	position: relative;
+}
+.md-parent-box .media .media-middle a img{
+	display: block;
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	background-color: #018FD9;
+}
+.md-parent-box .media .media-body{
+	height: 12%;
+	vertical-align: middle;
+}

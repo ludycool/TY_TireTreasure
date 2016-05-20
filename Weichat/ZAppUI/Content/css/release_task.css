@@ -1,20 +1,43 @@
 
-.main{/*background-color: pink;*/}
+.main{
 
-.title-box{padding-top: 3%;padding-bottom: 3%;}
+}
+
+.title-box{
+	padding-top: 3%;
+	padding-bottom: 3%;
+}
 
 .text-box{}
 
-.map-box{padding: 3% 0%;margin: 3% 0%;border: 1px solid #ddd;}
+.map-box{
+	padding: 3% 0%;
+	margin: 3% 0%;
+	border: 1px solid #ddd;
+}
 .map-box .col-xs-6{}
-.map-box .col-xs-6 span{font-size: 140%;color: #F43436;}
+.map-box .col-xs-6 span{
+	font-size: 140%;
+	color: #F43436;
+}
 
 
-.time-box{margin-top: 3%;}
+.time-box{
+	margin-top: 3%;
+}
 .time-box .row{}
 .time-box .row .col-xs-3,
-.time-box .row .col-xs-1{padding: 0;}
-.time-box .row .col-xs-1{padding-top: 3%;text-align: center;}
+.time-box .row .col-xs-1{
+	padding: 0;
+}
+.time-box .row .col-xs-1{
+	padding-top: 3%;
+	text-align: center;
+}
 
-.btn-box{margin: 10% 0%;}
-.btn-box .col-xs-10{padding: 0;}
+.btn-box{
+	margin: 10% 0%;
+}
+.btn-box .col-xs-10{
+	padding: 0;
+}

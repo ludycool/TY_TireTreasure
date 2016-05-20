@@ -1,5 +1,25 @@
-.main{padding: 5% 0%;margin: 10% 0%;}
-.main h4{padding: 5% 0%;}
-.main .QRcode-box{width: 100%;height: 0;padding-bottom: 50%;position: relative;}
-.main .QRcode-box img{width: 50%;height: 100%;position: absolute;top: 50%;left: 50%;-webkit-transform: translate(-50%,-50%);border: 1px solid #ddd;}
-.main p{padding: 5% 0%;}
+.main{
+	padding: 5% 0%;
+	margin: 10% 0%;
+}
+.main h4{
+	padding: 5% 0%;
+}
+.main .QRcode-box{
+	width: 100%;
+	height: 0;
+	padding-bottom: 50%;
+	position: relative;
+}
+.main .QRcode-box img{
+	width: 50%;
+	height: 100%;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	-webkit-transform: translate(-50%,-50%);
+	border: 1px solid #ddd;
+}
+.main p{
+	padding: 5% 0%;
+}

@@ -1,3 +1,8 @@
 .main{}
-.main .col-xs-12{white-space: nowrap;padding-top: 6%;}
-.main .col-xs-10{padding-top: 6%;}
+.main .col-xs-12{
+	white-space: nowrap;
+	padding-top: 6%;
+}
+.main .col-xs-10{
+	padding-top: 6%;
+}
