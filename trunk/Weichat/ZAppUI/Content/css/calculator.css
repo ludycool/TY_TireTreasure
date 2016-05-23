@@ -15,6 +15,9 @@
 .main .main-top .col-xs-5{
 	padding-left: 10px;
 }
+.main .main-top .col-xs-2{
+	position: relative;
+}
 .main .main-top .border-none{
 	border-left: 0;
 	text-align: left;
