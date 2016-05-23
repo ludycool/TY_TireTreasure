@@ -62,3 +62,6 @@
 .main-media .media-body{
 	padding-left: 5%;
 }
+.main-media .media-body p span{
+	color: #018FD9;
+}
