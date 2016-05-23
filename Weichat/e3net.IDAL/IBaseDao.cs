@@ -76,13 +76,7 @@ namespace e3net.IDAL
         /// <returns></returns>
         MObject ExecuteScalarToMObject(MQLBase mql);
 
-        /// <summary>
-        /// 执行存储过程结果反馈到DataSet
-        /// </summary>
-        /// <param name="parameters"></param>
-        /// <param name="procName"></param>
-        /// <returns></returns>
-        DataSet ExecuteProToDataSet(String procName, params DbParameter[] parameters);
+
 
         /// <summary>
         /// 执行存储过程,返回受影响的行数
@@ -100,16 +94,6 @@ namespace e3net.IDAL
         /// <returns></returns>
         List<T> ExecuteProToOwnList(String procName, params DbParameter[] parameters);
 
-
-        /// <summary>
-        /// 执行sql结果反馈到DataSet,自己注意sql注入问题
-        /// </summary>
-        /// <param name="parameters"></param>
-        /// <param name="procName"></param>
-        /// <returns></returns>
-        DataSet ExecuteSqlToDataSet(string sql);
-
-        DataSet ExecuteSqlToDataSet(string sql, params object[] values);
 
         /// <summary>
         /// 执行sql,返回受影响的行数,自己注意sql注入问题
@@ -192,9 +176,9 @@ namespace e3net.IDAL
         /// <returns></returns>
         T GetModelByWhere(string sql, string classname);
 
-        #region 获取 DataSet
+        #region 获取 DataSet 自己注意sql注入问题
 
-         DataSet ExecuteSqlToDataSet(string sql);
+        DataSet ExecuteSqlToDataSet(string sql);
 
          DataSet ExecuteSqlToDataSet(string sql, params object[] values);
          DataSet ExecuteProToDataSet(string procName, params DbParameter[] parameters);
