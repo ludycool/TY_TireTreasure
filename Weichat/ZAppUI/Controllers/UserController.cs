@@ -68,8 +68,7 @@ namespace ZAppUI.Controllers
             }
             DataSet result = balanceBiz.ExecuteSqlToDataSet("EXEC [TireMoneyDB].[dbo].[proc_CheckBalanceInfo] '" + openId + "'");
             ViewBag.balance = result.Tables[0].Rows[0]["AMneys"];
-            
-            
+                        
         }
         //添加用户余额到表
         private void addUserBalanceInfo(string openId)

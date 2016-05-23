@@ -226,6 +226,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AddFriendsController.cs" />
+    <Compile Include="Controllers\DepositController.cs" />
     <Compile Include="Controllers\FriendsController.cs" />
     <Compile Include="Controllers\RecommendController.cs" />
     <Compile Include="Controllers\RegisterController.cs" />
@@ -481,6 +482,8 @@
     <Content Include="Views\VipShop\Transaction.cshtml" />
     <Content Include="Views\AddFriends\requestFriendList.cshtml" />
     <Content Include="Views\VipShop\VipCard.cshtml" />
+    <Content Include="Views\Deposit\Index.cshtml" />
+    <Content Include="Views\Deposit\unionPay.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="temp\" />

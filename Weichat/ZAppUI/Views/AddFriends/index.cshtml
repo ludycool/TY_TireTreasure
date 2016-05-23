@@ -1,4 +1,4 @@
-﻿@model ZAppUI.Models.SearchUser
+﻿
 @{
     Layout = null;
     if (ViewData["IsShowAlert"] != null && ViewData["IsShowAlert"].ToString() == "True")
@@ -49,7 +49,7 @@
                 @using (Html.BeginForm("searchUserInfo", "AddFriends", FormMethod.Post))
                 {
                     <div class="input-group">
-                        @Html.TextBoxFor(m => m.UserAccount ,new{@class="form-control input-lg",@placeholder="搜索……"})
+                        @Html.TextBox("userAccount","" ,new{@class="form-control input-lg",@placeholder="搜索……"})
                         
                         <span class="input-group-btn">
                             <button class="btn btn-default btn-lg btn-success" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
