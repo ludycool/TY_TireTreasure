@@ -50,14 +50,14 @@ namespace ZAppUI.Controllers
         //生成推荐链接
         private string generateRecommendUrl()
         {
-            string id = getUserId();
+            string id = getRecommendId();
             if (id != null)
                 id = DESProvider.Encrypt(id, ConstantList.ENCRYPT_KEY);
 
-            return "http://" + Request.Url.Host + "/" + RouteData.Route.GetRouteData(this.HttpContext).Values["controller"] + "/encoderRecommendUrl?param=" + id + "&type=recommend";
+            return "http://" + Request.Url.Host + "/" + RouteData.Route.GetRouteData(this.HttpContext).Values["controller"] + "/decoderRecommendUrl?param=" + id + "&type=recommend";
         }
         //获取推荐人ID
-        public string getUserId()
+        public string getRecommendId()
         {
             UserBiz userBiz = new UserBiz();
             DataSet result = userBiz.ExecuteSqlToDataSet("EXEC [TireTreasureDB].[dbo].[proc_GeRecommendIdByWeiXinId] '" + GetUData.OpenId + "'");
@@ -88,7 +88,7 @@ namespace ZAppUI.Controllers
             return num = (int)result.Tables[0].Rows[0][0];
         }
         //推荐链接解码
-        public ActionResult encoderRecommendUrl()
+        public ActionResult decoderRecommendUrl()
         {
             string recommendId = FilterTools.FilterSpecial(DESProvider.Decrypt(Request["param"], ConstantList.ENCRYPT_KEY));
             string type = FilterTools.FilterSpecial(Request["type"]);
