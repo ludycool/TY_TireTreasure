@@ -4,6 +4,7 @@ using e3net.Mode.TireTreasureDB;
 using Microsoft.Practices.Unity;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -84,13 +85,15 @@ namespace ZAppUI.Controllers
         /// <returns></returns>
         public ActionResult VipCard()
         {
-            var mql = v_TT_UserCardSet.SelectAll().Where(v_TT_UserCardSet.UserId.Equal(userId));
-          List<v_TT_UserCard> item = OPCardBiz.GetOwnList(mql);
+            //var mql = v_TT_UserCardSet.SelectAll().Where(v_TT_UserCardSet.UserId.Equal(userId));
+            //List<v_TT_UserCard> item = OPCardBiz.GetOwnList<v_TT_UserCard>(mql);
+            string mql = " select [Levels],[CarNo],[Password],[Scores],[States],[StarTime],[EndTime],[UMoney],[Nickname],[Details] from v_TT_UserCard where UserId='" + userId + "'";
+           DataSet ds = OPCardBiz.ExecuteSqlToDataSet(mql);
 
-            if (item != null && item.Count>0)
+           if (ds.Tables[0] != null && ds.Tables[0].Rows.Count> 0)
             {
-                item[0].UserId = new Guid();
-                return View(item);
+              
+                return View(ds.Tables[0].Rows[0]);
             }
             else
             {

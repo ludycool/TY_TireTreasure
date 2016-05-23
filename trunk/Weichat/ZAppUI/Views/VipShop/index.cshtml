@@ -10,9 +10,10 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
-<title>我的Vip店</title>
+<title>3W联盟</title>
 
-<link href="../../Content/css/shop.css" rel="stylesheet">
+<!-- Bootstrap -->
+<link href="../../Content/css/store.css" rel="stylesheet">
 
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -21,48 +22,49 @@
 <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
 <![endif]-->
 
-   
+       
      @section Jsprepare{
 
          <script type="text/javascript">
              var imgList =  @Html.Raw(ViewBag.listImgJson)
           jQuery(document).ready(function () {
               setimg();
-            })
-          function setimg()//首页滚动图
-          {
-              if (imgList != null) {
-                  var imgul = "";//所有的数据
-                  var doo = "";
-                  for (var i = 0; i < imgList.length; i++) {
-                      if (i == 0) {
-                          imgul += '<div class="item active">';
-                          doo += ' <li data-target="#carousel-example-generic" data-slide-to="'+i+'" class="active"></li>'
+          })
+             function setimg()//首页滚动图
+             {
+                 if (imgList != null) {
+                     var imgul = "";//所有的数据
+                     var doo = "";
+                     for (var i = 0; i < imgList.length; i++) {
+                         if (i == 0) {
+                             imgul += '<div class="item active">';
+                             doo += ' <li data-target="#carousel-example-generic" data-slide-to="' + i + '" class="active"></li>'
 
-                      } else {
-                          imgul += '<div class="item">';
+                         } else {
+                             imgul += '<div class="item">';
 
-                          doo += ' <li data-target="#carousel-example-generic" data-slide-to="' + i + '"></li>'
-                      }
-                     
-                      imgul += ' <img src="' + imgList[i].Url + '" alt="">'
-                      imgul +='</div>';
-                  }
+                             doo += ' <li data-target="#carousel-example-generic" data-slide-to="' + i + '"></li>'
+                         }
 
-                  $('#div_lmgLit').empty().append(imgul); 
-                  $('#idicators').empty().append(doo);
-              }
-          }
-         
+                         imgul += ' <img src="' + imgList[i].Url + '" alt="">'
+                         imgul += '</div>';
+                     }
+
+                     $('#div_lmgLit').empty().append(imgul);
+                     $('#idicators').empty().append(doo);
+                 }
+             }
+
             </script>
          }
+
 </head>
 <body>
 <div class="container">
 <!-- top nav -->
 <div class="row">
   <div class="col-xs-12 top-parent-box">
-    <a class="col-xs-6 top-child-box" href="user.html"><div class=""><img class="center-block" src="../../Content/images/left.png" alt=""></div></a>
+    <a class="col-xs-6 top-child-box" href="/User"><div class=""><img class="center-block" src="../../Content/images/left.png" alt=""></div></a>
     <!-- <a class="col-xs-6 top-child-box" href="#"><div class="box-right"><img class="center-block" src="images/plus.png" alt=""></div></a> -->
   </div>
 </div>
@@ -79,8 +81,7 @@
 
   <!-- Wrapper for slides -->
   <div class="carousel-inner" role="listbox" id="div_lmgLit">
-
-          <div class="item active">
+    <div class="item active">
       <img src="../../Content/images/pic/banner1.png" alt="...">
       <!-- <div class="carousel-caption">
         ...
@@ -113,8 +114,8 @@
 
 <div class="container">
 	<div class="row main-nav">
-		<a href=" @Model.ShopItem.ImageUrlMax" class="col-xs-4 none text-center"><span class="glyphicon glyphicon-star" aria-hidden="true"></span> 店铺全景</a>
-		<a href="VipShop/Transaction" class="col-xs-4 text-center"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> 价目表</a>
+		<a href="@Model.ShopItem.ImageUrlMax" class="col-xs-4 none text-center"><span class="glyphicon glyphicon-star" aria-hidden="true"></span> 店铺全景</a>
+		<a href="price_list.html" class="col-xs-4 text-center"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> 价目表</a>
 		<a href="#" class="col-xs-4 text-center"><span class="glyphicon glyphicon-file" aria-hidden="true"></span> 消费记录</a>
 	</div><!-- /.main-nav -->
 
@@ -135,12 +136,18 @@
     </a>
   </div>
   <div class="media-body">
-    <p>店名：  @Model.ShopItem.TName</p>
+   <p>店名：  @Model.ShopItem.TName</p>
     <p>电话：@Model.ShopItem.Phone</p>
     <p>地址：@Model.ShopItem.Address</p>
   </div>
 </div><!-- /.main-media -->
 	
 </div><!-- /.container -->
+
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="../../Content/js/jquery-1.12.3.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="../../Content/js/bootstrap.min.js"></script>
 </body>
 </html>
