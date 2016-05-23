@@ -10,7 +10,7 @@
 <!-- Bootstrap -->
 <link href="../../Content/css/bootstrap.min.css" rel="stylesheet">
 <link href="../../Content/css/global.css" rel="stylesheet">
-<link href="../../Content/css/balance.css" rel="stylesheet">
+<link href="../../Content/css/recharge.css" rel="stylesheet">
 
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -21,27 +21,24 @@
 </head>
 <body>
 <div class="container">
-<!-- top nav -->
-<div class="row">
-  <div class="col-xs-12 top-parent-box">
-    <a class="col-xs-6 top-child-box" href="user.html"><div class=""><img class="center-block" src="../../Content/images/left.png" alt=""></div></a>
-    <!-- <a class="col-xs-6 top-child-box" href="#"><div class="box-right"><img class="center-block" src="images/plus.png" alt=""></div></a> -->
+  <!-- top nav -->
+  <div class="row">
+    <div class="col-xs-12 top-parent-box">
+      <a class="col-xs-6 top-child-box" href="index.html"><div class=""><img class="center-block" src="../../Content/images/left.png" alt=""></div></a>
+      <!-- <a class="col-xs-6 top-child-box" href="#"><div class="box-right"><img class="center-block" src="images/plus.png" alt=""></div></a> -->
+    </div>
   </div>
-</div>
-<!-- main -->
-	<div class="row main">
-		<div class="col-xs-12 main-top">
-			<div class="col-xs-6 text-right">账户余额 : &nbsp;</div>
-			<div class="col-xs-6 text-left">&nbsp; 2000.00 元</div>
+ 	<!-- main -->
+ 	<form class="" action="">
+	 <div class="input-group col-xs-12">
+		  <span class="input-group-addon input-lg">￥</span>
+		  <input type="text" class="form-control input-lg" aria-label="Amount (to the nearest dollar)" placeholder="输入金额">
+		  <span class="input-group-addon input-lg">.00</span>
 		</div>
-
-		<div class="col-xs-12 main-body">
-			<a href="#" class="col-xs-12 text-center red">支付宝充值</a>
-			<a href="#" class="col-xs-12 text-center green">微信充值</a>
-			<a href="recharge.html" class="col-xs-12 text-center ">银行卡充值</a>
-		</div>
-
-	</div>
+		<div class="btn-group col-xs-12" role="group" aria-label="...">
+		  <a href="payee_QRcode.html" type="button" class="btn btn-default btn-lg btn-block btn-success" role="button">确认</a>
+		</div>		
+ 	</form>
 
 
 </div><!-- /.container  -->
