@@ -16,7 +16,7 @@
 	position: absolute;
 }
 
-
+/*标签页*/
 .tabs-wrap{
 	padding: 3% 0%;
 }
@@ -24,23 +24,92 @@
 	width: 33.33333333%;
 }
 .tabs-wrap div .tab-content{
-	background-color: orange;
+	overflow: hidden;
 }
-.tabs-wrap div .tab-content .tab-pane{
-	background-color: yellow;
+/*店铺首页*/
+.tabs-wrap div .tab-content #home{
+	background-color: red;
 }
-.tabs-wrap div .tab-content .tab-pane .col-xs-6{
-	border: 1px solid #ddd;
-	padding: 0;height: 0;
-	padding: 0% 0% 50% 0%;
+.tabs-wrap div .tab-content #home .col-xs-12{
+}
+.main-media{
+	padding-top: 10%;
+}
+.main-media .media-left{
+	width: 30%;
+	height: 30%;
+}
+.main-media .media-left a{
+	display: block;
+	width: 100%;
+	height: 0;
+	padding-bottom: 100%;
 	position: relative;
 }
-.tabs-wrap div .tab-content .tab-pane .col-xs-6 img{
-	width: 60%;
-	height: 60%;
-	background-color: pink;
+.main-media .media-left a img{
+	display: block;
+	width: 100%;
+	height: 100%;
 	position: absolute;
-	top: 50%;
-	left: 50%;
-	-webkit-transform: translate(-50%,-50%);
+}
+.main-media .media-body{
+	padding-left: 5%;
+}
+.main-media .media-body p span{
+	color: #018FD9;
+}
+
+/*商品列表*/
+.tabs-wrap div .tab-content #profile{
+	background-color: yellow;
+}
+.tabs-wrap div .tab-content #profile .col-xs-6{
+	padding-top: 5%;
+	padding-bottom: 5%;
+}
+.tabs-wrap div .tab-content #profile .col-xs-6 .img-box{
+	width: 100%;
+	height: 0;
+	padding-bottom: 100%;
+	position: relative;
+}
+.tabs-wrap div .tab-content #profile .col-xs-6 h5{}
+.tabs-wrap div .tab-content #profile .col-xs-6 .text-box{
+	padding: 0;
+	white-space: nowrap;
+}
+.tabs-wrap div .tab-content #profile .col-xs-6 .img-box img{
+	width: 100%;
+	height: 100%;
+	display: block;
+	position: absolute;
+	border: 1px solid #ddd;
+}
+
+
+/*订单状态*/
+.tabs-wrap div .tab-content #messages{
+	overflow: hidden;
+}
+.tabs-wrap div .tab-content #messages .col-xs-12{
+	padding: 3% 0%;
+	border-bottom: 1px solid #ddd;
+}
+.tabs-wrap div .tab-content #messages .col-xs-12 .col-xs-4{
+}
+.tabs-wrap div .tab-content #messages .col-xs-12 .col-xs-4 .img-box{
+	width: 100%;
+	height: 0;
+	padding-bottom:100%;
+	position: relative;
+}
+.tabs-wrap div .tab-content #messages .col-xs-12 .col-xs-4 .img-box img{
+	width: 100%;
+	height: 100%;
+	position: absolute;
+}
+.tabs-wrap div .tab-content #messages .col-xs-12 .col-xs-8{
+}
+.tabs-wrap div .tab-content #messages .col-xs-12 .col-xs-8 .col-xs-6{
+	padding: 0;
 }
