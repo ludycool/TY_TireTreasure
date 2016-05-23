@@ -4,20 +4,26 @@
 	border: 1px solid #ddd;
 }
 .main .main-top h3{}
-.main .main-top .col-xs-4,
+.main .main-top .col-xs-5,
+.main .main-top .col-xs-3,
 .main .main-top .col-xs-2{
 	white-space: nowrap;
 	padding: 0;
 	line-height: 240%;
 	border-left: 1px solid #ddd;
 }
+.main .main-top .col-xs-5{
+	padding-left: 10px;
+}
 .main .main-top .border-none{
 	border-left: 0;
+	text-align: left;
 }
 
-.main .main-top .col-xs-4 form{}
-.main .main-top .col-xs-4 form div{
+.main .main-top .col-xs-3 form{}
+.main .main-top .col-xs-3 form div{
 	margin: 0% 2%;
+	padding: 0 5px;
 }
 
 .main-md{
