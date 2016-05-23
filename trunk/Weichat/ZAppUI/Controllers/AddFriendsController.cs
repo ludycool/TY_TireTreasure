@@ -24,9 +24,9 @@ namespace ZAppUI.Controllers
         }
         //通过手机号搜索用户
         [HttpPost]
-        public ActionResult searchUserInfo(SearchUser user)
+        public ActionResult searchUserInfo(string userAccount)
         {
-            if (user.UserAccount == null || user.UserAccount == "" || !util.isNumber(user.UserAccount))
+            if (userAccount == null || userAccount == "" || !util.isNumber(userAccount))
             {
                 ViewData["IsShowAlert"] = true;
                 ViewData["Alert"] = "请输入手机号";
@@ -34,7 +34,7 @@ namespace ZAppUI.Controllers
             }
 
             UserBiz userBiz = new UserBiz();
-            DataSet result = userBiz.ExecuteSqlToDataSet("EXEC [TireTreasureDB].[dbo].[proc_GetUserLoginNameByLoginName] '" + user.UserAccount + "'");
+            DataSet result = userBiz.ExecuteSqlToDataSet("EXEC [TireTreasureDB].[dbo].[proc_GetUserLoginNameByLoginName] '" + userAccount + "'");
             if (result.Tables.Count > 0 && result.Tables[0].Rows.Count > 0)
             {
                 string loginName = result.Tables[0].Rows[0]["LoginName"].ToString();
