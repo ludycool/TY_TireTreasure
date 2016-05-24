@@ -73,6 +73,7 @@
     <Compile Include="TireMoneyDB\ITM_BalceDao.cs" />
     <Compile Include="TireMoneyDB\ITM_BanardDao.cs" />
     <Compile Include="TireMoneyDB\ITM_OrderListDao.cs" />
+    <Compile Include="TireMoneyDB\ITM_OrderNoDao.cs" />
     <Compile Include="TireMoneyDB\ITM_PayPlatformDao.cs" />
     <Compile Include="TireMoneyDB\ITM_TranAccDao.cs" />
     <Compile Include="TireMoneyDB\ITM_WaterBillDao.cs" />

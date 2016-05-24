@@ -72,6 +72,7 @@
     <Compile Include="TireMoneyDB\TM_BalceBiz.cs" />
     <Compile Include="TireMoneyDB\TM_BanardBiz.cs" />
     <Compile Include="TireMoneyDB\TM_OrderListBiz.cs" />
+    <Compile Include="TireMoneyDB\TM_OrderNoBiz.cs" />
     <Compile Include="TireMoneyDB\TM_PayPlatformBiz.cs" />
     <Compile Include="TireMoneyDB\TM_TranAccBiz.cs" />
     <Compile Include="TireMoneyDB\TM_WaterBillBiz.cs" />
