@@ -28,12 +28,13 @@
 }
 /*店铺首页*/
 .tabs-wrap div .tab-content #home{
-	background-color: red;
 }
 .tabs-wrap div .tab-content #home .col-xs-12{
 }
+.tabs-wrap div .tab-content #home .col-xs-12 .text-box{
+	padding: 3% 0%;
+}
 .main-media{
-	padding-top: 10%;
 }
 .main-media .media-left{
 	width: 30%;
