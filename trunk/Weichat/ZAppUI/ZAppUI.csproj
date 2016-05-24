@@ -484,6 +484,9 @@
     <Content Include="Views\VipShop\VipCard.cshtml" />
     <Content Include="Views\Deposit\Index.cshtml" />
     <Content Include="Views\Deposit\unionPay.cshtml" />
+    <Content Include="Views\Insuran\one.cshtml" />
+    <Content Include="Views\MyShop\index.cshtml" />
+    <Content Include="Views\MyShop\Transaction.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="temp\" />

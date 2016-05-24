@@ -8,8 +8,9 @@
 <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
 <title>3W联盟</title>
 
+<!-- Bootstrap -->
 
-<link href="../../Content/css/price_list.css" rel="stylesheet">
+<link href="../../Content/css/insurance.css" rel="stylesheet">
 
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -18,16 +19,13 @@
 <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
 <![endif]-->
 
-
-    
-     @section Jsprepare{
+       @section Jsprepare{
 
          <script type="text/javascript">
-        
           jQuery(document).ready(function () {
-         
+          
           })
-           
+
 
             </script>
          }
@@ -37,46 +35,30 @@
 <!-- top nav -->
 <div class="row">
   <div class="col-xs-12 top-parent-box">
-    <a class="col-xs-6 top-child-box" href="/VipShop"><div class=""><img class="center-block" src="../../Content/images/left.png" alt=""></div></a>
+    <a class="col-xs-6 top-child-box" href="index.html"><div class=""><img class="center-block" src="../../Content/images/left.png" alt=""></div></a>
     <!-- <a class="col-xs-6 top-child-box" href="#"><div class="box-right"><img class="center-block" src="images/plus.png" alt=""></div></a> -->
   </div>
 </div>
 <!-- main -->
 <div class="row main">
-
-      @foreach (var item in Model)
-      { 
-        <div class="col-xs-12">
-    <div class="col-xs-4">
-      <a class="img-box" href="#"><img src="@item.ImageUrl" alt=""></a>
-    </div>
-    <div class="col-xs-4">
-      <div class="text-box">
-        <p>@item.Title</p>
-        <p>@item.Price</p>
-        <p>@item.Details</p>
-      </div>
-    </div>
-    <div class="col-xs-4">
-      <div class="text-box">
-        <p>@item.Clicks 件 </p>
-        <a class="btn btn-default btn-success" href="#" role="button">立即购买</a>
-      </div>
-    </div> 
-  </div><!-- /.col-xs-12  -->
-      
-      
-      
-      }
-
-
-
-
-</div><!-- /.row  -->
+  <div class="col-xs-12">
+    <h4>流程说明：</h4>
+    <p>
+      1、购买保险需要登记您的个人信息与车辆信息哦 <br>
+      2、登记完信息后，可以在系统的保险计算器测算自己的保险费用 <br>
+      3、测算完成后，我们的工作人员进行核保，核保后才是最终报价哦 <br>
+      4、核保的保险订单可以在个人中心的 “我的订单” 查看并支付保险费 <br>
+      5、保险费支付后，我们工作人员安排出单，您的保险就可以生效了 <br>
+      6、保单可以自取或者邮寄哦 <br>
+      7、工作人员核保时间是：周一至周五8点半至下午6点 <br>
+    </p>
+  </div>
+  <div class="col-xs-10 col-xs-offset-1">
+    <a class="btn btn-default btn-block btn-success btn-lg" href="car_info.html" role="button">确定</a>
+  </div>
+</div>
 
 
 </div><!-- /.container  -->
-
-
 </body>
 </html>

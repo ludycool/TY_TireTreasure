@@ -148,6 +148,33 @@ namespace e3net.Mode.TireTreasureDB
         }
 
         /// <summary>
+        /// 库存
+        /// </summary>
+        public Int32? Stock
+        {
+            get { return GetPropertyValue<Int32?>("Stock"); }
+            set { SetPropertyValue("Stock", value); }
+        }
+
+        /// <summary>
+        /// 已售
+        /// </summary>
+        public Int32? Sold
+        {
+            get { return GetPropertyValue<Int32?>("Sold"); }
+            set { SetPropertyValue("Sold", value); }
+        }
+
+        /// <summary>
+        /// 月销
+        /// </summary>
+        public Int32? MonthlySales
+        {
+            get { return GetPropertyValue<Int32?>("MonthlySales"); }
+            set { SetPropertyValue("MonthlySales", value); }
+        }
+
+        /// <summary>
         /// 赞
         /// </summary>
         public Int32? Praises
@@ -310,6 +337,21 @@ namespace e3net.Mode.TireTreasureDB
         /// 呼叫量
         /// </summary>
         public static readonly FieldBase CallCount = new FieldBase(DbType.SqlServer, "[TT_TransactSnapshot]", FieldType.Common, "[CallCount]");
+
+        /// <summary>
+        /// 库存
+        /// </summary>
+        public static readonly FieldBase Stock = new FieldBase(DbType.SqlServer, "[TT_TransactSnapshot]", FieldType.Common, "[Stock]");
+
+        /// <summary>
+        /// 已售
+        /// </summary>
+        public static readonly FieldBase Sold = new FieldBase(DbType.SqlServer, "[TT_TransactSnapshot]", FieldType.Common, "[Sold]");
+
+        /// <summary>
+        /// 月销
+        /// </summary>
+        public static readonly FieldBase MonthlySales = new FieldBase(DbType.SqlServer, "[TT_TransactSnapshot]", FieldType.Common, "[MonthlySales]");
 
         /// <summary>
         /// 赞
