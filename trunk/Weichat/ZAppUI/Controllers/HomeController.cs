@@ -60,7 +60,7 @@ namespace ZAppUI.Controllers
             //{
             //    
             //}
-            if (util.isOpenIdExist(GetUData.OpenId))
+            if (Util.isOpenIdExist(GetUData.OpenId))
             {
                 return RedirectToAction("Index", "User");
             }

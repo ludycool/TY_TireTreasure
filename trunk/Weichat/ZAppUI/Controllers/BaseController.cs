@@ -16,6 +16,7 @@ using System.Data;
 using e3net.BLL.Base;
 using ZAppUI.App_Code;
 using WeiChatMessageHandle;
+using e3net.BLL.TireMoneyDB;
 
 namespace ZAppUI.Controllers
 {
@@ -53,13 +54,19 @@ namespace ZAppUI.Controllers
 
         public bool isRegister()
         {          
-            if (util.isOpenIdExist(GetUData.OpenId))
+            if (Util.isOpenIdExist(GetUData.OpenId))
             {
                 return true;
             }
            return false;
         }  
-
+        //获取当前用户ID
+        public Guid getUserId()
+        {
+            UserBiz userBiz = new UserBiz();
+            DataSet result = userBiz.ExecuteSqlToDataSet("EXEC	[TireTreasureDB].[dbo].[proc_GetUserIdByWeiXinId] '" + GetUData.OpenId + "',null");
+            return (Guid)result.Tables[0].Rows[0][0];
+        }      
     }
 
 
