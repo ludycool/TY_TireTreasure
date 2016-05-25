@@ -23,5 +23,6 @@ namespace ZAppUI.Models
         /// 物品信息
         /// </summary>
         public List<TT_Transaction> TransactionList { set; get; }
+
     }
 }

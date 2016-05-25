@@ -70,11 +70,13 @@
     <Compile Include="Base\User.cs" />
     <Compile Include="TireMoneyDB\TM_Balce.cs" />
     <Compile Include="TireMoneyDB\TM_Banard.cs" />
+    <Compile Include="TireMoneyDB\TM_OrderItem.cs" />
     <Compile Include="TireMoneyDB\TM_OrderList.cs" />
     <Compile Include="TireMoneyDB\TM_OrderNo.cs" />
     <Compile Include="TireMoneyDB\TM_PayPlatform.cs" />
     <Compile Include="TireMoneyDB\TM_TranAcc.cs" />
     <Compile Include="TireMoneyDB\TM_WaterBill.cs" />
+    <Compile Include="TireMoneyDB\v_TM_OrderItem.cs" />
     <Compile Include="TireTreasureDB\TT_AppUserInfo.cs" />
     <Compile Include="TireTreasureDB\TT_CommentT.cs" />
     <Compile Include="TireTreasureDB\TT_Config.cs" />
