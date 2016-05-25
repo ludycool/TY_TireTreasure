@@ -1,4 +1,5 @@
 ﻿using e3net.common.SysMode;
+using e3net.IDAL.TireMoneyDB;
 using e3net.IDAL.TireTreasureDB;
 using e3net.Mode.TireTreasureDB;
 using Microsoft.Practices.Unity;
@@ -30,6 +31,9 @@ namespace ZAppUI.Controllers
         [Dependency]
         public Iv_TT_UserCardDao OPCardBiz { get; set; }
 
+        [Dependency]
+        public ITM_OrderListDao OPOrderListdBiz { get; set; }
+
         string userId = "a3e8f66f-3552-4626-9ee2-f7ddd8b106d8";  //GetUData.User_Id;
         public ActionResult Index()
         {
@@ -49,7 +53,7 @@ namespace ZAppUI.Controllers
 
                 vshopMode.ShopItem = item;
                 ViewBag.listImgJson = OPFileBiz.GetJson(listImg);
-
+                vshopMode.TransactionList = Transaction();
 
                 //ViewData.Model = item;
                 return View(vshopMode);
@@ -60,46 +64,44 @@ namespace ZAppUI.Controllers
            
         }
         /// <summary>
-        /// 商品表
+        /// 商品列表
         /// </summary>
         /// <returns></returns>
-        public ActionResult Transaction()
+        public List<TT_Transaction> Transaction()
         {
             var mql = TT_TransactionSet.SelectAll().Where(TT_TransactionSet.ShopId.Equal(TT_ShopSet.Select(TT_ShopSet.ShopId).Where(TT_ShopSet.UserId.Equal(userId))));
             List<TT_Transaction> list = OPTranBiz.GetOwnList(mql);
-
-            if (list != null)
-            {
-                return View(list);
-            }
-            else
-            {
-                return RedirectToAction("Index", "User");
-            }
-
+            return list;
         }
-
-        /// <summary>
-        /// vip卡
-        /// </summary>
-        /// <returns></returns>
-        public ActionResult VipCard()
+        [HttpPost]
+        public JsonResult GetList()
         {
-            //var mql = v_TT_UserCardSet.SelectAll().Where(v_TT_UserCardSet.UserId.Equal(userId));
-            //List<v_TT_UserCard> item = OPCardBiz.GetOwnList<v_TT_UserCard>(mql);
-            string mql = " select [Levels],[CarNo],[Password],[Scores],[States],[StarTime],[EndTime],[UMoney],[Nickname],[Details] from v_TT_UserCard where UserId='" + userId + "'";
-           DataSet ds = OPCardBiz.ExecuteSqlToDataSet(mql);
 
-           if (ds.Tables[0] != null && ds.Tables[0].Rows.Count> 0)
-            {
-              
-                return View(ds.Tables[0].Rows[0]);
-            }
-            else
-            {
-              return RedirectToAction("Index", "User");
-            }
 
+
+            int pageIndex = Request["page"] == null ? 1 : int.Parse(Request["page"]);
+            int pageSize = Request["rows"] == null ? 10 : int.Parse(Request["rows"]);
+            ////字段排序
+            //String sortField = Request["sortField"];
+            //String sortOrder = Request["sortOrder"];
+            PageClass pc = new PageClass();
+            pc.sys_Fields = "*";
+            pc.sys_Key = "ID";
+            pc.sys_PageIndex = pageIndex;
+            pc.sys_PageSize = pageSize;
+            pc.sys_Table = "v_TM_OrderItem";
+            pc.sys_Where = " UserId='" + userId + "' ";
+            pc.sys_Order = "ItemId";
+
+            var list2 = OPOrderListdBiz.GetPagingData(pc);
+            Dictionary<string, object> dic = new Dictionary<string, object>();
+
+
+            // var mql = RMS_ButtonsSet.Id.NotEqual("");
+            dic.Add("rows", list2);
+            dic.Add("total", pc.RCount);
+
+            return Json(dic, JsonRequestBehavior.AllowGet);
         }
     }
 }

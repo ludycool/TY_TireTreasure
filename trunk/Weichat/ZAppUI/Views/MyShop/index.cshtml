@@ -24,7 +24,17 @@
     @section Jsprepare{
 
         <script type="text/javascript">
-            var imgList =  @Html.Raw(ViewBag.listImgJson)
+            var imgList =  @Html.Raw(ViewBag.listImgJson);
+              
+             // 加载flag
+             var loading = false;
+            // 最多可加载的条目
+             var maxItems = 100;
+
+            // 每次加载添加多少条目
+             var itemsPerLoad = 20;
+             // 上次加载的序号
+             var lastIndex = 0;
          jQuery(document).ready(function () {
              setimg();
          })
@@ -51,6 +61,8 @@
                 }
             }
 
+
+
         </script>
     }
 </head>
@@ -59,7 +71,7 @@
         <!-- top nav -->
         <div class="row">
             <div class="col-xs-12 top-parent-box">
-                <a class="col-xs-6 top-child-box" href="user.html">
+                <a class="col-xs-6 top-child-box" href="/User">
                     <div class="">
                         <img class="center-block" src="../../Content/images/left.png" alt=""></div>
                 </a>
@@ -146,10 +158,11 @@
                             { 
                                 <div class="col-xs-6">
                                     <div class="img-box">
-                                        <img src="../../Content/images/pic/computer.png" alt=""></div>
+                                        <img src="@item.ImageUrl" alt=""></div>
                                     <h5>@item.Title</h5>
                                     <div class="col-xs-6 text-box">￥:@item.Price</div>
-                                    <div class="col-xs-6 text-box">月销:@item.Details</div>
+                                    <div class="col-xs-6 text-box">月销:@item.MonthlySales
+                                    </div>
                                 </div>
            }
 
