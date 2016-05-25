@@ -219,7 +219,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Code\ConstantList.cs" />
-    <Compile Include="App_Code\util.cs" />
+    <Compile Include="App_Code\Util.cs" />
     <Compile Include="App_Start\AuthConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -228,6 +228,8 @@
     <Compile Include="Controllers\AddFriendsController.cs" />
     <Compile Include="Controllers\DepositController.cs" />
     <Compile Include="Controllers\FriendsController.cs" />
+    <Compile Include="Controllers\InsuranController.cs" />
+    <Compile Include="Controllers\MyShopController.cs" />
     <Compile Include="Controllers\RecommendController.cs" />
     <Compile Include="Controllers\RegisterController.cs" />
     <Compile Include="Controllers\BaseController.cs" />

@@ -41,7 +41,7 @@ namespace ZAppUI.Controllers
                 GetUData.Head_Img_Url = result[OauthLogin.HEAD_IMG_URL];
                 GetUData.Controller=state;
             }
-            if (util.isOpenIdExist(GetUData.OpenId))
+            if (Util.isOpenIdExist(GetUData.OpenId))
             {
                 return RedirectToAction("Index", "User");
             }
@@ -58,7 +58,7 @@ namespace ZAppUI.Controllers
                 ViewData["IsShowAlert"] = true;
                 ViewData["Alert"] = "请输入正确的手机号";
             }
-            else if (!util.isNumber(model.Phone))
+            else if (!Util.isNumber(model.Phone))
             {
                 ViewData["IsShowAlert"] = true;
                 ViewData["Alert"] = "请输入正确的手机号";

@@ -81,5 +81,42 @@ namespace ZAppUI.App_Code
         /// 添加好友状态(通讯录)
         /// </summary>
         public const string FRIEND_TYPE_CONTACT = "Contact";
+
+
+        public const string ORDER_TYPE_DEPOSIT= "CZ";
+
+
+        public const int ORDER_SALE_TYPE_PERSON=10;
+
+        public const int ORDER_SALE_TYPE_SHOP = 20;
+
+
+        public const int ORDER_STATES_CLOSE=-1;
+
+        public const int ORDER_STATES_UNPAID=0;
+
+        public const int ORDER_STATES_PAID=10;
+
+        public const int ORDER_STATES_SUCCESS=50;
+
+
+        public const int ORDER_PAYMENT_TYPE_BALANCE=10;
+
+        public const int ORDER_PAYMENT_TYPE_ALI=20;
+
+        public const int ORDER_PAYMENT_TYPE_WEIXIN=30;
+
+        public const int ORDER_PAYMENT_TYPE_UNION=40;
+
+        
+        public const int WATER_BILL_TYPE_TRANSFER=10;
+        
+        public const int WATER_BILL_TYPE_PAYMENT=20;
+        
+        public const int WATER_BILL_TYPE_RECEIVE=30;
+        
+        public const int WATER_BILL_TYPE_CASH=40;
+
+        public const int WATER_BILL_TYPE_REFUND=50;
     }
 }

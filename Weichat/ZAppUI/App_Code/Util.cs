@@ -8,7 +8,7 @@ using System.Web;
 
 namespace ZAppUI.App_Code
 {
-    public class util
+    public class Util
     {
         //openId是否存在
         public static bool isOpenIdExist(string openId)
@@ -31,5 +31,11 @@ namespace ZAppUI.App_Code
             Regex y = new Regex(yidong);
             return d.IsMatch(s) || l.IsMatch(s) || y.IsMatch(s);
         }
+        //创建时间戳
+        public static int generateTimestamp()
+        {
+            DateTime dateStart = new DateTime(1970, 1, 1, 0, 0, 0);//格林威治时间1970，1，1，0，0，0
+            return (int)(DateTime.Now - dateStart).TotalSeconds;
+        } 
     }
 }

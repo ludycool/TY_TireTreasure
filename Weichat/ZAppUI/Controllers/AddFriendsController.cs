@@ -26,7 +26,7 @@ namespace ZAppUI.Controllers
         [HttpPost]
         public ActionResult searchUserInfo(string userAccount)
         {
-            if (userAccount == null || userAccount == "" || !util.isNumber(userAccount))
+            if (userAccount == null || userAccount == "" || !Util.isNumber(userAccount))
             {
                 ViewData["IsShowAlert"] = true;
                 ViewData["Alert"] = "请输入手机号";
@@ -85,7 +85,7 @@ namespace ZAppUI.Controllers
             RequestFriendsBiz requestFriendsBiz = new RequestFriendsBiz();
 
             DataSet result = requestFriendsBiz.ExecuteSqlToDataSet("EXEC [TireTreasureDB].[dbo].[proc_GetRequestUserId] '" + GetUData.OpenId + "'," + ConstantList.ADD_FRIENDS_STATUS_REQUESTING + "");
-            //TODO 多次点击会生成多条数据 设置一个flag
+            //TODO 重载页面前多次点击会生成多条数据 设置一个flag
             if (!(result.Tables[0].Rows.Count > 0))
             {
                 UserBiz userBiz = new UserBiz();

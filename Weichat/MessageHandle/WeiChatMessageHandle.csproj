@@ -93,6 +93,9 @@
     <Content Include="UnionPaySdk\DLL\log4net.dll" />
     <Content Include="UnionPaySdk\DLL\upacp_demo_b2c.dll" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="UnionPaySdk\Cert\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
