@@ -37,9 +37,8 @@ namespace ZAppUI.Controllers
         string userId = "a3e8f66f-3552-4626-9ee2-f7ddd8b106d8";  //GetUData.User_Id;
         public ActionResult Index()
         {
-
+            ViewBag.RuteUrl = RuteUrl();
             VipShopModel vshopMode = new VipShopModel();
-
             var mql = TT_ShopSet.SelectAll().Where(TT_ShopSet.UserId.Equal(userId));
             TT_Shop item = OPBiz.GetEntity(mql);
 
@@ -76,9 +75,6 @@ namespace ZAppUI.Controllers
         [HttpPost]
         public JsonResult GetList()
         {
-
-
-
             int pageIndex = Request["page"] == null ? 1 : int.Parse(Request["page"]);
             int pageSize = Request["rows"] == null ? 10 : int.Parse(Request["rows"]);
             ////字段排序
@@ -86,22 +82,14 @@ namespace ZAppUI.Controllers
             //String sortOrder = Request["sortOrder"];
             PageClass pc = new PageClass();
             pc.sys_Fields = "*";
-            pc.sys_Key = "ID";
+            pc.sys_Key = "ItemId";
             pc.sys_PageIndex = pageIndex;
             pc.sys_PageSize = pageSize;
             pc.sys_Table = "v_TM_OrderItem";
             pc.sys_Where = " UserId='" + userId + "' ";
-            pc.sys_Order = "ItemId";
-
-            var list2 = OPOrderListdBiz.GetPagingData(pc);
-            Dictionary<string, object> dic = new Dictionary<string, object>();
-
-
-            // var mql = RMS_ButtonsSet.Id.NotEqual("");
-            dic.Add("rows", list2);
-            dic.Add("total", pc.RCount);
-
-            return Json(dic, JsonRequestBehavior.AllowGet);
+            pc.sys_Order = " CreateTime desc ";
+           DataSet ds = OPOrderListdBiz.GetPagingDataP(pc);
+            return Json(ds.Tables[0], JsonRequestBehavior.AllowGet);
         }
     }
 }

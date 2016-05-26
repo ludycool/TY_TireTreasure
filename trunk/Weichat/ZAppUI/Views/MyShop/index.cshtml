@@ -24,20 +24,22 @@
     @section Jsprepare{
 
         <script type="text/javascript">
+              @Html.Raw(ViewBag.RuteUrl)
             var imgList =  @Html.Raw(ViewBag.listImgJson);
               
-             // 加载flag
-             var loading = false;
+            // 加载flag
+            var loading = true;
             // 最多可加载的条目
-             var maxItems = 100;
+            var maxItems = 100;
 
             // 每次加载添加多少条目
-             var itemsPerLoad = 20;
-             // 上次加载的序号
-             var lastIndex = 0;
-         jQuery(document).ready(function () {
-             setimg();
-         })
+            var Pagesize = 20;
+            // 页
+            var Pageindex = 1;
+            jQuery(document).ready(function () {
+                setimg();
+                GetData();
+            })
             function setimg()//首页滚动图
             {
                 if (imgList != null) {
@@ -63,6 +65,77 @@
 
 
 
+            //分页加载账单
+            function GetData()
+            {
+                if(loading)
+                {
+                    $.ajax({
+                        url: BaseUrl + 'GetList',
+                        type: 'POST',
+                        data: { page: Pageindex,rows:Pagesize},
+                        cache: false,
+                        error: function () { alert('Error $.ajax'); },
+                        success: function (data) {
+                            //var result = eval('(' + data + ')');
+                            if(data.length>=Pagesize)//还有
+                            {
+                                Pageindex++;
+                        
+                            }else{//已经加载完了
+                                loading=false;
+                            }
+                            if(data.length>0)//使用数据
+                            {
+                                $('#messages').append(createList(data));
+                            }
+                        }
+                    });
+                }
+            }
+
+            function createList(dataList) {
+                var result='';
+                for(var i=0;i<dataList.length;i++)
+                {
+                    result += '   <div class="col-xs-12">';
+                    result += ' <div class="col-xs-4">';
+                    result += '  <div class="img-box">';
+                    result += '   <img src="'+dataList[i].ImageUrl+'" alt=""></div>';
+                    result += ' </div>';
+                    result += '  <div class="col-xs-8">';
+                    result += '  <div class="col-xs-6">名称：'+dataList[i].Title+'</div>';
+                    result += ' <div class="col-xs-6 text-right">￥：'+dataList[i].IMuney+'</div>';
+                    result += ' <div class="col-xs-6">状态：'+dataList[i].StatesName+'</div>';
+                    result += '  <div class="col-xs-6 text-right">数量：'+dataList[i].ICount+'</div>';
+                    //result += ' <div class="col-xs-6"><a class="btn btn-default btn-danger pull-right" href="#" onclick="SetState('+dataList[i].ItemId+',11)" role="button" disabled="disabled">取消订单</a></div>';
+                    //result += '   <div class="col-xs-6"><a class="btn btn-default btn-success pull-right" href="#" role="button">完成订单</a></div>';
+                    result += ' </div>';
+                    result += ' </div>';
+                }
+                return result;
+            }
+            function SetState(id,value) {
+                $.ajax({
+                    url: BaseUrl + 'SetState',
+                    type: 'POST',
+                    data: { ID: id,State:value},
+                    cache: false,
+                    beforeSend:  function () { ; },
+                    error: function () { alert('Error $.ajax'); },
+                    success: function (data) {
+                        if( data.Code>0)
+                        {
+                        
+                        
+                        }
+                    }
+                });
+            
+            
+            }
+
+
         </script>
     }
 </head>
@@ -73,7 +146,8 @@
             <div class="col-xs-12 top-parent-box">
                 <a class="col-xs-6 top-child-box" href="/User">
                     <div class="">
-                        <img class="center-block" src="../../Content/images/left.png" alt=""></div>
+                        <img class="center-block" src="../../Content/images/left.png" alt="">
+                    </div>
                 </a>
                 <!-- <a class="col-xs-6 top-child-box" href="#"><div class="box-right"><img class="center-block" src="images/plus.png" alt=""></div></a> -->
             </div>
@@ -104,7 +178,7 @@
                     </div>
                 </div>
                 <!-- Controls -->
-                <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+                <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev" >
                     <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
                     <span class="sr-only">Previous</span>
                 </a>
@@ -123,7 +197,7 @@
                 <div>
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs" role="tablist">
-                        <li role="presentation" class="tablist-box active text-center"><a href="/VipShop" aria-controls="home" role="tab" data-toggle="tab">店铺首页</a></li>
+                        <li role="presentation" class="tablist-box active text-center"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">店铺首页</a></li>
                         <li role="presentation" class="tablist-box text-center"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">商品列表</a></li>
                         <li role="presentation" class="tablist-box text-center"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">购物订单</a></li>
                     </ul>
@@ -153,18 +227,20 @@
                         </div>
                         <!-- 商品列表 -->
                         <div role="tabpanel" class="tab-pane" id="profile">
-            
+
                             @foreach (var item in Model.TransactionList)
                             { 
                                 <div class="col-xs-6">
                                     <div class="img-box">
-                                        <img src="@item.ImageUrl" alt=""></div>
+                                        <img src="@item.ImageUrl" alt="">
+                                    </div>
                                     <h5>@item.Title</h5>
                                     <div class="col-xs-6 text-box">￥:@item.Price</div>
-                                    <div class="col-xs-6 text-box">月销:@item.MonthlySales
+                                    <div class="col-xs-6 text-box">
+                                        月销:@item.MonthlySales
                                     </div>
                                 </div>
-           }
+                            }
 
 
                         </div>
@@ -173,7 +249,8 @@
                             <div class="col-xs-12">
                                 <div class="col-xs-4">
                                     <div class="img-box">
-                                        <img src="../../Content/images/pic/computer.png" alt=""></div>
+                                        <img src="../../Content/images/pic/computer.png" alt="">
+                                    </div>
                                 </div>
                                 <div class="col-xs-8">
                                     <div class="col-xs-6">名称：XXXX</div>
@@ -181,36 +258,6 @@
                                     <div class="col-xs-6">状态：已付款</div>
                                     <div class="col-xs-6 text-right">数量：1</div>
                                     <div class="col-xs-6"><a class="btn btn-default btn-danger pull-right" href="#" role="button">取消订单</a></div>
-                                    <div class="col-xs-6"><a class="btn btn-default btn-success pull-right" href="#" role="button">完成订单</a></div>
-                                </div>
-                            </div>
-                            <!-- /.col-xs-12 -->
-                            <div class="col-xs-12">
-                                <div class="col-xs-4">
-                                    <div class="img-box">
-                                        <img src="../../Content/images/pic/computer.png" alt=""></div>
-                                </div>
-                                <div class="col-xs-8">
-                                    <div class="col-xs-6">名称：XXXX</div>
-                                    <div class="col-xs-6 text-right">￥：888</div>
-                                    <div class="col-xs-6">状态：已取消</div>
-                                    <div class="col-xs-6 text-right">数量：1</div>
-                                    <div class="col-xs-6"><a class="btn btn-default btn-danger pull-right" href="#" role="button" disabled="disabled">取消订单</a></div>
-                                    <div class="col-xs-6"><a class="btn btn-default btn-success pull-right" href="#" role="button" disabled="disabled">完成订单</a></div>
-                                </div>
-                            </div>
-                            <!-- /.col-xs-12 -->
-                            <div class="col-xs-12">
-                                <div class="col-xs-4">
-                                    <div class="img-box">
-                                        <img src="../../Content/images/pic/computer.png" alt=""></div>
-                                </div>
-                                <div class="col-xs-8">
-                                    <div class="col-xs-6">名称：XXXX</div>
-                                    <div class="col-xs-6 text-right">￥：888</div>
-                                    <div class="col-xs-6">状态：正派送</div>
-                                    <div class="col-xs-6 text-right">数量：1</div>
-                                    <div class="col-xs-6"><a class="btn btn-default btn-danger pull-right" href="#" role="button" disabled="disabled">取消订单</a></div>
                                     <div class="col-xs-6"><a class="btn btn-default btn-success pull-right" href="#" role="button">完成订单</a></div>
                                 </div>
                             </div>

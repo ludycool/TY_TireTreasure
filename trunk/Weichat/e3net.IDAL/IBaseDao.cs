@@ -189,6 +189,15 @@ namespace e3net.IDAL
         /// <param name="parameters"></param>
         /// <returns></returns>
          DataSet ExecuteProToDataSetNew(string procName, PageClass pc);
+
+
+
+        /// <summary>
+        /// 分页
+        /// </summary>
+        /// <param name="pc"></param>
+        /// <returns></returns>
+         DataSet GetPagingDataP(PageClass pc);
         #endregion
 
     }
