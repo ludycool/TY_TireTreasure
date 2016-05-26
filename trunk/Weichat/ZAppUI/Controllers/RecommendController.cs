@@ -64,9 +64,9 @@ namespace ZAppUI.Controllers
 
             return result.Tables[0].Rows[0]["Id"].ToString();
         }
+        //保存图片到目录
         public void SaveImg(string strPath, Bitmap img)
         {
-            //保存图片到目录
             if (Directory.Exists(strPath))
             {
                 //文件名称
@@ -95,21 +95,20 @@ namespace ZAppUI.Controllers
 
             if (type.Equals("recommend"))
             {
-                UserBiz userBiz = new UserBiz();
-                DataSet result = userBiz.ExecuteSqlToDataSet("EXEC [TireTreasureDB].[dbo].[proc_GetUserIdByRecommendId] '" + recommendId + "'");
-                if (result.Tables[0].Rows.Count > 0)
-                {
-                    if (GetUData == null)
-                        GetUData = new Models.UserData();
-                    GetUData.User_Id = (Guid)result.Tables[0].Rows[0]["UserId"];
+                if (GetUData == null)
+                    GetUData = new Models.UserData();
+                GetUData.User_Id = getUserIdByRecommendId(recommendId);
 
-                    string redirect_uri = "http://test.luntaibaobao.com/register";
-                    string state = ConstantList.REGISTER_TYPE_INVITE;
-                    string url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + WechatParamList.APP_ID + "&redirect_uri=" + redirect_uri + "&response_type=code&scope=snsapi_userinfo&state=" + state + "#wechat_redirect";
-                    return Redirect(url);
-                }
+                return Redirect(redirctUrl("home"));
             }
             return View();
         }
+        private Guid getUserIdByRecommendId(string recommendId)
+        {
+            UserBiz userBiz = new UserBiz();
+            DataSet result = userBiz.ExecuteSqlToDataSet("EXEC [TireTreasureDB].[dbo].[proc_GetUserIdByRecommendId] '" + recommendId + "'");
+            return (Guid)result.Tables[0].Rows[0]["UserId"];
+        }
+        
     }
 }

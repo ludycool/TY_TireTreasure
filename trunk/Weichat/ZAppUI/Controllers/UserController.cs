@@ -29,20 +29,18 @@ namespace ZAppUI.Controllers
         {
             //判断是否已经注册
             if (!isRegister())
-            {
-                string redirect_uri = "http://test.luntaibaobao.com/register";
-                string state = RouteData.Values["controller"].ToString();
-                string url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + WechatParamList.APP_ID + "&redirect_uri=" + redirect_uri + "&response_type=code&scope=snsapi_userinfo&state=" + state + "#wechat_redirect";
-                return Redirect(url);
+            {             
+                string controller = RouteData.Values["controller"].ToString();
+                return Redirect(redirctUrl(controller));
             }
-            
-            getNickName();
-            getBalance();
+
+            showUserInfo();
+            showBalance();
             return View();
         }
 
         //显示用户昵称头像
-        private void getNickName()
+        private void showUserInfo()
         {
             AppUserInfoBiz userInfoBiz = new AppUserInfoBiz();
             string openId = GetUData.OpenId;
@@ -54,29 +52,27 @@ namespace ZAppUI.Controllers
             }
         }
         //显示用户余额
-        private void getBalance()
+        private void showBalance()
         {
-            string openId = GetUData.OpenId;
+            addUserBalanceInfo();
 
             TM_BalceBiz balanceBiz = new TM_BalceBiz();
-            DataSet getBalanceInfo = balanceBiz.ExecuteSqlToDataSet("EXEC [TireMoneyDB].[dbo].[proc_CheckBalanceInfo] '" + openId + "'");
-            
-            
-            if (getBalanceInfo.Tables[0].Rows.Count == 0)
-            {
-                addUserBalanceInfo(openId);
-            }
-            DataSet result = balanceBiz.ExecuteSqlToDataSet("EXEC [TireMoneyDB].[dbo].[proc_CheckBalanceInfo] '" + openId + "'");
+            DataSet result = balanceBiz.ExecuteSqlToDataSet("EXEC [TireMoneyDB].[dbo].[proc_CheckBalanceInfo] '" + GetUData.OpenId + "'");
             ViewBag.balance = result.Tables[0].Rows[0]["AMneys"];
-                        
+
         }
         //添加用户余额到表
-        private void addUserBalanceInfo(string openId)
+        private void addUserBalanceInfo()
         {
+            string openId = GetUData.OpenId;
             TM_BalceBiz balanceBiz = new TM_BalceBiz();
-            Guid baId = Guid.NewGuid();
-            DateTime now = DateTime.Now;
-            balanceBiz.ExecuteSqlToDataSet("EXEC [TireMoneyDB].[dbo].[proc_AddUserBalanceInfo] '" + openId + "','" + now + "','" + now + "'");
+            DataSet result = balanceBiz.ExecuteSqlToDataSet("EXEC [TireMoneyDB].[dbo].[proc_CheckBalanceInfo] '" + openId + "'");
+            if (result.Tables[0].Rows.Count == 0)
+            {
+                Guid baId = Guid.NewGuid();
+                DateTime now = DateTime.Now;
+                balanceBiz.ExecuteSqlToDataSet("EXEC [TireMoneyDB].[dbo].[proc_AddUserBalanceInfo] '" + openId + "','" + now + "','" + now + "'");
+            }
         }
 
 
@@ -114,6 +110,6 @@ namespace ZAppUI.Controllers
         //    //ViewBag.nonceStr = noncestr;
         //    //ViewBag.signature = generateSignature(timestamp, noncestr);
         //}
-              
+
     }
 }

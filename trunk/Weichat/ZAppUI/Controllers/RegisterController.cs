@@ -27,26 +27,26 @@ namespace ZAppUI.Controllers
         public ActionResult Index()
         {
             string code = Request["code"];
-            string state=Request["state"];
-           
-            if (GetUData == null)
-            {
-                GetUData = new Models.UserData();
-            }
+            string state = Request["state"];
+
             if (code != null && code != "")
-            {
-                Dictionary<string,string> result = OauthLogin.getUserInfo(code);
-                GetUData.OpenId = result[OauthLogin.OPEN_ID];
-                GetUData.Nick_Name = result[OauthLogin.NICK_NAME];
-                GetUData.Head_Img_Url = result[OauthLogin.HEAD_IMG_URL];
-                GetUData.Controller=state;
-            }
+                setGetUDataParams(code, state);
+
             if (Util.isOpenIdExist(GetUData.OpenId))
-            {
                 return RedirectToAction("Index", "User");
-            }
+
             ViewBag.src = GetUData.Head_Img_Url;
             return View();
+        }
+        private void setGetUDataParams(string code, string state)
+        {
+            if (GetUData == null)
+                GetUData = new Models.UserData();
+            Dictionary<string, string> result = OauthLogin.getUserInfo(code);
+            GetUData.OpenId = result[OauthLogin.OPEN_ID];
+            GetUData.Nick_Name = result[OauthLogin.NICK_NAME];
+            GetUData.Head_Img_Url = result[OauthLogin.HEAD_IMG_URL];
+            GetUData.Controller = state;
         }
         [HttpPost]
         public ActionResult Index(LoginModel model)
@@ -63,7 +63,7 @@ namespace ZAppUI.Controllers
                 ViewData["IsShowAlert"] = true;
                 ViewData["Alert"] = "请输入正确的手机号";
             }
-            else if (isNumberExist(model.Phone))
+            else if (isPhoneNumberExist(model.Phone))
             {
                 ViewData["IsShowAlert"] = true;
                 ViewData["Alert"] = "手机已注册";
@@ -87,17 +87,28 @@ namespace ZAppUI.Controllers
                 //TODO BUG  添加用户信息时有可能为null
                 addUserInfo(now, guid, model);
 
-                if (GetUData.User_Id.ToString() != "00000000-0000-0000-0000-000000000000")
+                if (!GetUData.User_Id.ToString().Equals(Guid.Empty))
                 {
                     addUserReferences(GetUData.User_Id, guid);
                 }
                 ViewData["IsShowAlert"] = true;
                 ViewData["Alert"] = "注册成功";
-                ViewBag.url=GetUData.Controller;
+                ViewBag.url = GetUData.Controller;
             }
             return View();
         }
+        //检索手机号是否已注册
+        private bool isPhoneNumberExist(String loginName)
+        {
+            UserBiz userBiz = new UserBiz();
 
+            DataSet result = userBiz.ExecuteSqlToDataSet("EXEC [TireTreasureDB].[dbo].[proc_GetUserLoginNameByLoginName] '" + loginName + "'");
+            if (result.Tables.Count > 0 && result.Tables[0].Rows.Count > 0)
+            {
+                return true;
+            }
+            return false;
+        }
         //添加用户到表
         private void addUser(LoginModel model, DateTime now, Guid guid)
         {
@@ -135,19 +146,7 @@ namespace ZAppUI.Controllers
             AppUserInfoBiz userInfoBiz = new AppUserInfoBiz();
             userInfoBiz.Add(userInfo);
         }
-        //检索手机号是否已注册
-        private bool isNumberExist(String loginName)
-        {
-            UserBiz userBiz = new UserBiz();
-
-            DataSet result = userBiz.ExecuteSqlToDataSet("EXEC [TireTreasureDB].[dbo].[proc_GetUserLoginNameByLoginName] '" + loginName + "'");
-            if (result.Tables.Count > 0 && result.Tables[0].Rows.Count > 0)
-            {
-                return true;
-            }
-            return false;
-        }
-
+ 
         ////获取用户头像
         //private string getUserImg()
         //{
@@ -178,7 +177,6 @@ namespace ZAppUI.Controllers
             string recommendId = result.Tables[0].Rows[0]["Id"].ToString();
 
             References references = new References();
-
             references.UserId = userId;
             references.ToUserId = toUserId;
             references.InvitationCode = FilterTools.FilterSpecial(recommendId);

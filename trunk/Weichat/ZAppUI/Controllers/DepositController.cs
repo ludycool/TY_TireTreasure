@@ -21,9 +21,7 @@ namespace ZAppUI.Controllers
 
         public ActionResult Index()
         {
-            string num = getBalance();
-            num = num.Substring(0, num.IndexOf("."));
-            int money = int.Parse(num);
+            int money = int.Parse(getBalance());
 
             if (Request.Form.AllKeys.Length > 0)
             {
@@ -37,19 +35,15 @@ namespace ZAppUI.Controllers
 
                 if (respCode.Equals("00") && respMsg.Equals("success") && txnTime.Equals(GetUData.Timestamp) && orderId.Equals(GetUData.OrderId))
                 {
+                    //TODO 确保订单的用户与当前用户ID一致
                     money = money + int.Parse(depositMoney);
 
-                    TM_BalceBiz balanceBiz = new TM_BalceBiz();
-                    DataSet result = balanceBiz.ExecuteSqlToDataSet("EXEC	 [TireMoneyDB].[dbo].[proc_UpdateBalanceInfoByWeixinId] '" + GetUData.OpenId + "'," + money + "");
-
+                    updateUserBalance(money);
+                    
                     updateOrderInfo(orderId);
 
-                    addWaterBill(orderId, depositMoney, GetUData.Timestamp);
-                }
-                else
-                {
-                    //TODO
-                }
+                    addWaterBill(orderId, depositMoney);
+                }            
             }
             ViewBag.balance = money;
             return View();
@@ -129,17 +123,23 @@ namespace ZAppUI.Controllers
             TM_OrderListBiz orderListBiz = new TM_OrderListBiz();
             orderListBiz.Add(orderList);
         }
+        //更新用户余额
+        private void updateUserBalance(int money)
+        {
+            TM_BalceBiz balanceBiz = new TM_BalceBiz();
+            DataSet result = balanceBiz.ExecuteSqlToDataSet("EXEC	 [TireMoneyDB].[dbo].[proc_UpdateBalanceInfoByWeixinId] '" + GetUData.OpenId + "'," + money + "");
+        }
         //订单完成后更新信息
         private void updateOrderInfo(string orderId)
         {
             TM_OrderListBiz orderListBiz = new TM_OrderListBiz();
-            orderListBiz.ExecuteSqlToDataSet("EXEC	[TireMoneyDB].[dbo].[proc_UpdateOrderInfoByOrderId] '" + orderId + "'," + ConstantList.ORDER_STATES_SUCCESS+ ",'"+DateTime.Now+"'");
+            orderListBiz.ExecuteSqlToDataSet("EXEC	[TireMoneyDB].[dbo].[proc_UpdateOrderInfoByOrderId] '" + orderId + "'," + ConstantList.ORDER_STATES_SUCCESS + ",'" + DateTime.Now + "'");
         }
         //添加订单流水信息
-        private void addWaterBill(string orderId, string depositMoney, string timestamp)
+        private void addWaterBill(string orderId, string depositMoney)
         {
             TM_WaterBill waterBill = new TM_WaterBill();
-            waterBill.BiId=Guid.NewGuid();
+            waterBill.BiId = Guid.NewGuid();
             waterBill.UBId = getUserId();
 
             TM_OrderListBiz orderListBiz = new TM_OrderListBiz();
@@ -151,9 +151,9 @@ namespace ZAppUI.Controllers
 
             //waterBill.Platform
             //waterBill.BType=ConstantList.WATER_BILL_TYPE_RECEIVE
+            //TODO 类型与平台?
 
-
-            DateTime now = DateTime.ParseExact(timestamp, "yyyyMMddHHmmss", null);
+            DateTime now = DateTime.ParseExact(GetUData.Timestamp, "yyyyMMddHHmmss", null);
             waterBill.Years = (short)now.Year;
             waterBill.Months = (byte)now.Month;
             waterBill.Weeks = now.DayOfWeek.ToString();
@@ -169,7 +169,9 @@ namespace ZAppUI.Controllers
         {
             TM_BalceBiz balanceBiz = new TM_BalceBiz();
             DataSet result = balanceBiz.ExecuteSqlToDataSet("EXEC [TireMoneyDB].[dbo].[proc_CheckBalanceInfo] '" + GetUData.OpenId + "'");
-            return result.Tables[0].Rows[0]["AMneys"].ToString();
+            string num = result.Tables[0].Rows[0]["AMneys"].ToString();
+
+            return num = num.Substring(0, num.IndexOf("."));
         }
 
     }

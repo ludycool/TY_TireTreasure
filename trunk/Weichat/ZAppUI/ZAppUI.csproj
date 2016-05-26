@@ -334,6 +334,7 @@
     <Content Include="Content\css\purchase_history.css" />
     <Content Include="Content\css\QR_code.css" />
     <Content Include="Content\css\quest.css" />
+    <Content Include="Content\css\recharge.css" />
     <Content Include="Content\css\recommend.css" />
     <Content Include="Content\css\reg.css" />
     <Content Include="Content\css\Register.css" />
