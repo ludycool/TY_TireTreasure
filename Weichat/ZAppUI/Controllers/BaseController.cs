@@ -51,7 +51,7 @@ namespace ZAppUI.Controllers
         
         #endregion
         #endregion
-
+        //是否已注册
         public bool isRegister()
         {          
             if (Util.isOpenIdExist(GetUData.OpenId))
@@ -59,14 +59,21 @@ namespace ZAppUI.Controllers
                 return true;
             }
            return false;
-        }  
+        }
+        //重定向URL
+        public string redirctUrl(string controller)
+        {
+            string redirect_uri = "http://test.luntaibaobao.com/register";
+            return "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + WechatParamList.APP_ID + "&redirect_uri=" + redirect_uri + "&response_type=code&scope=snsapi_userinfo&state=" + controller + "#wechat_redirect";
+        }
         //获取当前用户ID
         public Guid getUserId()
         {
             UserBiz userBiz = new UserBiz();
             DataSet result = userBiz.ExecuteSqlToDataSet("EXEC	[TireTreasureDB].[dbo].[proc_GetUserIdByWeiXinId] '" + GetUData.OpenId + "',null");
             return (Guid)result.Tables[0].Rows[0][0];
-        }      
+        }
+        
     }
 
 

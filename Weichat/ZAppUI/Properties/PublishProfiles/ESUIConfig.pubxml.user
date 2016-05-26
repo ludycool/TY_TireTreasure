@@ -38,7 +38,7 @@
       <publishTime>04/26/2016 16:19:32</publishTime>
     </File>
     <File Include="bin/App.Core.dll">
-      <publishTime>05/23/2016 16:08:13</publishTime>
+      <publishTime>05/25/2016 17:29:12</publishTime>
     </File>
     <File Include="bin/App_Data/AdvertisingData.xml">
       <publishTime>04/07/2015 15:02:29</publishTime>
@@ -74,22 +74,22 @@
       <publishTime>04/26/2016 16:19:41</publishTime>
     </File>
     <File Include="bin/e3net.BLL.dll">
-      <publishTime>05/23/2016 16:08:13</publishTime>
+      <publishTime>05/25/2016 17:29:11</publishTime>
     </File>
     <File Include="bin/e3net.common.dll">
-      <publishTime>05/23/2016 16:08:11</publishTime>
+      <publishTime>05/25/2016 17:29:09</publishTime>
     </File>
     <File Include="bin/e3net.DAL.dll">
-      <publishTime>05/23/2016 16:08:12</publishTime>
+      <publishTime>05/25/2016 17:29:11</publishTime>
     </File>
     <File Include="bin/e3net.IDAL.dll">
-      <publishTime>05/23/2016 16:08:12</publishTime>
+      <publishTime>05/25/2016 17:29:10</publishTime>
     </File>
     <File Include="bin/e3net.Mode.dll">
-      <publishTime>05/23/2016 16:08:11</publishTime>
+      <publishTime>05/25/2016 17:29:10</publishTime>
     </File>
     <File Include="bin/e3net.tools.dll">
-      <publishTime>05/23/2016 16:08:12</publishTime>
+      <publishTime>05/25/2016 17:29:10</publishTime>
     </File>
     <File Include="bin/EntityFramework.dll">
       <publishTime>04/26/2016 16:19:43</publishTime>
@@ -98,7 +98,7 @@
       <publishTime>04/22/2016 11:05:39</publishTime>
     </File>
     <File Include="bin/ICSharpCode.SharpZipLib.dll">
-      <publishTime>04/21/2016 17:01:03</publishTime>
+      <publishTime>01/26/2016 17:31:59</publishTime>
     </File>
     <File Include="bin/jpush-api.dll">
       <publishTime>12/22/2015 16:11:37</publishTime>
@@ -263,10 +263,10 @@
       <publishTime>05/09/2016 14:31:18</publishTime>
     </File>
     <File Include="bin/WeiChatMessageHandle.dll">
-      <publishTime>05/23/2016 16:08:12</publishTime>
+      <publishTime>05/25/2016 17:29:10</publishTime>
     </File>
     <File Include="bin/ZAppUI.dll">
-      <publishTime>05/23/2016 16:08:14</publishTime>
+      <publishTime>05/25/2016 17:29:12</publishTime>
     </File>
     <File Include="bin/zh-Hans/EntityFramework.resources.dll">
       <publishTime>04/26/2016 16:19:42</publishTime>
@@ -320,40 +320,40 @@
       <publishTime>04/02/2014 03:44:31</publishTime>
     </File>
     <File Include="Content/amazeui/css/admin.css">
-      <publishTime>05/18/2016 16:35:25</publishTime>
+      <publishTime>05/24/2016 17:17:18</publishTime>
     </File>
     <File Include="Content/amazeui/css/amazeui.css">
-      <publishTime>05/18/2016 16:35:25</publishTime>
+      <publishTime>05/24/2016 17:17:18</publishTime>
     </File>
     <File Include="Content/amazeui/css/amazeui.flat.css">
-      <publishTime>05/18/2016 16:35:25</publishTime>
+      <publishTime>05/24/2016 17:17:18</publishTime>
     </File>
     <File Include="Content/amazeui/css/amazeui.flat.min.css">
-      <publishTime>05/18/2016 16:35:25</publishTime>
+      <publishTime>05/24/2016 17:17:18</publishTime>
     </File>
     <File Include="Content/amazeui/css/amazeui.min.css">
-      <publishTime>05/18/2016 16:35:25</publishTime>
+      <publishTime>05/24/2016 17:17:18</publishTime>
     </File>
     <File Include="Content/amazeui/css/app.css">
       <publishTime>05/18/2016 16:35:25</publishTime>
     </File>
     <File Include="Content/amazeui/fonts/fontawesome-webfont.eot">
-      <publishTime>05/18/2016 16:35:27</publishTime>
+      <publishTime>05/24/2016 17:17:19</publishTime>
     </File>
     <File Include="Content/amazeui/fonts/fontawesome-webfont.svg">
-      <publishTime>05/18/2016 16:35:27</publishTime>
+      <publishTime>05/24/2016 17:17:19</publishTime>
     </File>
     <File Include="Content/amazeui/fonts/fontawesome-webfont.ttf">
-      <publishTime>05/18/2016 16:35:27</publishTime>
+      <publishTime>05/24/2016 17:17:19</publishTime>
     </File>
     <File Include="Content/amazeui/fonts/fontawesome-webfont.woff">
-      <publishTime>05/18/2016 16:35:27</publishTime>
+      <publishTime>05/24/2016 17:17:19</publishTime>
     </File>
     <File Include="Content/amazeui/fonts/fontawesome-webfont.woff2">
-      <publishTime>05/18/2016 16:35:27</publishTime>
+      <publishTime>05/24/2016 17:17:19</publishTime>
     </File>
     <File Include="Content/amazeui/fonts/FontAwesome.otf">
-      <publishTime>05/18/2016 16:35:27</publishTime>
+      <publishTime>05/24/2016 17:17:19</publishTime>
     </File>
     <File Include="Content/amazeui/i/app-icon72x72%402x.png">
       <publishTime>05/18/2016 16:35:25</publishTime>
@@ -398,22 +398,22 @@
       <publishTime>05/18/2016 16:35:25</publishTime>
     </File>
     <File Include="Content/amazeui/js/amazeui.ie8polyfill.js">
-      <publishTime>05/18/2016 16:35:28</publishTime>
+      <publishTime>05/24/2016 17:17:20</publishTime>
     </File>
     <File Include="Content/amazeui/js/amazeui.ie8polyfill.min.js">
-      <publishTime>05/18/2016 16:35:28</publishTime>
+      <publishTime>05/24/2016 17:17:20</publishTime>
     </File>
     <File Include="Content/amazeui/js/amazeui.js">
-      <publishTime>05/18/2016 16:35:28</publishTime>
+      <publishTime>05/24/2016 17:17:20</publishTime>
     </File>
     <File Include="Content/amazeui/js/amazeui.min.js">
-      <publishTime>05/18/2016 16:35:28</publishTime>
+      <publishTime>05/24/2016 17:17:20</publishTime>
     </File>
     <File Include="Content/amazeui/js/amazeui.widgets.helper.js">
-      <publishTime>05/18/2016 16:35:28</publishTime>
+      <publishTime>05/24/2016 17:17:20</publishTime>
     </File>
     <File Include="Content/amazeui/js/amazeui.widgets.helper.min.js">
-      <publishTime>05/18/2016 16:35:28</publishTime>
+      <publishTime>05/24/2016 17:17:20</publishTime>
     </File>
     <File Include="Content/amazeui/js/app.js">
       <publishTime>05/18/2016 16:35:28</publishTime>
@@ -473,7 +473,7 @@
       <publishTime>05/12/2016 11:52:37</publishTime>
     </File>
     <File Include="Content/css/calculator.css">
-      <publishTime>05/20/2016 16:42:51</publishTime>
+      <publishTime>05/23/2016 17:37:16</publishTime>
     </File>
     <File Include="Content/CSS/camera.css">
       <publishTime>05/20/2016 16:42:51</publishTime>
@@ -602,7 +602,7 @@
       <publishTime>05/20/2016 16:42:51</publishTime>
     </File>
     <File Include="Content/css/release_task.css">
-      <publishTime>05/20/2016 16:42:51</publishTime>
+      <publishTime>05/24/2016 17:17:17</publishTime>
     </File>
     <File Include="Content/CSS/search.css">
       <publishTime>05/20/2016 16:42:51</publishTime>
@@ -611,7 +611,7 @@
       <publishTime>05/16/2016 18:00:28</publishTime>
     </File>
     <File Include="Content/css/shops.css">
-      <publishTime>05/23/2016 14:59:21</publishTime>
+      <publishTime>05/24/2016 17:17:17</publishTime>
     </File>
     <File Include="Content/css/store.css">
       <publishTime>05/23/2016 14:59:21</publishTime>
@@ -9131,7 +9131,7 @@
       <publishTime>04/21/2016 17:02:19</publishTime>
     </File>
     <File Include="Content/js/script.js">
-      <publishTime>05/14/2016 13:59:17</publishTime>
+      <publishTime>05/23/2016 17:37:16</publishTime>
     </File>
     <File Include="Content/Login/images/Default.css">
       <publishTime>04/21/2016 17:02:02</publishTime>
@@ -10550,7 +10550,7 @@
       <publishTime>04/26/2016 21:08:50</publishTime>
     </File>
     <File Include="Views/AddFriends/index.cshtml">
-      <publishTime>05/16/2016 15:07:03</publishTime>
+      <publishTime>05/23/2016 17:34:46</publishTime>
     </File>
     <File Include="Views/AddFriends/requestFriendList.cshtml">
       <publishTime>05/19/2016 10:03:29</publishTime>
@@ -10577,7 +10577,10 @@
       <publishTime>04/21/2016 17:01:40</publishTime>
     </File>
     <File Include="Views/Deposit/Index.cshtml">
-      <publishTime>05/23/2016 14:55:47</publishTime>
+      <publishTime>05/24/2016 15:54:33</publishTime>
+    </File>
+    <File Include="Views/Deposit/unionPay.cshtml">
+      <publishTime>05/23/2016 17:35:42</publishTime>
     </File>
     <File Include="Views/Dictionary/Index.cshtml">
       <publishTime>04/21/2016 17:01:40</publishTime>
@@ -10696,6 +10699,9 @@
     <File Include="Views/Information/Index.cshtml">
       <publishTime>02/12/2015 16:21:23</publishTime>
     </File>
+    <File Include="Views/Insuran/one.cshtml">
+      <publishTime>05/24/2016 17:17:16</publishTime>
+    </File>
     <File Include="Views/Login/Index.cshtml">
       <publishTime>05/03/2016 19:59:20</publishTime>
     </File>
@@ -10707,6 +10713,12 @@
     </File>
     <File Include="Views/Manu/Index.cshtml">
       <publishTime>04/21/2016 17:01:40</publishTime>
+    </File>
+    <File Include="Views/MyShop/index.cshtml">
+      <publishTime>05/24/2016 17:17:16</publishTime>
+    </File>
+    <File Include="Views/MyShop/Transaction.cshtml">
+      <publishTime>05/24/2016 17:17:16</publishTime>
     </File>
     <File Include="Views/OAuth/index.cshtml">
       <publishTime>04/28/2016 15:08:42</publishTime>
@@ -10733,7 +10745,7 @@
       <publishTime>04/26/2016 16:19:29</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
-      <publishTime>05/19/2016 11:40:46</publishTime>
+      <publishTime>05/24/2016 17:17:16</publishTime>
     </File>
     <File Include="Views/Supply/Index.cshtml">
       <publishTime>02/10/2015 14:52:52</publishTime>
@@ -10847,10 +10859,10 @@
       <publishTime>12/21/2015 17:14:43</publishTime>
     </File>
     <File Include="Views/VipShop/index.cshtml">
-      <publishTime>05/23/2016 14:59:20</publishTime>
+      <publishTime>05/24/2016 17:17:17</publishTime>
     </File>
     <File Include="Views/VipShop/Transaction.cshtml">
-      <publishTime>05/19/2016 11:40:46</publishTime>
+      <publishTime>05/24/2016 17:17:17</publishTime>
     </File>
     <File Include="Views/VipShop/View1.cshtml">
       <publishTime>05/18/2016 15:09:27</publishTime>
@@ -10910,7 +10922,7 @@
       <publishTime>05/13/2016 16:35:02</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>05/23/2016 16:08:15</publishTime>
+      <publishTime>05/25/2016 17:29:13</publishTime>
     </File>
     <File Include="文档/HospitalAssistant.pdm">
       <publishTime>04/03/2015 17:40:53</publishTime>
