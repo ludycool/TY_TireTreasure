@@ -229,11 +229,13 @@
     <Compile Include="Controllers\DepositController.cs" />
     <Compile Include="Controllers\FriendsController.cs" />
     <Compile Include="Controllers\InsuranController.cs" />
+    <Compile Include="Controllers\MissionsController.cs" />
     <Compile Include="Controllers\MyShopController.cs" />
     <Compile Include="Controllers\RecommendController.cs" />
     <Compile Include="Controllers\RegisterController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\testController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\VipShopController.cs" />
     <Compile Include="Global.asax.cs">
@@ -489,7 +491,8 @@
     <Content Include="Views\Deposit\unionPay.cshtml" />
     <Content Include="Views\Insuran\one.cshtml" />
     <Content Include="Views\MyShop\index.cshtml" />
-    <Content Include="Views\MyShop\Transaction.cshtml" />
+    <Content Include="Views\test\index.cshtml" />
+    <Content Include="Views\Missions\index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="temp\" />
