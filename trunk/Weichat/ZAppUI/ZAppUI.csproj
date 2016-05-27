@@ -254,40 +254,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\ParameterData.xml" />
-    <Content Include="Content\amazeui\css\admin.css" />
-    <Content Include="Content\amazeui\css\amazeui.css" />
-    <Content Include="Content\amazeui\css\amazeui.flat.css" />
-    <Content Include="Content\amazeui\css\amazeui.flat.min.css" />
-    <Content Include="Content\amazeui\css\amazeui.min.css" />
-    <Content Include="Content\amazeui\css\app.css" />
-    <Content Include="Content\amazeui\fonts\fontawesome-webfont.svg" />
-    <Content Include="Content\amazeui\i\app-icon72x72%402x.png" />
-    <Content Include="Content\amazeui\i\examples\admin-chrome.png" />
-    <Content Include="Content\amazeui\i\examples\admin-firefox.png" />
-    <Content Include="Content\amazeui\i\examples\admin-ie.png" />
-    <Content Include="Content\amazeui\i\examples\admin-opera.png" />
-    <Content Include="Content\amazeui\i\examples\admin-safari.png" />
-    <Content Include="Content\amazeui\i\examples\adminPage.png" />
-    <Content Include="Content\amazeui\i\examples\blogPage.png" />
-    <Content Include="Content\amazeui\i\examples\landing.png" />
-    <Content Include="Content\amazeui\i\examples\landingPage.png" />
-    <Content Include="Content\amazeui\i\examples\loginPage.png" />
-    <Content Include="Content\amazeui\i\examples\sidebarPage.png" />
-    <Content Include="Content\amazeui\i\favicon.png" />
-    <Content Include="Content\amazeui\i\startup-640x1096.png" />
-    <Content Include="Content\amazeui\js\amazeui.ie8polyfill.js" />
-    <Content Include="Content\amazeui\js\amazeui.ie8polyfill.min.js" />
-    <Content Include="Content\amazeui\js\amazeui.js" />
-    <Content Include="Content\amazeui\js\amazeui.min.js" />
-    <Content Include="Content\amazeui\js\amazeui.widgets.helper.js" />
-    <Content Include="Content\amazeui\js\amazeui.widgets.helper.min.js" />
-    <Content Include="Content\amazeui\js\app.js" />
-    <Content Include="Content\amazeui\js\handlebars.min.js" />
-    <Content Include="Content\amazeui\js\jquery.min.js" />
-    <Content Include="Content\amazeui\js\plug.js" />
-    <Content Include="Content\animations\css\animations.css" />
-    <Content Include="Content\animations\css\components.css" />
-    <Content Include="Content\animations\js\page-transitions.js" />
     <Content Include="Content\css\add_friends.css" />
     <Content Include="Content\css\animations.css" />
     <Content Include="Content\css\appointment.css" />
@@ -425,6 +391,18 @@
     <Content Include="Content\Scripts\bootstrap.min.js" />
     <Content Include="Content\Scripts\jquery-1.12.2.min.js" />
     <Content Include="Content\Scripts\npm.js" />
+    <Content Include="Content\suimobile\dist\css\sm-extend.css" />
+    <Content Include="Content\suimobile\dist\css\sm-extend.min.css" />
+    <Content Include="Content\suimobile\dist\css\sm.css" />
+    <Content Include="Content\suimobile\dist\css\sm.min.css" />
+    <Content Include="Content\suimobile\dist\js\sm-city-picker.js" />
+    <Content Include="Content\suimobile\dist\js\sm-city-picker.min.js" />
+    <Content Include="Content\suimobile\dist\js\sm-extend.js" />
+    <Content Include="Content\suimobile\dist\js\sm-extend.min.js" />
+    <Content Include="Content\suimobile\dist\js\sm.js" />
+    <Content Include="Content\suimobile\dist\js\sm.min.js" />
+    <Content Include="Content\suimobile\dist\js\zepto.min.js" />
+    <Content Include="Content\suimobile\fonts\ratchicons.svg" />
     <Content Include="Global.asax" />
     <Content Include="upload\file\20150319022047_psb.jpg" />
     <Content Include="httpHandle\DictionaryHandler.ashx" />
@@ -440,11 +418,9 @@
     <Content Include="Content\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff2" />
-    <Content Include="Content\amazeui\fonts\fontawesome-webfont.eot" />
-    <Content Include="Content\amazeui\fonts\fontawesome-webfont.ttf" />
-    <Content Include="Content\amazeui\fonts\fontawesome-webfont.woff" />
-    <Content Include="Content\amazeui\fonts\fontawesome-webfont.woff2" />
-    <Content Include="Content\amazeui\fonts\FontAwesome.otf" />
+    <Content Include="Content\suimobile\fonts\ratchicons.eot" />
+    <Content Include="Content\suimobile\fonts\ratchicons.ttf" />
+    <Content Include="Content\suimobile\fonts\ratchicons.woff" />
     <None Include="Properties\PublishProfiles\ESUIConfig.pubxml" />
     <None Include="Content\Scripts\jquery-1.7.1.intellisense.js" />
     <Content Include="Content\Scripts\jquery-1.7.1.js" />
@@ -493,6 +469,7 @@
     <Content Include="Views\MyShop\index.cshtml" />
     <Content Include="Views\test\index.cshtml" />
     <Content Include="Views\Missions\index.cshtml" />
+    <Content Include="Views\test\rout2.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="temp\" />

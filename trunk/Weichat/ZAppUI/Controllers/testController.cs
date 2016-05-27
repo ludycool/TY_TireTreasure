@@ -15,6 +15,9 @@ namespace ZAppUI.Controllers
         {
             return View();
         }
-
+        public ActionResult rout2()
+        {
+            return View();
+        }
     }
 }

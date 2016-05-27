@@ -39,39 +39,40 @@
                     wx.chooseImage({
                         success: function (res) {
                             images.localId = res.localIds;
-                            $("#img1").attr("src", res.localIds[0])
+                            $("#img1").attr("src", res.localIds[0]);
+                            alert(res.localIds[0]);
 
                         }
                     });
                 };
-                // 5.3 上传图片
-                document.querySelector('#uploadImage').onclick = function () {
-                    if (images.localId.length == 0) {
-                        alert('请先选择图片');
-                        return;
-                    }
-                    var i = 0, length = images.localId.length;
-                    images.serverId = [];
-                    function upload() {
-                        wx.uploadImage({
-                            localId: images.localId[i],
-                            success: function (res) {
-                                i++;
-                                //alert('已上传：' + i + '/' + length);
-                                images.serverId.push(res.serverId);
-                                if (i < length) {
-                                    upload();
-                                }
+                //// 5.3 上传图片
+                //document.querySelector('#uploadImage').onclick = function () {
+                //    if (images.localId.length == 0) {
+                //        alert('请先选择图片');
+                //        return;
+                //    }
+                //    var i = 0, length = images.localId.length;
+                //    images.serverId = [];
+                //    function upload() {
+                //        wx.uploadImage({
+                //            localId: images.localId[i],
+                //            success: function (res) {
+                //                i++;
+                //                //alert('已上传：' + i + '/' + length);
+                //                images.serverId.push(res.serverId);
+                //                if (i < length) {
+                //                    upload();
+                //                }
 
-                                alert(res.serverId);
-                            },
-                            fail: function (res) {
-                                alert(JSON.stringify(res));
-                            }
-                        });
-                    }
-                    upload();
-                };
+                //                alert(res.serverId);
+                //            },
+                //            fail: function (res) {
+                //                alert(JSON.stringify(res));
+                //            }
+                //        });
+                //    }
+                //    upload();
+                //};
             });
         </script>
     }
@@ -98,7 +99,7 @@
         <div class="col-xs-4"><img id="img1" style="width:100px;height:100px;" alt=""></div>
 
          <div class="col-xs-4"><input id="chooseImage" type="button" value="选择图片" /> </div>
-        <div class="col-xs-4">  <input id="uploadImage" type="button" value="上传" /> </div>
+     
 
     </div>
 <!--     <div class="col-xs-4"><img src="../../Content/images/plus_gray.png" alt=""></div>
