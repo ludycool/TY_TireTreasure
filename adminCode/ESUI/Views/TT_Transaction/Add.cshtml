@@ -1,0 +1,323 @@
+﻿<!DOCTYPE html>
+@{
+    ViewBag.Title = "Index";
+}
+
+<html>
+<head>
+   
+    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" content="ie=edge"/> 
+
+     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   
+
+    <!-- 编辑器Star-->
+
+   <link href="~/Content/umditor/themes/default/css/umeditor.css" type="text/css" rel="stylesheet">
+    <script type="text/javascript" charset="utf-8" src="~/Content/umditor/umeditor.config.js"></script>
+    <script type="text/javascript" charset="utf-8" src="~/Content/umditor/umeditor.min.js"></script>
+    <script type="text/javascript" src="~/Content/umditor/lang/zh-cn/zh-cn.js"></script>
+
+
+    <script type="text/javascript" charset="utf-8" src="~/Content/js/FileUpTransact.js"></script>
+    <script src="~/Content/js/area.js"></script>
+    <script type="text/javascript" charset="utf-8" src="~/Content/js/DictionaryHelper.js"></script>
+    
+        @* ReSharper disable once NotAllPathsReturnValue *@
+
+
+    @section Jsprepare{
+
+        <script type="text/javascript">
+            @Html.Raw(ViewBag.RuteUrl)
+         @Html.Raw(ViewBag.toolbar)
+
+
+            jQuery(document).ready(function () {
+                //GetDictionaryByDicType("CategoryId", "6");
+                //getInfoList();
+                EditInfo();
+            })
+
+
+
+            function Init() {
+
+                $(".validatebox-tip").remove();//清除验证样式
+                DataBaseFunction.ClearForm("ff");
+                //$("input[name='HouseNo']").focus();
+                //$("#ff input[name='Tel']").removeAttr("disabled");
+                //$('#States').combobox('reload', '/httpHandle/DictionaryHandler.ashx?action=GetSysItem&ItemType=States&CN=BaseCN');  // 使用新的URL重新载入列表数据
+                $("#imgLogo").attr('src', "");
+                //$("#imgLogoM").attr('src', "");
+
+               //UM.getEditor('Details').setContent("", false);
+
+                //map.addEventListener("click", function (e) {//点击事件
+                //    map.clearOverlays();//清除
+                //    $("input[name='Longitude']").val(e.point.lng);
+                //    $("input[name='Latitude']").val(e.point.lat);
+                //    var point = new BMap.Point(e.point.lng, e.point.lat);  // 创建点坐标   
+                //    var marker = new BMap.Marker(point);
+                //    map.addOverlay(marker);                     // 将标注添加到地图中
+                //    marker.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画  
+
+                //});
+
+            }
+            //绑定修改显示详细信息的方法
+            function EditInfo() {
+
+                var ID = GetQueryString("id")
+                if (ID == null) {
+                    return;
+                }
+                $(".validatebox-tip").remove();//清除验证样式
+                $.ajax({
+                    url: BaseUrl + 'GetInfo',
+                    type: 'POST',
+                    data: { ID: ID },
+                    cache: false,
+                    error: function () { alert('Error $.ajax'); },
+                    success: function (data) {
+                        //var result = eval('(' + data + ')');
+                        DataBaseFunction.BindForm("ff", data);
+                        //$("input[name='HouseNo']").focus();
+                        //change(1);
+                        //$('#CityCode').val(data.CityCode);
+                        //change(2);
+                        //$('#AreaCode').val(data.AreaCode);
+                        //UM.getEditor('Details').setContent(data["Details"], false);
+                        $("#imgLogo").attr('src', data.ImageUrl);
+                        //$("#imgLogoM").attr('src', data.ImageUrlMax);
+                        $('#CategoryId').combotree('setValue', data['CategoryId']);
+                        $('#States').combobox('select', data.States);
+
+                        GetFileList(data.ShopId, "TT_Transaction");//图片
+
+                    }
+                });
+
+            }
+
+            //实现的编辑，包括增查改
+            function SaveInfo() {
+
+                //判断的信息是否通过验证
+                var validate = $("#ff").form('validate');
+                if (validate == false) {
+                    return false;
+                }
+                //var iable1  = $("#ff [name='UserId']").val()
+                //if (iable1 == null || iable1 == undefined || iable1 == '') {
+                //    alerts("请选择用户", 2);
+                //    return false;
+                //}
+
+
+                //获取需要传递的参数传递给前台
+                var data = DataBaseFunction.GetFormData("ff");
+                //var Details = UM.getEditor('Details').getContent();
+                //Details = htmlEncode(Details);
+                //data[data.length - 1].value = Details;
+                //发送异步请求到后台保存数据
+                $.post(BaseUrl + 'EditInfo', data, function (data) {
+                    alerts(data.Msg, 2);
+                    if (data.Code > 0) {
+                        $(".validatebox-tip").remove();
+                        var id = $("input[name='TT_Transaction']").val();
+                        if (id == "") {
+                            id = data.Data;//id
+                        }
+                        Delfile();//删除移除的图片
+                        SaveToid(id);//保存添加的图片
+
+                        window.setTimeout("go()", 1500);//跳转页面
+                    }
+                });
+
+            }
+
+
+
+
+            function go() {
+                window.parent.JumpN("CommunityNotice");
+                parent.reloadTabGrid("商品添加");
+                window.parent.closeN("发布公告");
+            }
+            function FileHeadSave() {
+                //----上传头像
+                var FileId = "";
+                $("input[name='Details']").val("");//html带有非法字符
+                $("#ff").form('submit', {
+                    url: "/httpHandle/Sys_FilesHandler.ashx?action=addImg&SourceTable=TT_Transaction",
+                    onSubmit: function () {
+
+                    },
+                    success: function (data) {
+                        var d = eval('(' + data + ')');
+                        if (d.Code > 0) {
+                            var imgList = eval('(' + d.Data + ')');
+                            $("#imgLogo").attr('src', imgList[0].Route + imgList[0].RelativePath);
+                            $("input[name='ImageUrl']").val(imgList[0].Route + imgList[0].RelativePath)
+
+                            var file = $("input[name='file1']");//清空文件
+                            file.after(file.clone().val(""));
+                            file.remove();
+                        }
+                        else {
+                            alerts(d.Msg, 5);
+                        }
+
+                    }
+                })
+            }
+
+            function FileHeadSaveM() {
+                //----上传头像
+                var FileId = "";
+                $("input[name='Details']").val("");//html带有非法字符
+                $("#ff").form('submit', {
+                    url: "/httpHandle/Sys_FilesHandler.ashx?action=addImg&SourceTable=TT_Transaction",
+                    onSubmit: function () {
+
+                    },
+                    success: function (data) {
+                        var d = eval('(' + data + ')');
+                        if (d.Success) {
+                            var imgList = eval('(' + d.Data + ')');
+                            $("#imgLogoM").attr('src', imgList[0].Route + imgList[0].RelativePath);
+                            $("input[name='ImageUrlMax']").val(imgList[0].Route + imgList[0].RelativePath);
+
+                            var file = $("input[name='fileM']");//清空文件
+                            file.after(file.clone().val(""));
+                            file.remove();
+                        }
+                        else {
+                            alerts(d.Message, 5);
+                        }
+
+                    }
+                })
+            }
+            function AddImg() {
+                FileUp("TT_Transaction")
+            }
+        </script>
+    }
+
+</head>
+<body >
+    <div id="Div_form" class="easyui-panel" title="编辑"
+        style="background: #fafafa; padding: 10px 10px;"
+        data-options="iconCls:'icon-save'">
+            <form id="ff" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="ShopId" />
+            <input type="hidden" name="TransactionId" />
+            <input type="hidden" name="ImageUrlMax" />
+            <input type="hidden" name="ImageUrl" />
+            <input type="hidden" name="CreateMan" />
+            <input type="hidden" name="CallCount" />
+            <input type="hidden" name="Praises" />
+            <input type="hidden" name="Clicks" />
+            <input type="hidden" name="CreateTime" />
+            <input type="hidden" name="UpdateTime" />
+            <input type="hidden" name="Longitude" />
+            <input type="hidden" name="Latitude" />
+            <input type="hidden" name="isDeleted" />
+            <table class="stripes" style="table-layout: fixed; width:600px;" border="0" cellspacing="0" cellpadding="0">
+
+                <tr>
+                        <td style="width: 120px;">
+                            <label>标题：</label></td>
+                        <td style="width: 490px;">
+                            <input class="easyui-validatebox textbox" type="text" name="Title" /></td>
+                    </tr>
+                <tr>
+                    <td>
+                        <label>图片：</label></td>
+                    <td>
+
+                        <img alt="" id="imgLogo" src="" style="width: 100px; height: 100px; margin-top: 10px;" />
+                        <input type="file" name="file1" style="width: 50px;" onchange="FileHeadSave()" />
+                    </td>
+
+                </tr>
+                 <tr>
+                        <td style="width: 120px;">
+                            <label>类别：</label></td>
+                        <td style="width: 490px;">
+                            <input class="easyui-validatebox textbox" type="text" name="CategoryId" /></td>
+                    </tr>
+                @*<tr>
+                    <td>
+                        <label>省/市/区：</label></td>
+                    <td>
+                        <select id="ProvinceCode" name="ProvinceCode">
+                        </select>
+                        <select id="CityCode" name="CityCode">
+                        </select>
+                        <select id="AreaCode" name="AreaCode">
+                        </select>
+
+                    </td>
+                </tr>*@
+                    <tr>
+                        <td style="width: 120px;">
+                            <label>品牌：</label></td>
+                        <td style="width: 490px;">
+                            <input class="easyui-validatebox textbox" type="text" name="Brand" /></td>
+                    </tr>
+                    <tr>
+                        <td style="width: 120px;">
+                            <label>型号：</label></td>
+                        <td style="width: 490px;">
+                            <input class="easyui-validatebox textbox" type="text" name="Models" /></td>
+                    </tr>
+                    <tr>
+                        <td style="width: 120px;">
+                            <label>详情：</label></td>
+                        <td style="width: 490px;">
+                            <textarea rows="3" cols="30" name="Details"></textarea>
+                    </tr>
+                    <tr>
+                        <td style="width: 120px;">
+                            <label>电话：</label></td>
+                        <td style="width: 490px;">
+                            <input class="easyui-validatebox textbox" type="text" name="Phone" data-options="required:true,validType:'length[1,13]'" /></td>
+                    </tr>
+                    <tr>
+                        <td style="width: 120px;">
+                            <label>价格：</label></td>
+                        <td style="width: 490px;">
+                            <input class="easyui-validatebox textbox" onkeyup="clearNoNum(this)" type="text" name="Price" /></td>
+                    </tr>        
+            </table>
+        </form>
+        <div style="text-align: center; width: 100%; margin-bottom: 5px;">
+            <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-ok" onclick="SaveInfo();">保存</a>
+        </div>
+    </div>
+      <!------------------------ 维修人员列表---------------------------------->
+    <div id="DivInfo" class="easyui-dialog" style="width: 580px; height: 600px;"
+        closed="true" resizable="true" title="请选择-用户人员" modal="true" buttons="#dlg-buttons">
+        <table style="width: 100%;">
+            <tr>
+                <td colspan="4">
+
+                    <table id="tbInfo"></table>
+                </td>
+
+            </tr>
+
+            <tr>
+                <td colspan="4" style="text-align: center; padding-top: 10px">
+                    <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-ok" onclick="SetInfo();">确定</a>
+                    <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-cancel" onclick="$('#DivInfo').dialog('close')">关闭</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>
