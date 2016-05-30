@@ -23,15 +23,15 @@
                     columns: [[
                         { field: 'ck', checkbox: true },
                      
-              //{ field: 'InsuranId', title: '主键', width: 100, sortable: true }, 
-              //{ field: 'UserId', title: '用户Id', width: 100, sortable: true }, 
-              //{ field: 'InsuranCompanyId', title: '保险公司Id', width: 100, sortable: true },
+               { field: 'UserId', title: '用户Id', hidden: "true" },
               {field:'TName',title:'保险公司名',width:100,sortale:true},
               { field: 'CategoryId', title: '类别', width: 80, sortable: true }, 
               { field: 'ProvinceCode', title: '省', width: 80, sortable: true }, 
               //{ field: 'CityCode', title: '城市', width: 100, sortable: true }, 
               //{ field: 'AreaCode', title: '区', width: 100, sortable: true }, 
-              { field: 'MCost', title: '金额', width: 80, sortable: true }, 
+              { field: 'CarMoney', title: '汽车价格', width: 100, sortable: true },
+              { field: 'MCost', title: '保险金额', width: 100, sortable: true },
+              { field: 'DiscountCode', title: '折后价', width: 100, sortable: true },
               //{ field: 'Explain', title: '个人办理说明', width: 100, sortable: true }, 
               { field: 'NCode', title: '依据（单号）', width: 100, sortable: true }, 
               { field: 'InsuranMan', title: '被保险人', width: 100, sortable: true }, 
@@ -82,26 +82,13 @@
             }
             //easyUI 弹出添加的对话框
             function AddInfo() {
-                //弹出层
-                // $("#DivEditor").dialog('open').dialog('setTitle', '添加信息');
-                //$('#DivEditor').dialog({
-                //    title: '添加',
-                //    width: 400,
-                //    height: 200,
-                //    closed: false,
-                //    cache: false,
-                //     href: 'get_content.php',
-                //    modal: true, top: 20,
-                //    onClose: function () {
-                //        解决弹出窗口关闭后，验证消息还显示在最上面
-
-                //    }
-                //});
-                //$(".validatebox-tip").remove();//清除验证样式
-                //DataBaseFunction.ClearForm("ff");
-                //$("input[name='HouseNo']").focus();
-                //$("#ff input[name='Tel']").removeAttr("disabled");
-                window.parent.JumpP("保险单申请", "TT_Insuran/Add", "icon-add");
+                var rows = $("#dg").datagrid('getSelected');
+                //首先取出来值判断只能选择一个
+                if (rows == null) {
+                    $.messager.alert("友情提示", "请选择保险单号", "error");
+                    return;
+                }
+                window.parent.JumpP("办理", "TT_Insuran/Add?UOId=" + rows.UserId + "&SOId=" + rows.UserId + "&CarMoney=" + rows.CarMoney, "icon-add");
             }
             //查看
             function ShowOP() {
@@ -268,8 +255,7 @@
         closed="true" resizable="true" modal="true" buttons="#dlg-buttons">
         <div class="easyui-panel" style="padding: 10px 10px; overflow-x: hidden;" data-options=" height:460,width:580,border:false">
             <form id="fshow" method="post" enctype="multipart/form-data">
-
-                 <table class="stripes" style="table-layout: fixed;" border="0"  cellspacing="0" cellpadding="0">
+<table class="stripes" style="table-layout: fixed;" border="0"  cellspacing="0" cellpadding="0">
 @*<tr><td><label >主键：</label></td><td><span   name="InsuranId"  ></span></td></tr>
 <tr><td><label >用户Id：</label></td><td><span   name="UserId"  ></span></td></tr>*@
 @*<tr><td><label >保险公司Id：</label></td><td><span   name="InsuranCompanyId"  ></span></td></tr>*@
@@ -293,6 +279,8 @@
 <tr><td><label >备注：</label></td><td><span   name="Remarks"  ></span></td></tr>
 <tr><td><label >状态：</label></td><td><span   name="States"  ></span></td></tr>
 <tr><td><label >办理人：</label></td><td><span   name="HandlePerson"  ></span></td></tr>
+<tr><td><label>保险项</label></td><td><span name="InsuranItermSeelName"></span></td></tr>
+<tr><td><label>保险项金额</label></td><td><span name="itemCost"></span></td></tr>
 <tr><td><label >开始时间：</label></td><td><span   name="StarTime"  ></span></td></tr>
 <tr><td><label >结束时间：</label></td><td><span   name="EndTime"  ></span></td></tr>
  </table>

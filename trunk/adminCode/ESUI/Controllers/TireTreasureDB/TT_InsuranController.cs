@@ -7,7 +7,7 @@ using System.Web.Mvc;
 using Microsoft.Practices.Unity;
 using Newtonsoft.Json;
 using System.Data;
-
+using System.Text;
 using e3net.Mode.HttpView;
 using e3net.common.SysMode;
 using e3net.Mode.TireTreasureDB;
@@ -58,6 +58,34 @@ namespace ESUI.Controllers
             Dictionary<string, object> dic = new Dictionary<string, object>();
             dic.Add("rows", ds.Tables[0]);
             dic.Add("total", pc.RCount);
+            return Json(dic, JsonRequestBehavior.AllowGet);
+        }
+        [HttpPost]
+        public JsonResult GetInsuranItermSeel()
+        {
+            // SelectWhere.selectwherestring(Request["sqlSet"]);
+            int pageIndex = Request["page"] == null ? 1 : int.Parse(Request["page"]);
+            int pageSize = Request["rows"] == null ? 10 : int.Parse(Request["rows"]);
+            //string Where = Request["sqlSet"] == null ? "1=1" : SelectWhere.selectwherestring(Request["sqlSet"]);
+            string Where = Request["sqlSet"] == null ? "1=1" : GetSql(Request["sqlSet"]);
+            Where += " and (isDeleted=0)";
+            PageClass pc = new PageClass();
+            pc.sys_Fields = "ItermSeelId,TName,Rates,SCode,Formula,ClaimAmount,Describe";
+            pc.sys_Key = "ItermSeelId";
+            pc.sys_PageIndex = pageIndex;
+            pc.sys_PageSize = pageSize;
+            pc.sys_Table = "TT_InsuranItermSeel";
+            pc.sys_Where = Where;
+            pc.sys_Order = " " + pc.sys_Key + " desc";
+            DataSet ds = OPBiz.GetPagingDataP(pc);
+            Dictionary<string, object> dic = new Dictionary<string, object>();
+            dic.Add("rows", ds.Tables[0]);
+            dic.Add("total", pc.RCount);
+            //StringBuilder sb = new StringBuilder();
+            //foreach (DataRow item in ds.Tables[0].Rows)
+            //{
+            //    sb.AppendFormat("<input type=\"hidden\" name=\"ItermSeelId\" value=\"{0}\"> <label style=\"width:120px;\">{1}</label> <label style=\"width:120px;\">{2}</label> <label style=\"width:200px;\">{3}</label> <input type=\"text\" value=\"\" class=\"easyui-validatebox\" onkeyup=\"clearNoNum(this)\" data-options=\"valueField:'ItemValue',textField:'ItemName',required:true\"> <input type=\"checkbox\" name=\"ce\"> <br> ", item[0], item[1], item[2], item[3]);
+            //}
             return Json(dic, JsonRequestBehavior.AllowGet);
         }
         public ActionResult Add()
@@ -123,27 +151,31 @@ namespace ESUI.Controllers
             //  groupsBiz.Add(rol);
             return Json(Rmodel, JsonRequestBehavior.AllowGet);
         }
-        public JsonResult InsuranceApply()
+        public JsonResult InsuranceApply(string UOId, string SOId)
         {
             HttpReSultMode ReSultMode = new HttpReSultMode();
             var PayType=Request["PayType"];
             var OMuney=Request["OMuney"];
             var Remarks=Request["Remarks"];
+            var SaleType=Request["SaleType"];
+            //var UOId = Request["UOId"];
+            //var SOId = Request["SOId"];
             var parameters = new System.Data.SqlClient.SqlParameter[]{
-            new System.Data.SqlClient.SqlParameter("@Number",""+OPBiz.GetTime().ToString("yyyyMMddHHmmss")),
-            new System.Data.SqlClient.SqlParameter("@Type","1"),
-            new System.Data.SqlClient.SqlParameter("@UOId",Guid.NewGuid()),
-            new System.Data.SqlClient.SqlParameter("@SOId",Guid.NewGuid()),
+            new System.Data.SqlClient.SqlParameter("@Number","BX"+OPBiz.GetTime().ToString("yyyyMMddHHmmssfff")),
+            new System.Data.SqlClient.SqlParameter("@Types","1"),
+            new System.Data.SqlClient.SqlParameter("@UOId",UOId),
+            new System.Data.SqlClient.SqlParameter("@SOId",SOId),
             new System.Data.SqlClient.SqlParameter("@Money",OMuney),
+            new System.Data.SqlClient.SqlParameter("@SaleType",SaleType),
             new System.Data.SqlClient.SqlParameter("@Remarks",Remarks),
             new System.Data.SqlClient.SqlParameter("@PayType",PayType)
             };
-            var res = OPBiz.ExecuteProWithNonQuery("proc_InsuranceApplication", parameters);
+            var res = OPBiz.ExecuteProWithNonQuery("proc_InsuranceHandle", parameters);
             if (res > 0)
                 {
                     ReSultMode.Code = 11;
                     ReSultMode.Data = "";
-                    ReSultMode.Msg = "修改成功";
+                    ReSultMode.Msg = "办理成功";
                 }
             return Json(ReSultMode,JsonRequestBehavior.AllowGet);
         }

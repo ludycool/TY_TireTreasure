@@ -3541,6 +3541,9 @@
     <Content Include="Views\TT_Shop\Add.cshtml" />
     <Content Include="Views\TT_InsuranItermSeel\Index.cshtml" />
     <Content Include="Views\TT_Levels\Index.cshtml" />
+    <Content Include="Views\TT_TransactSnapshot\Index.cshtml" />
+    <Content Include="Views\TT_Transaction\Index.cshtml" />
+    <Content Include="Views\TT_Transaction\Add.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="temp\" />

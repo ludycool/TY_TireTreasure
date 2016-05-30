@@ -5,15 +5,15 @@
 
 <html>
 <head>
-   
-    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" content="ie=edge"/> 
 
-     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-   
+    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" content="ie=edge" />
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
 
     <!-- 编辑器Star-->
 
-   <link href="~/Content/umditor/themes/default/css/umeditor.css" type="text/css" rel="stylesheet">
+    <link href="~/Content/umditor/themes/default/css/umeditor.css" type="text/css" rel="stylesheet">
     <script type="text/javascript" charset="utf-8" src="~/Content/umditor/umeditor.config.js"></script>
     <script type="text/javascript" charset="utf-8" src="~/Content/umditor/umeditor.min.js"></script>
     <script type="text/javascript" src="~/Content/umditor/lang/zh-cn/zh-cn.js"></script>
@@ -23,63 +23,66 @@
     <script src="~/Content/js/area.js"></script>
     <script type="text/javascript" charset="utf-8" src="~/Content/js/DictionaryHelper.js"></script>
 
-        @* ReSharper disable once NotAllPathsReturnValue *@
+    @* ReSharper disable once NotAllPathsReturnValue *@
 
 
     @section Jsprepare{
 
         <script type="text/javascript">
+            //$("easyui-panel").panel({display:inline,float:left,margin-left: 5px;width: 260px;});
+
             @Html.Raw(ViewBag.RuteUrl)
          @Html.Raw(ViewBag.toolbar)
             jQuery(document).ready(function () {
 
                 //Init();
                 //_init_area();//初始化省市区联动
-
+                getInsuranItermSeel();
                 //GetDictionaryByDicType("CategoryId", "6");
-                getInfoList();
-                EditInfo();
+                //getInfoList();
+                //EditInfo();
             })
-
-
-
-            function Init() {
-
-                $(".validatebox-tip").remove();//清除验证样式
-                DataBaseFunction.ClearForm("ff");
-                //$("input[name='HouseNo']").focus();
-                //$("#ff input[name='Tel']").removeAttr("disabled");
-                $('#States').combobox('reload', '/httpHandle/DictionaryHandler.ashx?action=GetSysItem&ItemType=States&CN=BaseCN');  // 使用新的URL重新载入列表数据
-                $("#imgLogo").attr('src', "");
-                //$("#imgLogoM").attr('src', "");
-
-                UM.getEditor('Details').setContent("", false);
-
-
-                var map = new BMap.Map("Mapcontainer");          // 创建地图实例  
-                var opts = { type: BMAP_NAVIGATION_CONTROL_LARGE }
-                map.addControl(new BMap.NavigationControl(opts));
-                var point = new BMap.Point(108.321465, 22.832497);  // 创建点坐标 默认
-                $("input[name='Longitude']").val(108.321465);//默认
-                $("input[name='Latitude']").val(22.832497)//默认
-                map.centerAndZoom(point, 12);                 // 初始化地图，设置中心点坐标和地图级别 
-                var marker = new BMap.Marker(point);
-                map.addOverlay(marker);                     // 将标注添加到地图中
-                marker.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画  
-
-                map.addEventListener("click", function (e) {//点击事件
-                    map.clearOverlays();//清除
-                    $("input[name='Longitude']").val(e.point.lng);
-                    $("input[name='Latitude']").val(e.point.lat);
-                    var point = new BMap.Point(e.point.lng, e.point.lat);  // 创建点坐标   
-                    var marker = new BMap.Marker(point);
-                    map.addOverlay(marker);                     // 将标注添加到地图中
-                    marker.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画  
-
+            function getInsuranItermSeel() {
+                $.ajax({
+                    url: BaseUrl + 'GetInsuranItermSeel',
+                    type: 'POST',
+                    data: null,
+                    cache: false,
+                    error: function () { alert('Error $.ajax'); },
+                    success: function (data) {
+                        //var result = eval('(' + data + ')');
+                        //DataBaseFunction.BindForm("ff", data);
+                        //$("input[name='HouseNo']").focus();
+                        //document.getElementById("ShowInfo").innerHTML = data.ShowInfo;
+                        ShowInsuranItermSeel(data.rows);
+                        $("#CarMoney").val(GetQueryString("CarMoney"));
+                    }
                 });
-                GetFileList();
-
+                //$('#tb').datagrid({
+                //    url: BaseUrl + 'GetInsuranItermSeel',
+                //    columns: [[
+                //        { field: 'ItermSeelId', hidden: "true" },
+                //        { field: 'TName', title: '名称', width: 100, sortable: true },
+                //        { field: 'Rates', title: '费率', width: 100 },
+                //        { field: 'Describe', title: '简介', width: 100, sortable: true },
+                //        { field: 'ck', checkbox: true },
+                //    ]],
+                //    iconCls: 'icon-save',
+                //    nowrap: true,
+                //    width: 350,
+                //    //height: 360,
+                //    //fitColumns: true,
+                //    //singleSelect: true,
+                //    //striped: true,
+                //    //collapsible: true,
+                //    //pageSize: 20,
+                //    //pagination: true,
+                //    //rownumbers: true,
+                //    sortName: 'CreateTime',
+                //    sortOrder: 'desc'
+                //});
             }
+           
             //绑定修改显示详细信息的方法
             function EditInfo() {
 
@@ -109,83 +112,177 @@
                         $('#CityCode').val(data.CityCode);
                         change(2);
                         $('#AreaCode').val(data.AreaCode);
-
-                        var map = new BMap.Map("Mapcontainer");          // 创建地图实例  
-                        var opts = { type: BMAP_NAVIGATION_CONTROL_LARGE }
-                        map.addControl(new BMap.NavigationControl(opts));
-                        var point = new BMap.Point(data["Longitude"], data["Latitude"]);  // 创建点坐标  
-                        map.centerAndZoom(point, 12);                 // 初始化地图，设置中心点坐标和地图级别  
-                        var marker = new BMap.Marker(point);        // 创建标注    
-                        map.addOverlay(marker);                     // 将标注添加到地图中
-                        marker.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
-
-                        GetFileList(data.ShopId, "TT_Shop");//图片
-
                     }
                 });
-
             }
+                //实现的编辑，包括增查改
+                function SaveInfo() {
 
-            //实现的编辑，包括增查改
-            function SaveInfo() {
-
-                //判断的信息是否通过验证
-                var validate = $("#ff").form('validate');
-                if (validate == false) {
-                    return false;
-                }
-                //var iable1 = $("#ff [name='UserId']").val()
-                //if (iable1 == null || iable1 == undefined || iable1 == '') {
-                //    alerts("请选择用户", 2);
-                //    return false;
-                //}
-
-
-                //获取需要传递的参数传递给前台
-                var data = DataBaseFunction.GetFormData("ff");
-                //var Details = UM.getEditor('Details').getContent();
-                //Details = htmlEncode(Details);
-                //data[data.length - 1].value = Details;
-                //发送异步请求到后台保存数据
-                $.post(BaseUrl + 'InsuranceApply', data, function (data) {
-                    alerts(data.Msg, 2);
-                    //if (data.Code > 0) {
-                    //    $(".validatebox-tip").remove();
-                    //    var id = $("input[name='ShopId']").val();
-                    //    if (id == "") {
-                    //        id = data.Data;//id
-                    //    }
-                    //    Delfile();//删除移除的图片
-                    //    SaveToid(id);//保存添加的图片
-
-                    //    window.setTimeout("go()", 1500);//跳转页面
+                    //判断的信息是否通过验证
+                    var validate = $("#ff").form('validate');
+                    if (validate == false) {
+                        return false;
+                    }
+                    //var iable1 = $("#ff [name='UserId']").val()
+                    //if (iable1 == null || iable1 == undefined || iable1 == '') {
+                    //    alerts("请选择用户", 2);
+                    //    return false;
                     //}
-                });
+                    var UOId = GetQueryString("UOId")
+                    var SOId = GetQueryString("SOId")
+                    //获取需要传递的参数传递给前台
+                    var data = DataBaseFunction.GetFormData("ff");
+                    var inputs = document.getElementsByTagName("input");//获取所有的input标签对象
+                    var checkboxArray = [];//初始化空数组，用来存放checkbox对象。
+                    var se;
+                    $("[type='checkbox'][checked]").each(function () {
+                        se.push($(this));
+                        //alert($(this).val());
+                    })
+                    for (var i = 0; i < inputs.length; i++) {
+                        var obj = inputs[i];
+                        if ((obj.type == 'checkbox').checked) {
+                            checkboxArray.push(obj);
+                        }
+                        var s;
+                    }
+                    //var seel = DataBaseFunction.GetFormData("ss");                    
+                    //data[data.length - 1].value = Details;
+                    //发送异步请求到后台保存数据
+                    //$.post(BaseUrl + 'InsuranceApply?UOId=' + UOId + "&SOId=" + SOId, data, function (data) {
+                    //    alerts(data.Msg, 2);
+                    //});
                 }
+                //生成保险下拉列表
+                function SelectClaimAmount(name,data) {
+                    var html = "<select onchange=\"CheckInsuranItermSeel()\" id=\"" + name + "\" name=\"" + name + "\">";
+                    var d = data.split("|");
+                    for (var i = 0; i < d.length; i++) {
+                        html += "<option value=\""+d[i]*10000+"\">"+d[i]+"</option>";
+                    }
+                    html += "</select>";
+                    return html;
+                }
+                //
+                function ShowInsuranItermSeel(data) {
+                    var html = '';
+                    html += ("<form id=\"ss\" method=\"post\" enctype=\"multipart/form-data\">\r\n<table class=\"stripes\" style=\"table-layout: fixed; width:auto;\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\">\r\n<tr>保险项选择</tr>");
+                    for (var i = 0; i < data.length; i++) {
+                        if (data[i].ClaimAmount != undefined && data[i].ClaimAmount != "") {
+                            html += "<tr>\r\n<td style=\"width:20px;\"><input type=\"checkbox\" onclick=\"CheckInsuranItermSeel()\" name=\"ItermSeelId_" + data[i].ItermSeelId + "\" value=" + data[i].ItermSeelId + " ><lable id=Formula_" + data[i].ItermSeelId + " style=\"display:none;\" >" + data[i].Formula + "</lable></td><td style=\"width: 120px;\"><label style=\"width:120px;\">" + data[i].TName + "</label></td><td style=\"width: 120px;\"><label style=\"width:120px;\">" + data[i].Describe + "</label></td><td style=\"width: 120px;\"><lable id=itemCost_" + data[i].ItermSeelId + "></lable></td><td style=\"width: 120px;\">" + SelectClaimAmount("ClaimAmount_" + data[i].ItermSeelId, data[i].ClaimAmount) + "</td>\r\n</tr> ";
+                        }
+                        else if (data[i].ClaimAmount==null && data[i].Formula != undefined && data[i].Formula != "") {
+                            html += "<tr>\r\n<td style=\"width:20px;\"><input type=\"checkbox\" name=\"ItermSeelId_" + data[i].ItermSeelId + "\" onclick=\"CheckInsuranItermSeel()\" value=" + data[i].ItermSeelId + " ><lable id=Formula_" + data[i].ItermSeelId + " style=\"display:none;\" >" + data[i].Formula + "</lable></td><td style=\"width: 120px;\"><label style=\"width:120px;\">" + data[i].TName + "</label></td><td style=\"width: 120px;\"><label style=\"width:120px;\">" + data[i].Describe + "</label></td><td style=\"width: 120px;\"><lable id=itemCost_" + data[i].ItermSeelId + ">" + data[i].Rates
+                                 + "</lable></td><td style=\"width: 120px;\"> </td>\r\n</tr> ";
+                        }
+                        else {
+                            html += "<tr>\r\n<td style=\"width:20px;\"><input type=\"checkbox\" name=\"ItermSeelId_" + data[i].ItermSeelId + "\" onclick=\"CheckInsuranItermSeel()\" value=" + data[i].ItermSeelId + " ></td><td style=\"width: 120px;\"><label style=\"width:120px;\">" + data[i].TName + "</label></td><td style=\"width: 120px;\"><label style=\"width:120px;\">" + data[i].Describe + "</label></td><td style=\"width: 120px;\"><lable id=itemCost_" + data[i].ItermSeelId + ">" + data[i].Rates
+                                + "</lable></td><td style=\"width: 120px;\"> </td>\r\n</tr> ";
+                        }
+                    }
+                    html += ("</table>\r\n</from>");
+                    $("#ShowInfo").html(html);
+                }
+                //计算保险总价格
+                function CheckInsuranItermSeel() {
+                    var validate = $("#ss").form('validate');
+                    if (validate == false) {
+                        return false;
+                    }
+                    //var data = $("#ss").serializeArray();
+                    //for (var i = 0; i < data.length; i++) {
+                    //    var money = data[i].ItermSeelId;
+                    //    if (money!=undefined&&money!='') {
+
+                    //    }
+                    //}
+                    //var ss = $("ss");
+                    var inputs = document.getElementsByTagName("input");//获取所有的input标签对象
+                    var checkboxArray = [];//初始化空数组，用来存放checkbox对象。
+                    var arr = [];
+                    var money=0.0;
+                    for (var i = 0; i < inputs.length; i++) {
+                        var obj = inputs[i];
+                        if (obj.type == 'checkbox') {
+                            checkboxArray.push(obj);
+                        }
+                    }
+                    for (var i = 0; i < checkboxArray.length; i++) {
+                        if (checkboxArray[i].checked) {
+                            arr.push(checkboxArray[i]);
+                        }
+                    }
+                    for (var i = 0; i < checkboxArray.length; i++) {
+                        $("#itemCost_" + checkboxArray[i].value + "").val("");
+                    }
+                    $("#OMuney").val("");
+                    Compute(arr);
+                    for (var i = 0; i < arr.length; i++) {
+                        money += parseFloat($("#itemCost_" + arr[i].value + "").html()) != NaN ? parseFloat($("#itemCost_" + arr[i].value + "").html()) : 0;
+                    }
+                    $("#OMuney").val(money);
+                }
+                //获取计算公式并计算
+                function Compute(data) {
+                    for (var i = 0; i < data.length; i++) {
+                        if ($("#Formula_" + data[i].value + "").html() != undefined && $("#ClaimAmount_" + data[i].value + "").html() != undefined) {
+                            var formula = $("#Formula_" + data[i].value + "").html().replace("c1", $("#ClaimAmount_" + data[i].value + "").val());
+                            var result = eval(formula);
+                            $("#itemCost_" + data[i].value + "").html(result);
+                        }
+                        if ($("#Formula_" + data[i].value + "").html() != undefined && $("#ClaimAmount_" + data[i].value + "").html() == undefined) {
+                            var formula = $("#Formula_" + data[i].value + "").html().replace("n1", $("#CarMoney").val());
+                            var result = eval(formula);
+                            $("#itemCost_" + data[i].value + "").html(result);
+                        }
+                    }
+                }
+                //function PriceCalculation(o, r) {
+                //    if (o.SCode == "01") {
+                //        var formula = o.Formula.replace("c1", $("#ClaimAmount_" + r.value + "").val());
+                //        var result = eval(formula);
+                //        $("#itemCost_" + r.value + "").html(result);
+                //    }
+                //    else if (o.SCode == "02") {
+                //        var formula = o.Formula.replace("n1", $("#CarMoney").val());
+                //        var result = eval(formula);
+                //        $("#itemCost_" + r.value + "").html(result);
+                //    }
+                //    else if (o.SCode == "03") {
+                //        var result = o.Rates;
+                //        $("#itemCost_" + r.value + "").html(result);
+                //    }
+                //}
         </script>
     }
 
 </head>
-<body >
-    <div id="Div_form" class="easyui-panel" title="编辑"
-        style="background: #fafafa; padding: 10px 10px;"
-        data-options="iconCls:'icon-save'">
+<body>
+
+    <div id="list" >
+        <div id="Div_form" class="" style="float: left; width: 400px; overflow: hidden;">
             <form id="ff" method="post" enctype="multipart/form-data">
-            <input type="hidden" name="ShopId" />           
+            <input type="hidden" name="ShopId" />
             <input type="hidden" name="isDeleted" />
+            <table id="tb"></table>
             <table class="stripes" style="table-layout: fixed; width: 100%;" border="0" cellspacing="0" cellpadding="0">
-                
                 <tr>
                     <td style="width: 120px;">
-                        <label>交易金额：</label></td>
+                        <label style="width:120px;">裸价：</label></td>
                     <td>
-                        <input class="easyui-validatebox textbox" type="text" name="OMuney" /></td>
+                        <input class="easyui-validatebox textbox" type="text" onkeyup="clearNoNum(this);CheckInsuranItermSeel()" id="CarMoney" name="CarMoney" /></td>
+                </tr>
+                <tr>
+                    <td style="width: 120px;">
+                        <label style="width:120px;">交易金额：</label></td>
+                    <td>
+                        <input class="easyui-validatebox textbox" type="text" onkeyup="clearNoNum(this)" id="OMuney" name="OMuney" /></td>
                 </tr>
                 <tr>
                     <td>
                         <label>备注：</label></td>
                     <td>
-                          <input class="easyui-validatebox textbox" type="text" name="Remarks" /></td>
+                        <input class="easyui-validatebox textbox" type="text" name="Remarks" /></td>
                 </tr>
                 <tr>
                     <td>
@@ -198,11 +295,25 @@
                             <option value="40">银联</option>
                         </select>
                 </tr>
+                <tr>
+                    <td>
+                        <label>消费类型：</label></td>
+                    <td>
+                        <select class="easyui-combobox" name="SaleType">
+                            <option value="10">个人</option>
+                            <option value="20">商铺</option>
+                        </select>
+                </tr>
             </table>
+                <div style="text-align: center; width: 100%;">
+            <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-ok" onclick="SaveInfo();">办理</a>
+        </div>
         </form>
-      
-        <div style="text-align: center; width: 100%; margin-bottom: 5px;">
-            <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-ok" onclick="SaveInfo();">申请</a>
+        </div>
+        <div id="ShowInfo" class="" style="" data-options="iconCls:'icon-save',closable:true,    
+                collapsible:true,minimizable:true,maximizable:true">  
+        </div>
+        <div style="clear: both;" title="该标签用于清除浮动，使left和right的父标签能自适应高度！">
         </div>
     </div>
 </body>

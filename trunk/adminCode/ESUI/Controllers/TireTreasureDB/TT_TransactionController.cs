@@ -33,7 +33,11 @@ namespace ESUI.Controllers
             ViewBag.toolbar = toolbar();
             return View();
         }
-
+        public ActionResult Add()
+        {
+            ViewBag.RuteUrl = RuteUrl();
+            return View();
+        }
         [HttpPost]
         public JsonResult Search()
         {
@@ -70,8 +74,15 @@ namespace ESUI.Controllers
             {
                 IsAdd = true;
 			    EidModle.TransactionId = Guid.NewGuid();
+                EidModle.ShopId = Guid.NewGuid();//先自定义生产以后再动态获取店铺id添加
                 EidModle.CreateTime = DateTime.Now;
                 EidModle.UpdateTime = DateTime.Now;
+                EidModle.Clicks = 0;
+                EidModle.CallCount = 0;
+                EidModle.Praises = 0;
+                EidModle.States = 0;
+                EidModle.MonthlySales = 0;
+                EidModle.Sold = 0;
 				EidModle.isValid = true;
 				EidModle.isDeleted = false;
             }
@@ -114,7 +125,7 @@ namespace ESUI.Controllers
         }
         public JsonResult GetInfo(string ID)
         {
-            var mql2 = TT_TransactionSet.SelectAll().Where(TT_TransactionSet.TransactionId.Equal(ID));
+            var mql2 = TT_TransactionSet.SelectAll().Where(TT_TransactionSet.ShopId.Equal(ID));
             TT_Transaction Rmodel = OPBiz.GetEntity(mql2);
             //  groupsBiz.Add(rol);
             return Json(Rmodel, JsonRequestBehavior.AllowGet);
