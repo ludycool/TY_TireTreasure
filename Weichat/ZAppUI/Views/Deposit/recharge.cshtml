@@ -38,8 +38,8 @@
             </div>
         </div>
         <!-- main -->
-
-        @using (@Html.BeginForm("unionPay", "Deposit", FormMethod.Post))
+        <div>@ViewBag.url</div>
+        @using (@Html.BeginForm("recharge", "Deposit", FormMethod.Post))
         {
             <div class="input-group col-xs-12">
                 <span class="input-group-addon input-lg">￥</span>

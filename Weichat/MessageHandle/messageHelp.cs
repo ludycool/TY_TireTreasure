@@ -141,7 +141,7 @@ namespace WeiChatMessageHandle
         {
 
             string url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx5c2b91a9bbef68b4&redirect_uri=http://5705395e.nat123.net/home&response_type=code&scope=snsapi_base&state=test#wechat_redirect";
-            string responseContent = SendText("欢迎使用微信公共账号，您输入的内容为：" + Content + "\r\n<a href=\""+url+"\">点击进入</a>");
+            string responseContent = SendText("欢迎使用微信公共账号，您输入的内容为：" + Content + "\r\n<a href=\"" + url + "\">点击进入</a>");
             return responseContent;
         }
 
@@ -265,6 +265,52 @@ namespace WeiChatMessageHandle
 
             }
 
+        }
+        public static string Pay
+        {
+            get
+            {
+                return @"<xml>
+  <appid><![CDATA[{0}]]></appid>
+  <attach><![CDATA[{1}]]></attach>
+  <body><![CDATA[{2}]]></body>
+  <detail><![CDATA[{3}]]></detail>
+  <device_info><![CDATA[{4}]]></device_info>
+  <fee_type><![CDATA[{5}]]></fee_type>
+  <goods_tag><![CDATA[{6}]]></goods_tag>
+  <limit_pay><![CDATA[{7}]]></limit_pay>
+  <mch_id><![CDATA[{8}]]></mch_id>
+  <nonce_str><![CDATA[{9}]]></nonce_str>
+  <notify_url><![CDATA[{10}]]></notify_url>
+  <openid><![CDATA[{11}]]></openid>
+  <out_trade_no><![CDATA[{12}]]></out_trade_no>
+  <product_id><![CDATA[{13}]]></product_id>
+  <spbill_create_ip><![CDATA[{14}]]></spbill_create_ip>
+  <time_expire><![CDATA[{15}]]></time_expire>
+  <time_start><![CDATA[{16}]]></time_start>
+  <total_fee><![CDATA[{17}]]></total_fee>
+  <trade_type><![CDATA[{18}]]></trade_type>
+  <sign><![CDATA[{19}]]></sign>
+</xml>";
+            }
+        }
+        public static string Pay_Ready
+        {
+            get
+            {
+                return @"<xml>
+  <return_code><![CDATA[0]]></return_code>  
+  <return_msg><![CDATA[1]]></return_msg>  
+  <appid><![CDATA[2]]></appid>  
+  <mch_id><![CDATA[3]]></mch_id>  
+  <device_info><![CDATA[4]]></device_info>  
+  <nonce_str><![CDATA[5]]></nonce_str>  
+  <sign><![CDATA[6]]></sign>  
+  <result_code><![CDATA[7]]></result_code>  
+  <prepay_id><![CDATA[8]]></prepay_id>  
+  <trade_type><![CDATA[9]]></trade_type> 
+</xml>";
+            }
         }
     }
 }

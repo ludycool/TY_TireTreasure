@@ -82,6 +82,11 @@
     <Compile Include="WeChatJsSdk.SdkCore\SimpleCacheProvider.cs" />
     <Compile Include="WeChatJsSdk.Utility\TimeStamp.cs" />
     <Compile Include="WechatParamList.cs" />
+    <Compile Include="WechatPay\MD5Util.cs" />
+    <Compile Include="WechatPay\OrderDetail.cs" />
+    <Compile Include="WechatPay\QueryOrder.cs" />
+    <Compile Include="WechatPay\TenpayUtil.cs" />
+    <Compile Include="WechatPay\UnifiedOrder.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\e3net.tools\e3net.tools.csproj">
