@@ -25,6 +25,10 @@
 
     <link href="~/Content/suimobile/dist/css/sm-extend.min.css" rel="stylesheet" />
     <script src="~/Content/suimobile/dist/js/sm-extend.min.js"></script>
+
+   @* ///文件选择*@
+    <link href="~/Content/plus/component.css" rel="stylesheet" />
+    <script src="~/Content/plus/custom-file-input.js"></script>
 </head>
 <body>
 
@@ -41,6 +45,11 @@
                         <li><a href="#router3">内联的新页面</a></li>
                     </ul>
                 </div>
+                <div class="box">
+					<input type="file" name="file-7[]" id="file-7" class="inputfile inputfile-6" data-multiple-caption="{count} files selected" multiple />
+					
+				</div>
+
                     <h3>请选择图片文件：JPG/GIF</h3>
     <form name="form0" id="form0">
         <input type="file"   accept="image/*" multiple="multiple" name="file0" id="file0" multiple="multiple" /><br>
