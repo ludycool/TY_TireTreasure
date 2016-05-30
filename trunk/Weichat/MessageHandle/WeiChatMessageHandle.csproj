@@ -66,6 +66,7 @@
     <Compile Include="LoginOauth.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="GetJsParam.cs" />
+    <Compile Include="tool\MultimediaHelper.cs" />
     <Compile Include="UnionPaySdk\AcpService.cs" />
     <Compile Include="UnionPaySdk\BigNum.cs" />
     <Compile Include="UnionPaySdk\CertUtil.cs" />

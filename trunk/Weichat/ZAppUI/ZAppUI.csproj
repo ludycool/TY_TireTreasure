@@ -386,6 +386,8 @@
     <Content Include="Content\js\npm.js" />
     <Content Include="Content\js\page-transitions.js" />
     <Content Include="Content\js\script.js" />
+    <Content Include="Content\plus\component.css" />
+    <Content Include="Content\plus\custom-file-input.js" />
     <Content Include="Content\Qr_code_img\QR_code.png" />
     <Content Include="Content\Scripts\bootstrap.js" />
     <Content Include="Content\Scripts\bootstrap.min.js" />
