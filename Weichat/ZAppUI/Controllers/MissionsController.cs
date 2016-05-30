@@ -1,4 +1,6 @@
-﻿using System;
+﻿using e3net.IDAL.TireTreasureDB;
+using Microsoft.Practices.Unity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -13,7 +15,8 @@ namespace ZAppUI.Controllers
     {
         //
         // GET: /Missions/
-
+                [Dependency]
+        public ITT_MissionsDao OPBiz { get; set; }
         public ActionResult Index()
         {
 
@@ -25,6 +28,11 @@ namespace ZAppUI.Controllers
             ViewBag.config = serializer.Serialize(config);
             return View();
         }
-
+        [HttpPost]
+        public JsonResult Public(string Title, string Details, string Longitude, string Latitude, string Address, string MoneyReward, string SpendTime,)
+        { 
+        
+        
+        }
     }
 }
