@@ -44,6 +44,10 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\e3net.tools\dll\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp">
       <Private>True</Private>
     </Reference>
@@ -466,12 +470,13 @@
     <Content Include="Views\AddFriends\requestFriendList.cshtml" />
     <Content Include="Views\VipShop\VipCard.cshtml" />
     <Content Include="Views\Deposit\Index.cshtml" />
-    <Content Include="Views\Deposit\unionPay.cshtml" />
+    <Content Include="Views\Deposit\recharge.cshtml" />
     <Content Include="Views\Insuran\one.cshtml" />
     <Content Include="Views\MyShop\index.cshtml" />
     <Content Include="Views\test\index.cshtml" />
     <Content Include="Views\Missions\index.cshtml" />
     <Content Include="Views\test\rout2.cshtml" />
+    <Content Include="Views\Deposit\wechat.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="temp\" />

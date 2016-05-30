@@ -25,6 +25,12 @@ namespace ZAppUI.Models
         public string Timestamp{get;set;}
 
         public string OrderId{get;set;}
+
+        public string RechargeType
+        {
+            get;
+            set;
+        }
     }
 
     public class UserInfo
@@ -32,4 +38,5 @@ namespace ZAppUI.Models
         
 
     }
+
 }

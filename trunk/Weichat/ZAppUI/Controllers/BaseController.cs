@@ -25,7 +25,7 @@ namespace ZAppUI.Controllers
     /// </summary>
     public class BaseController : Controller
     {
-    
+
         #region  公共方法
         /// <summary>
         /// 获取地址
@@ -37,28 +37,34 @@ namespace ZAppUI.Controllers
             return " var BaseUrl = '/" + RouteData.Values["controller"].ToString() + "/';";
 
         }
-        public UserData GetUData {
-
-            get { return Session["UserData"] as UserData;}
-            set{Session["UserData"] =value;}
+        public UserData GetUData
+        {
+            get
+            {
+                return Session["UserData"] as UserData;
+            }
+            set
+            {
+                Session["UserData"] = value;
+            }
         }
-
+  
         #region 获取客户端IP地址
         #endregion
         #region 获取UserID
-        
 
-        
+
+
         #endregion
         #endregion
         //是否已注册
         public bool isRegister()
-        {          
+        {
             if (Util.isOpenIdExist(GetUData.OpenId))
             {
                 return true;
             }
-           return false;
+            return false;
         }
         //重定向URL
         public string redirctUrl(string controller)
@@ -73,15 +79,23 @@ namespace ZAppUI.Controllers
             DataSet result = userBiz.ExecuteSqlToDataSet("EXEC	[TireTreasureDB].[dbo].[proc_GetUserIdByWeiXinId] '" + GetUData.OpenId + "',null");
             return (Guid)result.Tables[0].Rows[0][0];
         }
-        
+
     }
 
 
 
     public class JsonNetResult : JsonResult
     {
-        public JsonSerializerSettings SerializerSettings { get; set; }
-        public Formatting Formatting { get; set; }
+        public JsonSerializerSettings SerializerSettings
+        {
+            get;
+            set;
+        }
+        public Formatting Formatting
+        {
+            get;
+            set;
+        }
         public JsonNetResult()
         {
             SerializerSettings = new JsonSerializerSettings();
@@ -103,7 +117,8 @@ namespace ZAppUI.Controllers
                     DateFormatString = "yyyy-MM-dd HH:mm:ss"//时间格式
                 };
                 JsonSerializer serializer = JsonSerializer.Create(SerializerSettings);
-                serializer.Serialize(writer, Data); writer.Flush();
+                serializer.Serialize(writer, Data);
+                writer.Flush();
             }
         }
     }

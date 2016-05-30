@@ -87,7 +87,7 @@ namespace ZAppUI.Controllers
                 //TODO BUG  添加用户信息时有可能为null
                 addUserInfo(now, guid, model);
 
-                if (!GetUData.User_Id.ToString().Equals(Guid.Empty))
+                if (GetUData.User_Id.ToString() != "00000000-0000-0000-0000-000000000000")
                 {
                     addUserReferences(GetUData.User_Id, guid);
                 }
