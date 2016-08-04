@@ -11,6 +11,7 @@ using e3net.IDAL;
 using e3net.common.SysMode;
 using Moon.Orm.Util;
 using e3net.tools;
+using System.Configuration;
 
 namespace e3net.DAL
 {
@@ -31,7 +32,21 @@ namespace e3net.DAL
         {
             IsDefultConnection = IsDefult;
             DbConnectionName = ConnectionName;
+
         }
+        ///       创建通用的Db引擎,所有的关系型数据库(包括所谓的国产数据库,如达梦...)都可以用此方法
+        ///       若不知其配置说明,可联系我们(qsmmy_qin@163.com),
+        ///       </summary>
+        /// <param name="name">对应的名字</param>
+        /// <returns>对应的Db对象</returns>
+        public static Db CreateSharedDbByConfigName(string name)
+        {
+            ConnectionStringSettings expr_0B = ConfigurationManager.ConnectionStrings[name];
+            string connectionString = expr_0B.ConnectionString;
+            string providerName = expr_0B.ProviderName;
+            return new SharedDb(connectionString, providerName);
+        }
+
         public Db GetDb()
         {
             if (IsDefultConnection)
