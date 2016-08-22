@@ -28,11 +28,11 @@ namespace ZAppUI.Controllers
             ViewBag.config = serializer.Serialize(config);
             return View();
         }
-        [HttpPost]
-        public JsonResult Public(string Title, string Details, string Longitude, string Latitude, string Address, string MoneyReward, string SpendTime,)
-        { 
+        //[HttpPost]
+        //public JsonResult Public(string Title, string Details, string Longitude, string Latitude, string Address, string MoneyReward, string SpendTime,)
+        //{ 
         
         
-        }
+        //}
     }
 }

@@ -3474,7 +3474,7 @@
     <Content Include="httpHandle\Sys_FilesHandler.ashx" />
     <Content Include="httpHandle\FilesTransactHandler.ashx" />
     <Content Include="httpHandle\FilesInsuranHandler.ashx" />
-    <None Include="Properties\PublishProfiles\ESUIConfig.pubxml" />
+    <None Include="Properties\PublishProfiles\ldbb.pubxml" />
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.7.1.js" />
     <Content Include="Scripts\jquery-1.7.1.min.js" />
